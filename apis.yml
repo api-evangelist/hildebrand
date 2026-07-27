@@ -1,0 +1,184 @@
+aid: hildebrand
+url: https://raw.githubusercontent.com/api-evangelist/hildebrand/refs/heads/main/apis.yml
+name: Hildebrand
+kind: company
+description: >-
+  Hildebrand Technology Limited is a London-based energy data company and, since 2019, the United
+  Kingdom's first independent DCC Other User with a direct connection to the Smart Data Communications
+  Company network. It sits between Britain's mandated smart-metering infrastructure and the
+  applications built on top of it: it makes Glow hardware (CADs, in-home displays, sub-meters,
+  temperature sensors), ingests and stores smart-meter reads at scale, and republishes them through the
+  Glowmarkt Platform APIs, the consumer Bright app, and the commercial Glow Data Service. Its API
+  posture is an honest reflection of the British market seam — Britain mandated the metering
+  INFRASTRUCTURE, not a consumer data right, so there is no Consumer Data Right or Green Button
+  obligation on Hildebrand and no standards-conformant data-sharing surface to point at. What exists
+  instead is a proprietary but genuinely well-documented platform: five public Swagger 2.0 definitions
+  are served anonymously from api.glowmarkt.com/api-docs, and any individual who installs Bright,
+  creates an account and passes meter-point verification can call the same production API for their own
+  household data with a published applicationId. Third-party organisational access to other people's
+  data is the closed half — it runs through Glow Data Service on a signed contract from GBP 595/month
+  per MPxN, with consumer verification and consent captured per meter point. Hildebrand publishes no
+  open grid or market data of any kind: every documented endpoint returns HTTP 400 without an
+  applicationId header, so this is a closed-market-data, consent-gated-consumer-data provider.
+accessModel:
+  pricing: paid
+  onboarding: request
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Contract required for organisational access; free self-serve for your own meter data via Bright
+  confidence: high
+  source:
+  - https://data.glowforindustry.com/
+  - https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  generated: '2026-07-27'
+  method: manual
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/groq.png
+tags:
+- Energy
+- United Kingdom
+- Utilities
+- Electricity
+- Gas
+- Smart Metering
+- Energy Data
+- Demand Response
+- IoT
+- Metering
+created: '2026-07-27'
+modified: '2026-07-27'
+specificationVersion: '0.19'
+apis:
+- aid: hildebrand:glowmarkt-user-system-api
+  name: Glowmarkt User System API
+  description: >-
+    User, account, authentication and consent management for the Glow Platform. Covers user
+    registration, account profiles and sessions, JWT issuance via POST /auth, an OAuth 2.0
+    authorization-code grant (POST /auth/oauth and POST /auth/oauth/access), and — the part that
+    matters most in the British smart-metering context — Meter Point Consent and Verification, where
+    consent to retrieve data is renewed and revoked per MPxN.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Users
+  - Accounts
+  - Authentication
+  - OAuth
+  - Consent
+  - Meter Points
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-glowmarkt-user-system-swagger.json
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+- aid: hildebrand:glowmarkt-resource-system-api
+  name: Glowmarkt Resource System API
+  description: >-
+    Time-series energy data retrieval. A resource is a single data stream — electricity consumption,
+    electricity cost, gas consumption, gas cost, electricity export, reactive import/export — each
+    carrying a classifier such as electricity.consumption or gas.consumption.cost. Exposes historical
+    readings with ISO 8601 aggregation periods (PT1M through P1Y), current readings, first/last reading
+    times, cumulative meter reads, the tariff applied to a cost resource and its history, a DCC catchup
+    trigger, a DCC daily consumption log, and raw data in Hildebrand's Glow Binary format.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Energy Data
+  - Consumption
+  - Tariffs
+  - Time Series
+  - Smart Metering
+  - DCC
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-glowmarkt-resource-system-swagger.json
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: Documentation
+    url: https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+- aid: hildebrand:glowmarkt-virtual-entity-system-api
+  name: Glowmarkt Virtual Entity System API
+  description: >-
+    CRUD over Virtual Entities — the Glow Platform's model of a physical "thing" such as a home or a
+    site, made up of metadata and a collection of resources. Lists the virtual entities a caller has
+    access to, resolves the resources belonging to each, manages virtual entity types and metadata
+    attributes, and reports per-application virtual entity statistics.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Virtual Entities
+  - Sites
+  - Metadata
+  - Energy Data
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: Documentation
+    url: https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+- aid: hildebrand:glowmarkt-device-management-system-api
+  name: Glowmarkt Device Management System API
+  description: >-
+    Registration and status of the physical hardware feeding the platform — gateways such as the Glow
+    CAD and GlowStick, sensors such as smart electricity meters, and actuators such as auxiliary load
+    control switches. Also exposes the DCC inventory of a meter point by MPxN or by smart-meter EUI,
+    the resources associated to a meter point, and gateway packet-delivery status.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Devices
+  - Hardware
+  - Gateways
+  - Smart Metering
+  - DCC
+  - IoT
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+- aid: hildebrand:glowmarkt-notification-system-api
+  name: Glowmarkt Notification System API
+  description: >-
+    Alerting and messaging for Glow-based applications. Defines alert types, manages per-channel and
+    per-culture message templates, sends alerts to users, and reports notification delivery and logs.
+    Served from its own base path, /api/v0-1/ns.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+  baseURL: https://api.glowmarkt.com/api/v0-1/ns
+  tags:
+  - Notifications
+  - Alerts
+  - Templates
+  - Messaging
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-glowmarkt-notification-system-swagger.json
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+common:
+- type: Website
+  url: https://www.hildebrand.co.uk/
+- type: Documentation
+  url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+- type: APIReference
+  url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+- type: SignUp
+  url: https://data.glowforindustry.com/signup
+- type: Pricing
+  url: https://data.glowforindustry.com/#pricing
+- type: Support
+  url: https://www.hildebrand.co.uk/contact-us
+- type: Forum
+  url: https://forum.glowmarkt.com/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/hildebrand/
+- type: PrivacyPolicy
+  url: https://www.hildebrand.co.uk/privacy-policy
+- type: Review
+  url: review.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

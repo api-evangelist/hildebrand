@@ -1,0 +1,386 @@
+aid: hildebrand
+name: Hildebrand
+review:
+  question: >-
+    Does Hildebrand operate under an energy consumer-data mandate, and if so is there a real,
+    verifiable implementation behind the claim? What can a developer actually call, and how do they
+    get in?
+  date: '2026-07-27'
+  reviewer: API Evangelist
+  homeMarket: United Kingdom
+  tier: energy-data-platform
+  primaryDomain: hildebrand.co.uk
+
+mandate:
+  regime: smart-meter-infrastructure
+  status: live-implemented
+  regimeNotes: >-
+    Great Britain mandated the smart-metering INFRASTRUCTURE, not a consumer data right. The obligation
+    that touches Hildebrand is the Smart Energy Code (SEC) and the Data Communications Company (DCC)
+    User Entry Process, which governs who may connect to the licensed national smart-metering network
+    and retrieve meter data. There is NO Consumer Data Right, no Green Button regulation, and no
+    statutory data-portability duty on Hildebrand. The mandate here regulates ACCESS TO THE NETWORK,
+    not publication of an identical API — so it produces no common schema, no register of API base
+    URIs, and no standards-conformant consumer endpoint to test against.
+  whatWasVerified: >-
+    An actual register entry, not a press release. Hildebrand's own site footer self-declares "SEC
+    Party, DCC Other User, SEC Party Identifier PLK001". That claim was checked against the primary
+    source: the Smart Energy Code Company's official SEC Parties List spreadsheet
+    (https://smartenergycodecompany.co.uk/documents/sec/sec-parties-list/, HTTP 200,
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, 112,635 bytes, fetched
+    2026-07-27). Sheet "Other SEC Parties" carries the row: Hildebrand Technology Limited | Hildebrand
+    Technology Limited | "Yes - Other User" in the column "Parties Who Have Completed the DCC User
+    Entry Process". Sheet "All Voting Groups" categorises it as "Other SEC Parties". This is a
+    completed-process register entry, not a claim.
+  implementationEvidence: >-
+    Beyond the register entry, the DCC connection is visible in the live API contracts themselves. The
+    harvested Resource System Swagger exposes GET /resource/{id}/catchup ("Trigger a request to
+    retrieve the latest available readings from the DCC") and GET /resource/{id}/daily-consumption-log
+    ("Get daily consumption log (DCC)"). The Device Management System Swagger exposes GET
+    /device/meter-point/{meterPointNumber}/inventory and GET /device/smart-meter/{eui}/inventory ("Get
+    the DCC inventory of a meter point"). Hildebrand's own timeline page dates this to 2019: "UK's
+    first independent DCC Other User with direct DCC connection."
+  whatIsNotMandated: >-
+    Nothing compels Hildebrand to publish a consumer-facing data-sharing API, to conform to any data
+    schema, or to make market data open. Every API surface documented below is a commercial product
+    decision, not a compliance artifact. The SEC/DCC regime is the reason Hildebrand CAN get the data;
+    it is not the reason it publishes an API.
+  notApplicableRegimes:
+    - cdr-energy — Australian Consumer Data Right; no UK equivalent, does not apply
+    - green-button-ontario — Ontario regulation; does not apply
+    - green-button-voluntary — no Green Button / ESPI reference found anywhere on hildebrand.co.uk,
+      glowmarkt.com, data.glowforindustry.com or in any of the five harvested Swagger definitions
+
+dataStandard:
+  implemented: none — proprietary Glow Platform data model
+  detail: >-
+    No standard reference found. The Glow Platform uses a proprietary shape of its own invention:
+    Device -> Resource -> Virtual Entity, with a "classifier" string carrying the data semantics
+    (electricity.consumption, electricity.consumption.cost, electricity.export,
+    electricity.import.reactive, electricity.export.reactive, gas.consumption, gas.consumption.cost).
+    Aggregation periods use ISO 8601 durations (PT1M, PT30M, PT1H, P1D, P1W, P1M, P1Y) and timestamps
+    are UTC epoch seconds, but that is the extent of standards reuse in the payloads. There is no Green
+    Button / ESPI, no CDR Consumer Data Standards, no IEC CIM 61968/61970, no IEEE 2030.5, no OpenADR,
+    and no OCPP/OCPI. Hildebrand also ships a proprietary binary encoding — GET
+    /resource/{id}/glowbinary, "returns the resource's raw data in the Glow Binary format". The
+    underlying UK infrastructure standards (SEC, GBCS, DUIS, SMETS2, ZigBee SEP, DLMS) sit below the
+    API and are not exposed through it; Hildebrand's site notes a "World's 1st Zigbee and DLMS
+    certified SAPC device" on the hardware side only.
+
+consumerVsMarketDataSplit:
+  consumerDataAPI: true
+  marketDataOpen: false
+  finding: >-
+    Hildebrand is the mirror image of a grid operator. Its consumer-data side is real, documented and
+    productised — a third party CAN obtain an individual customer's half-hourly electricity and gas
+    consumption, cost, and export data, plus up to 13 months of history, through the Glowmarkt APIs,
+    gated by per-MPxN verification and consent. Its market-data side is empty: Hildebrand publishes no
+    open grid, system, settlement or carbon data of any kind. Every documented endpoint refuses
+    anonymous callers. Probed 2026-07-27: GET https://api.glowmarkt.com/api/v0-1/resource -> HTTP 400
+    {"error":"bad request","message":"bad request"}; GET /api/v0-1/virtualentity -> HTTP 400; GET
+    /api/v0-1/resourcetype -> HTTP 400; GET /api/v0-1/resource/count -> HTTP 400; POST /api/v0-1/auth
+    with no body -> HTTP 400 {"message":"Bad request missing info"}. There is no free tier, no public
+    dataset, no bulk download and no open-data licence. The split IS the finding: in Britain the open
+    market data lives elsewhere (NESO Carbon Intensity, Elexon BSC, DNO open-data portals) and the
+    consumer data lives behind commercial DCC Other Users like Hildebrand.
+
+accessGate:
+  gate: customer-account-required
+  secondaryGate: licence-agreement
+  publiclyReadable: >-
+    The API contracts themselves are open. All five Swagger 2.0 definitions are served anonymously with
+    no login from https://api.glowmarkt.com/api-docs/v0-1/{system}/swagger-ui-init.js (HTTP 200 each),
+    and the individual-user retrieval guide is a public PDF at
+    https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf (HTTP
+    200, application/pdf, 298,163 bytes, v1.8, "Last updated: 09 April 2026"). Reading is free; calling
+    is not.
+  pathA_individual: >-
+    FREE, SELF-SERVE, YOUR OWN DATA ONLY. Per the public PDF: (1) install the Bright app for Android or
+    iOS; (2) create an account; (3) either connect Glow hardware or, on a SMETS2 smart meter, complete
+    the in-app verification process and wait for email confirmation that verification passed
+    ("Hildebrand can retrieve delayed half hourly consumption data from the DCC because we are a DCC
+    Other User"); (4) POST username and password to https://api.glowmarkt.com/api/v0-1/auth with the
+    published applicationId header b0f1b774-a586-4f72-9edd-27ead8aa7a8d to receive a JWT valid for 7
+    days. MQTT real-time streaming is an extra manual step — email support@glowmarkt.com with your
+    Bright username and the MAC ID of your Glow CAD. No developer console, no key self-issuance, no
+    payment. This is why the gate is recorded as customer-account-required and not self-serve.
+  pathB_organisation: >-
+    PAID, CONTRACTED, OTHER PEOPLE'S DATA. Glow Data Service (https://data.glowforindustry.com/) is the
+    commercial route. Its own words: "create an account with us, set up your organisation and we'll
+    generate a contract. Once that's in place, we'll get you up and running." Published pricing as of
+    2026-07-27: Core GBP 595/month charged per MPxN with a GBP 595 minimum, 3-month minimum term, up to
+    5 applications; Enterprise GBP 2,600/month plus per-MPxN, 1-year minimum; Dedicated on request. All
+    billed quarterly. The tiers include "Access to Glow Support and Development Portals" and
+    "Organisational API access" — the Development Portal ("Add new data streams, expose APIs, manage
+    permissions and authentication") is behind that contract and was NOT reachable anonymously. The
+    site states plainly: "Smart meter data access in Great Britain is regulated and requires proper
+    authorisation. You can only access data for properties where you have legal authority (as the bill
+    payer or with explicit consent)." Nine verification methods for domestic and non-domestic consumers
+    are offered.
+  developerPortalConfirmed: false
+  developerPortalNote: >-
+    There is no anonymous self-serve developer portal. https://docs.glowmarkt.com/ returns HTTP 403 at
+    the root (individual document paths under it are readable). https://glowmarkt.com/api and
+    https://glowmarkt.com/developers both return HTTP 200 but serve the identical 5,908-byte
+    glowmarkt.com homepage — an SPA catch-all, not real developer pages. No developer./developers. host
+    exists on hildebrand.co.uk. The closest thing to a portal that IS confirmed live and public is the
+    Swagger UI at https://api.glowmarkt.com/api-docs/v0-1/resourcesys/ (HTTP 200, titled "Glow Platform
+    API Docs"), which is a reference, not a signup surface.
+
+authModel:
+  scheme: JWT bearer in a custom `token` header, plus a mandatory `applicationId` header; OAuth 2.0 authorization-code grant also defined
+  detail: >-
+    Taken verbatim from the harvested securityDefinitions and the public PDF. Every call requires TWO
+    headers: `token` (the JWT from POST /api/v0-1/auth) and `applicationId` (a UUID identifying the
+    calling application — b0f1b774-a586-4f72-9edd-27ead8aa7a8d is published for individual Bright
+    users). Tokens currently expire after 7 days. Swagger securityDefinitions across the five specs
+    declare: oAccessAuthToken, userToken, devUserToken, internalUserToken (all apiKey in header, name
+    `token`); applicationId, userId, userID, organizationId (apiKey in header); and appKeys /
+    orgAppKeys (HTTP basic). The User System spec additionally defines a real OAuth 2.0
+    authorization-code flow under the "OAuth" tag: POST /auth/oauth (authenticate a user and generate
+    an authorization code), POST /auth/oauth/access (exchange the code for an access token), GET
+    /auth/oauth (validate an access token). Token lifecycle management is exposed too — GET
+    /auth/token, GET /auth/newToken, DELETE /auth/token/{tokenId}, DELETE /auth/deleteToken. No mTLS,
+    no CDR accreditation, and no OpenID Connect discovery document:
+    https://api.glowmarkt.com/.well-known/openid-configuration returned HTTP 404 and
+    https://api.glowmarkt.com/api/v0-1/.well-known/openid-configuration returned HTTP 404 on
+    2026-07-27.
+  consentModel: >-
+    Consent is modelled explicitly and per meter point, which is unusual and worth noting given there
+    is no mandate requiring it. The User System spec exposes GET /user/verification/status, POST
+    /user/verification/status/mpxns/renewal, POST /user/verification/status/mpxns/revocation, and the
+    single-meter equivalents GET/POST /user/verification/status/mpxn/{mpxn}/renewal and
+    GET/POST /user/verification/status/mpxn/{mpxn}/revocation. Consent is therefore renewable and
+    revocable at MPxN granularity through the API — a voluntary construction that happens to resemble
+    what the Australian CDR mandates.
+
+harvest:
+  fetchDate: '2026-07-27'
+  method: >-
+    The Swagger UI shells at https://api.glowmarkt.com/api-docs/v0-1/{system}/ are swagger-ui-express
+    builds that inline the full swaggerDoc into ./swagger-ui-init.js. Each init script was fetched
+    anonymously and the swaggerDoc object extracted verbatim and re-serialised as JSON. No spec was
+    edited, synthesised, or inferred. There is no openapi.json, swagger.json, or /api-docs index — all
+    returned HTTP 404.
+  specs:
+  - file: openapi/hildebrand-glowmarkt-user-system-swagger.json
+    title: Glowmarkt User System
+    version: 1.0.5
+    format: Swagger 2.0
+    paths: 29
+    host: api.glowmarkt.com
+    basePath: /api/v0-1/
+    source: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/swagger-ui-init.js
+    httpStatus: 200
+    bytes: 108798
+    parsed: true
+  - file: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
+    title: Virtual Entity System
+    version: 1.3.0
+    format: Swagger 2.0
+    paths: 8
+    host: api.glowmarkt.com
+    basePath: /api/v0-1/
+    source: https://api.glowmarkt.com/api-docs/v0-1/vesys/swagger-ui-init.js
+    httpStatus: 200
+    bytes: 41528
+    parsed: true
+  - file: openapi/hildebrand-glowmarkt-resource-system-swagger.json
+    title: Resource System
+    version: 1.5.0
+    format: Swagger 2.0
+    paths: 18
+    host: api.glowmarkt.com
+    basePath: /api/v0-1/
+    source: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/swagger-ui-init.js
+    httpStatus: 200
+    bytes: 54514
+    parsed: true
+  - file: openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+    title: Device Management System
+    version: 1.1.0
+    format: Swagger 2.0
+    paths: 11
+    host: api.glowmarkt.com
+    basePath: /api/v0-1/
+    source: https://api.glowmarkt.com/api-docs/v0-1/dmssys/swagger-ui-init.js
+    httpStatus: 200
+    bytes: 30234
+    parsed: true
+  - file: openapi/hildebrand-glowmarkt-notification-system-swagger.json
+    title: Notification System
+    version: 1.0.0
+    format: Swagger 2.0
+    paths: 10
+    host: api.glowmarkt.com
+    basePath: /api/v0-1/ns
+    source: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/swagger-ui-init.js
+    httpStatus: 200
+    bytes: 41488
+    parsed: true
+  duplicatesDiscarded:
+  - path: https://api.glowmarkt.com/api-docs/v0-1/vesys/v2/swagger-ui-init.js
+    httpStatus: 200
+    note: >-
+      Byte-identical swaggerDoc to vesys (Virtual Entity System 1.3.0). The /v2/ segment is an Express
+      static-mount artifact, not a second API version. Same behaviour observed for resourcesys/v2 and
+      dmssys/v2 and notificationsys/v2 (all HTTP 200). Not saved.
+
+undocumentedButReferenced:
+  - name: Glowmarkt MQTT stream
+    note: >-
+      Real-time streaming is offered but has no published contract. The public PDF instructs users to
+      "email support@glowmarkt.com stating that you wish to use the MQTT", supplying the Bright
+      username and the MAC ID of the Glow CAD (GlowStick or IHD/CAD). Glow Data Service lists "Real
+      time data streams, with added Glow hardware" and Utility in a Box lists export via "RestAPI (JSON
+      + csv), SFTP (csv), MQTT (JSON)". No broker host, topic structure, or AsyncAPI document is
+      published, so nothing was recorded in apis.yml. Do not invent one.
+  - name: Glow Development Portal
+    note: >-
+      Named on both https://www.hildebrand.co.uk/services/utility-in-a-box and
+      https://data.glowforindustry.com/ as the place to "Add new data streams, expose APIs, manage
+      permissions and authentication" and where contracted customers "access API Documentation". It is
+      behind the commercial contract and no anonymous URL was found. Not recorded as a portal.
+
+probeLog:
+  date: '2026-07-27'
+  entries:
+  - url: https://hildebrand.co.uk
+    status: '000 (no A record / connection failed; apex does not resolve)'
+  - url: https://www.hildebrand.co.uk/
+    status: '200'
+  - url: https://www.hildebrand.co.uk/about
+    status: '200'
+  - url: https://www.hildebrand.co.uk/contact-us
+    status: '200'
+  - url: https://www.hildebrand.co.uk/services/data-as-a-service
+    status: '200'
+  - url: https://www.hildebrand.co.uk/services/utility-in-a-box
+    status: '200'
+  - url: https://www.hildebrand.co.uk/services/bright
+    status: '200'
+  - url: https://www.hildebrand.co.uk/services/connect
+    status: '200'
+  - url: https://www.hildebrand.co.uk/services/reflect
+    status: '200 but renders the Next.js 404 page — dead nav link'
+  - url: https://developer.hildebrand.co.uk
+    status: '000 (does not resolve)'
+  - url: https://api.hildebrand.co.uk
+    status: '000 (does not resolve)'
+  - url: https://docs.hildebrand.co.uk
+    status: '000 (does not resolve)'
+  - url: https://data.hildebrand.co.uk
+    status: '000 (does not resolve)'
+  - url: https://www.hildebrand.co.uk/.well-known/security.txt
+    status: '404'
+  - url: https://glowmarkt.com/
+    status: '200'
+  - url: https://glowmarkt.com/api
+    status: '200 — SPA catch-all serving the identical 5,908-byte homepage, not a real page'
+  - url: https://glowmarkt.com/developers
+    status: '200 — SPA catch-all serving the identical 5,908-byte homepage, not a real page'
+  - url: https://glowmarkt.com/.well-known/security.txt
+    status: '200 — SPA catch-all, not a security.txt'
+  - url: https://docs.glowmarkt.com/
+    status: '403'
+  - url: https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+    status: '200 application/pdf 298163 bytes (v1.8, last updated 09 April 2026)'
+  - url: https://api.glowmarkt.com/
+    status: '404'
+  - url: https://api.glowmarkt.com/openapi.json
+    status: '404'
+  - url: https://api.glowmarkt.com/swagger.json
+    status: '404'
+  - url: https://api.glowmarkt.com/api-docs
+    status: '404'
+  - url: https://api.glowmarkt.com/api-docs/v0-1/
+    status: '404'
+  - url: https://api.glowmarkt.com/.well-known/openid-configuration
+    status: '404'
+  - url: https://api.glowmarkt.com/.well-known/security.txt
+    status: '404'
+  - url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+    status: '200 text/html (Swagger UI, "Glow Platform API Docs")'
+  - url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+    status: '200 text/html'
+  - url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+    status: '200 text/html'
+  - url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+    status: '200 text/html'
+  - url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+    status: '200 text/html'
+  - url: https://api.glowmarkt.com/api-docs/v0-1/usersys/
+    status: '404'
+  - url: https://api.glowmarkt.com/api/v0-1/auth
+    status: '400 application/json {"message":"Bad request missing info"} — endpoint live, anonymous refused'
+  - url: https://api.glowmarkt.com/api/v0-1/resource
+    status: '400 application/json {"error":"bad request","message":"bad request"}'
+  - url: https://api.glowmarkt.com/api/v0-1/virtualentity
+    status: '400 application/json'
+  - url: https://api.glowmarkt.com/api/v0-1/resourcetype
+    status: '400 application/json'
+  - url: https://api.glowmarkt.com/api/v0-1/resource/count
+    status: '400 application/json'
+  - url: https://data.glowforindustry.com/
+    status: '200 — Glow Data Service commercial site (features, pricing, case studies)'
+  - url: https://data.glowforindustry.com/signup
+    status: '200 — client-rendered form ("Loading…" in the served HTML)'
+  - url: https://data.glowforindustry.com/.well-known/security.txt
+    status: '404'
+  - url: https://metering.glowforindustry.com/
+    status: '200'
+  - url: https://glowforhomes.com/home
+    status: '200'
+  - url: https://glowforbusiness.com/home
+    status: '200'
+  - url: https://forum.glowmarkt.com/
+    status: '200 — community forum'
+  - url: https://bitbucket.org/ijosh/brightglowmarkt/src/master/
+    status: '200 — third-party community guides referenced by the official PDF; NOT a Hildebrand property, not recorded in apis.yml'
+  - url: https://smartenergycodecompany.co.uk/current-sec-parties/
+    status: '200 text/html — party list is not in the served HTML'
+  - url: https://smartenergycodecompany.co.uk/documents/sec/sec-parties-list/
+    status: '200 xlsx 112635 bytes — CONTAINS Hildebrand Technology Limited, "Yes - Other User"'
+
+apiFamily:
+  segmentation: >-
+    Hildebrand's docs segment by platform SYSTEM, not by energy product. The five systems are User
+    (identity, auth, OAuth, per-MPxN consent), Virtual Entity (sites/homes and their data streams),
+    Resource (the actual usage/metering, cost and tariff time series), Device Management (Glow hardware
+    plus DCC meter-point inventory), and Notification (alerts and templates). Mapped onto the sector
+    vocabulary: usage/metering and tariffs/pricing are the Resource System; DER/asset control and
+    charging sessions are absent entirely; billing and payments exist as marketing claims under
+    "Utility in a Box" (Payments System, Tariff Engine, Meter Balance) but have no published contract;
+    emissions/carbon and market data are absent. Hardware sold alongside: Glow Electricity Meters,
+    Aqua, Flux, Bridge Duo, Delta, Temperature Sensor, SAPC, IHD + CAD.
+  applications:
+  - name: Bright
+    role: consumer mobile app (Android/iOS) and the free on-ramp to the Glowmarkt API for your own data
+  - name: Connect
+    role: field app for meter engineers — installation, pairing, firmware, commissioning
+  - name: Glow Data Service
+    role: contracted organisational access to customers' smart-meter data
+  - name: Utility in a Box
+    role: white-label modular utility stack (dashboard, support portal, developer portal, customer portal)
+
+corporateFacts:
+  legalName: Hildebrand Technology Limited
+  secParty: true
+  secPartyIdentifier: PLK001 (self-declared on hildebrand.co.uk footer)
+  dccRole: Other User — confirmed "Yes - Other User" in the official SEC Parties List
+  firstIndependentDccOtherUser: 2019, per https://www.hildebrand.co.uk/about timeline
+  isoCertification: ISO 27001:2022, certificate number 10338-ISMS-001 (self-declared)
+  icoRegistration: Z3161543 (self-declared)
+  scaleClaims: 20+ years, 20+ clients, 300,000+ consumers, 25+ countries, "50 billion reads and growing" (homepage); "570 billion readings" (2019 timeline entry)
+  namedCustomers: Energy Systems Catapult (Living Lab, 4,000+ households), Carbon Co-op (Power Shaper), Manx Utilities, Transport for London — per Hildebrand case studies
+
+verdict:
+  status: built
+  summary: >-
+    A real, capturable API surface behind a real regulatory status. Hildebrand is the counter-example to
+    the sector's usual pattern: the mandate it lives under is genuine and verified in a public register,
+    but that mandate is about network access, not data publication — so its APIs owe nothing to a
+    standard and conform to none. Five Swagger 2.0 definitions covering 76 documented paths were
+    harvested verbatim and saved. Consumer data is available and consent-managed per meter point;
+    market data is nonexistent. Reading the contracts costs nothing; calling them costs either a Bright
+    account (your own home only) or GBP 595/month on a signed contract (anyone else's).

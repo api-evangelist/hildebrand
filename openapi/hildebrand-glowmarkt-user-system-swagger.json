@@ -1,0 +1,3780 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "The document enlists and describes the APIs for the User.",
+    "version": "1.0.5",
+    "title": "Glowmarkt User System",
+    "license": {
+      "name": "Copyright © 2012-26 by Hildebrand Technology Limited"
+    }
+  },
+  "host": "api.glowmarkt.com",
+  "basePath": "/api/v0-1/",
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Meter Point Consent & Verification"
+    },
+    {
+      "name": "Account"
+    },
+    {
+      "name": "Account Profile"
+    },
+    {
+      "name": "Account Session"
+    },
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "OAuth"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create a user",
+        "description": "Create a User a directory account for username and password login using this action. More specifically this is a registration process which creates a user and adds an account to the given application id. Self-Registration process should use this action. This call requires no authentication.",
+        "operationId": "addUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "addUserBody",
+            "description": "The information that is used to create a user.",
+            "schema": {
+              "$ref": "#/definitions/AddUserReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AddUserRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Find specific user that has an account in an application from the username.",
+        "description": "Returns a user.",
+        "operationId": "getUserbyUsername",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "The username of user that is being queried (lowercase, trimmed etc). Please note that this API is prone to errors if the username contains characters that are affected by URL encoding.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "appKeys": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AddUserRes"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create a user",
+        "description": "This call can be used by an application to create a user. No verification will be required",
+        "operationId": "createUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "createUserBody",
+            "description": "The information that is used to create a user.",
+            "schema": {
+              "$ref": "#/definitions/CreateUserReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "appKeys": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateUserRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Find specific user that has an account in an application.",
+        "description": "Returns a user.",
+        "operationId": "getUserbyId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user that is being queried",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "appKeys": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AddUserRes"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete specific user. This will delete all the accounts of a user. Please refer to delete account API. This API requires specific permissions.",
+        "description": "Deletes a user.",
+        "operationId": "deleteUserbyId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user that is being queried",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "appKeys": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IsValidRes"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/user/verify": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Generate a user verification token",
+        "description": "This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email).",
+        "operationId": "generateUserVerificationToken",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "generateVerificationTokenUserReq",
+            "description": "The information that is used to create to generate an email verification token.",
+            "schema": {
+              "$ref": "#/definitions/GenerateVerificationTokenUserReq"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Verify a user verification token",
+        "description": "This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email).",
+        "operationId": "verifyUser",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "verifyDevUser",
+            "description": "The information that is used to create a devuser.",
+            "schema": {
+              "$ref": "#/definitions/VerifyUserReq"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "6ccb3612-4cdc-469e-8574-6007f3c54084"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "active"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/user/resetpassword": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Generate a token that can be used by user to reset their password.",
+        "description": "This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email). The user can then use this token to reset their password.",
+        "operationId": "generateUserPasswordResetToken",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "generatePasswordResetTokenUserReq",
+            "description": "The information that is needed to generate a password reset token.",
+            "schema": {
+              "$ref": "#/definitions/GeneratePasswordResetTokenUserReq"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "A user resets their password",
+        "description": "This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email).",
+        "operationId": "resetPasswordUser",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "resetPasswordUserBody",
+            "description": "The information that is used to reset a user's password.",
+            "schema": {
+              "$ref": "#/definitions/PasswordResetUserReq"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/account": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Find all accounts of an application",
+        "description": "Returns all accounts that belong to an application.",
+        "operationId": "getAccounts",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "appKeys": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AccountRes"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Add an account to an existing user",
+        "description": "This call should be used when a user is registered via  on the Glow ecosystem. By providing the username of the user a directory account may be added to the application.",
+        "operationId": "addAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "addAccountBody",
+            "description": "The information that is used to add an account to an existing user.",
+            "schema": {
+              "$ref": "#/definitions/AddAccountReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "appKeys": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "OK"
+                },
+                "accountId": {
+                  "type": "string",
+                  "example": "ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6"
+                },
+                "applicationId": {
+                  "type": "string",
+                  "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "69f464fa-bca2-4f2a-83b1-0c69819c5cd0"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/account/{accountId}": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Find specific account of an application.",
+        "description": "Returns an account.",
+        "operationId": "getAccountbyId",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of account that is being queried",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "appKeys": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AccountRes"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Updates the account's metadata.",
+        "description": "Updates the account s metadata. Elements that can be updated include name. This can be used in on an administrative level.",
+        "operationId": "updateAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of user that needs to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "userUpdateBody",
+            "description": "The elements of user that can be updated.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Montgomery Jorgensen"
+                }
+              }
+            }
+          }
+        ],
+        "security": [
+          {
+            "orgAppKeys": [],
+            "applicationId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateAccountRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Delete account",
+        "description": "Delete account",
+        "operationId": "deleteAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of account that is to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "orgAppKeys": []
+          },
+          {
+            "devUserToken": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                },
+                "accountId": {
+                  "type": "string",
+                  "example": "ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6"
+                },
+                "userId": {
+                  "example": "69f464fa-bca2-4f2a-83b1-0c69819c5cd0"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "inactive"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/IncorrectElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/account/{accountId}/status": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Find the status of a specified account. If the account is using an external directory service, this call will confirm whether the user is authenticated against it. This call requires administrative application level credentials.",
+        "description": "Returns the status an account.",
+        "operationId": "getAccountStatusbyId",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of account that is being queried",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "appKeys": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AccountStatus"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/account/status": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "With a given JWT token a user can have their account status verfied. If their account is created under an external directory service, this call will establish whether a user's token to the external service is still valid.",
+        "description": "Returns the status an account.",
+        "operationId": "getAccountStatusbyUserToken",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": []
+          },
+          {
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AccountStatus"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/account/email": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Change a user's email",
+        "description": "A user can update their email",
+        "operationId": "userChangeEmail",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "userChangeEmailBody",
+            "description": "The body contains the user's new email.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "scotty_eng@enterprise.st"
+                }
+              },
+              "required": [
+                "email"
+              ]
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/IncorrectElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/user/{userId}/username": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Change a user's username",
+        "description": "API to update a user's username",
+        "operationId": "updateUsernameUserId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user that is being queried",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "UserChangeUsernameAdminBodyReq",
+            "description": "The body contains the user's new email.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "scotty_eng@enterprise.st"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "active"
+                }
+              },
+              "required": [
+                "username",
+                "status"
+              ]
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/IncorrectElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/account/name": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Change a user's name",
+        "description": "A user can update their name",
+        "operationId": "userChangeName",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "userChangeNameBody",
+            "description": "The body contains the user's new email.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Montgomery Jorgensen"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/IncorrectElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/account/changepassword": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Change a user's password",
+        "description": "A user can change their passwrod. They would neeed to have knowledge of their previous password and provide it in the body.",
+        "operationId": "userChangePassWord",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "userChangePassWord",
+            "description": "The information that is needed to change a user's password.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "oldPassword": {
+                  "type": "string",
+                  "example": "@$tr0ngP@$"
+                },
+                "newPassword": {
+                  "type": "string",
+                  "example": "aV3ry$tr0ngp@$"
+                }
+              }
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": []
+          },
+          {
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "weak new password"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/account/{accountId}/mobileapptoken": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Add mobile app token to a user",
+        "description": "Mobile app token can be added to the user, who will then be able to receive push notifications.",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of account that is being queried",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "accountAddMobileToken",
+            "description": "The information that is needed to assign a mobile token to an account.",
+            "schema": {
+              "$ref": "#/definitions/AddMobileTokenToAccountReq"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Remove a mobile app token to a user",
+        "description": "Mobile app tokens can be removed from a user.",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of account that is being queried",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "accountRemoveMobileToken",
+            "description": "The information that is needed to remove a mobile token to an account.",
+            "schema": {
+              "$ref": "#/definitions/RemoveMobileTokenToAccountReq"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/accountprofile": {
+      "get": {
+        "tags": [
+          "Account Profile"
+        ],
+        "summary": "Find all the profiles of an account",
+        "description": "Returns all the profileNames of profiles an account has saved.",
+        "operationId": "getAccountProfile",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "example": "ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6"
+                },
+                "profileNames": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "DashBoard",
+                    "Settings"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Account Profile"
+        ],
+        "summary": "Create an account profile under a given profileName.",
+        "description": "Create an account profile under a given profileName. profileName is a required field. Please note that anything under the profileName will be overwritten.",
+        "operationId": "addAccountProfile",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "addAccountProfile",
+            "description": "The information that is used to create a devuser.",
+            "schema": {
+              "$ref": "#/definitions/AccountProfile"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "OK"
+                },
+                "devUserId": {
+                  "type": "string",
+                  "example": "6ccb3612-4cdc-469e-8574-6007f3c54084"
+                },
+                "profileName": {
+                  "type": "string",
+                  "example": "DashBoard"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/accountprofile/{profileName}": {
+      "get": {
+        "tags": [
+          "Account Profile"
+        ],
+        "summary": "Find specific group of application",
+        "description": "Returns an application's group.",
+        "operationId": "getAccountProfilebyProfileName",
+        "parameters": [
+          {
+            "name": "profileName",
+            "in": "path",
+            "description": "profileName of the system to be retrieved",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AccountProfile"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/accountsession": {
+      "get": {
+        "tags": [
+          "Account Session"
+        ],
+        "summary": "get the session of an account",
+        "description": "Returns the session of an account",
+        "operationId": "getAccountSession",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/AccountSession"
+                },
+                {
+                  "type": "object"
+                }
+              ],
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "accountsession"
+        ],
+        "summary": "Update an account session.",
+        "description": "Update fields of an account session. The fields that are updated are completely overwritten if they exist.",
+        "operationId": "updateAccountSession",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "updateAccountProfile",
+            "description": "The information that is used to create a devuser.",
+            "schema": {
+              "$ref": "#/definitions/AccountSession"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/AccountSession"
+                },
+                {
+                  "type": "object"
+                }
+              ],
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/auth": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Checks whether a user token is valid.",
+        "description": "Checks whether a user token is valid.",
+        "operationId": "tokencheck",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "example": "ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6"
+                },
+                "applicationId": {
+                  "type": "string",
+                  "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+                },
+                "valid": {
+                  "type": "boolean"
+                },
+                "exp": {
+                  "type": "integer",
+                  "description": "Timestamp of token expiry date",
+                  "example": 1509010921
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "authenticate an account",
+        "description": "Autheticates the user and generates a JWT token.",
+        "operationId": "usernamelogin",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "applicationId",
+            "type": "string",
+            "description": "The ID of the application",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "UsernameLoginDetails",
+            "required": true,
+            "description": "The information that is required to authenticate an account.",
+            "schema": {
+              "$ref": "#/definitions/UserNameLoginReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "example": "ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6"
+                },
+                "applicationId": {
+                  "type": "string",
+                  "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Arthur Dent"
+                },
+                "valid": {
+                  "type": "boolean"
+                },
+                "exp": {
+                  "type": "integer",
+                  "description": "Timestamp of token expiry date",
+                  "example": 1509010921
+                },
+                "token": {
+                  "type": "string",
+                  "description": "JWT token",
+                  "example": "eyJhbGciO37iIsInR5cCI6IkpXVCJ9.eyJ0b2tlbkhhc2giOiI0Y2FmMGVlYmRjNDk2NjAxZDI3ZDk2NzdjM2MxN2JhMDBlZGRmOTNiZDk5MjlmYjgyMWZk6453NzliOWNlYmY0ODZiOTVjZWZhNDI3MjY3NjhiYzAxNWMiLCJpYXQiOjE1MDg0MDYxMjEsImV4cCI6MTUwOTAxMDkyMX0.3iOew-W5YJBd7DK0kFgvWItAkxKjruurkTupM"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/auth/token": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Returns all the tokens that are active and valid for a specified user.",
+        "description": "This call enables a customer to view all the tokens that have been generated and used for their accounts. This includes all the JWT and OAuth tokens. By enabling this a user can then manage and monitor the access to their accounts.",
+        "operationId": "getTokenOfUser",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TokenDocument"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/auth/token/{tokenId}": {
+      "delete": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Deletes a token, specified by its tokenId.",
+        "description": "This call enables an user to delete and token and revoke access. JWT as well as OAuth tokens can be deleted.",
+        "operationId": "deleteTokenById",
+        "parameters": [
+          {
+            "name": "tokenId",
+            "in": "path",
+            "description": "GUID of token that is to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IsValidRes"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/auth/newToken": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Generate a new token for an account.",
+        "description": "An account provides an old token and gets a new one generated.",
+        "operationId": "newToken",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                },
+                "exp": {
+                  "type": "integer",
+                  "description": "Timestamp of token expiry date",
+                  "example": 1509010921
+                },
+                "token": {
+                  "type": "string",
+                  "description": "A new valid token for an account",
+                  "example": "eyJhbGciO37iIsInR5cCI6IkpXVCJ9.eyJ0b2tlbkhhc2giOiI0Y2FmMGVlYmRjNDk2NjAxZDI3ZDk2NzdjM2MxN2JhMDBlZGRmOTNiZDk5MjlmYjgyMWZk6453NzliOWNlYmY0ODZiOTVjZWZhNDI3MjY3NjhiYzAxNWMiLCJpYXQiOjE1MDg0MDYxMjEsImV4cCI6MTUwOTAxMDkyMX0.3iOew-W5YJBd7DK0kFgvWItAkxKjruurkTupM"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/auth/deleteToken": {
+      "delete": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "delete a token",
+        "description": "Delete the token the account used to make this call.",
+        "operationId": "deleteToken",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/auth/oauth": {
+      "get": {
+        "tags": [
+          "OAuth"
+        ],
+        "summary": "Check and validate an Oauth Access token.",
+        "description": "The user system supports an OAuth 2.0 Authorization Code Grant. This call validates that a generated access key is valid.",
+        "operationId": "validateOAuthAccessToken",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "oAccessAuthToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OAuthValidAccessToken"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/IncorrectElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "OAuth"
+        ],
+        "summary": "Authenticate a user and generate an OAuth 2.0 Authorization Code Grant.",
+        "description": "The user system supports an OAuth 2.0 Authorization Code Grant. This call authenticates a user and generates an OAuth 2.0 Authorization Code Grant.",
+        "operationId": "generateOAuthorizationCode",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "applicationId",
+            "type": "string",
+            "description": "The ID of the application",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "UsernameLoginDetails",
+            "required": true,
+            "description": "The information that is required to authenticate an account.",
+            "schema": {
+              "$ref": "#/definitions/UserNameLoginReq"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OAuthCodeRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/IncorrectElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/auth/oauth/access": {
+      "post": {
+        "tags": [
+          "OAuth"
+        ],
+        "summary": "Exchange the Authorization Code for an Access Token.",
+        "description": "The user system supports an OAuth 2.0 Authorization Code Grant. This call generates an access and refresh token from an OAuth 2.0 Authorization Code Grant. This API can also be used to generate a new access token with a given refresh token. Instead of using the authorization code in the body of the request (code), use the refresh token (refresh_token).",
+        "operationId": "exchangeAuthorizationCodeWithAccess",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ExchangeAuthorizationCodeWithAccessBody",
+            "required": true,
+            "description": "The information that is required to authenticate an account.",
+            "schema": {
+              "$ref": "#/definitions/OAuthAccessRefreshToken"
+            }
+          }
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ExchangeAuthorizationCodeWithAccessRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/IncorrectElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/user/verification/status": {
+      "get": {
+        "tags": [
+          "Meter Point Consent & Verification"
+        ],
+        "summary": "API to retrieve user's meter points' consent and verification",
+        "description": "API to retrieve user's meter points' consent and verification status",
+        "operationId": "getUserMeterPointVerificationConsentStatus",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "appKeys": [],
+            "userId": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserMeterPointConsentAndVerification"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/user/verification/status/mpxns/renewal": {
+      "post": {
+        "tags": [
+          "Meter Point Consent & Verification"
+        ],
+        "summary": "Renew consent for a number of meterpoints",
+        "description": "A user can renew their consent for a number of meterpoints.  The consent can be extended to a maximum of 18 months (default).",
+        "operationId": "renewMeterPointConsentBulk",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Payload",
+            "schema": {
+              "$ref": "#/definitions/MeterPointConsentManagementBulkReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "appKeys": [],
+            "userId": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MeterPointConsentManagementBulkRenewalRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/user/verification/status/mpxns/revocation": {
+      "post": {
+        "tags": [
+          "Meter Point Consent & Verification"
+        ],
+        "summary": "Revoke consent for a number of meterpoints",
+        "description": "A user can revoke their consent for a number of meterpoints.",
+        "operationId": "renewMeterPointConsentRevokeBulk",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Payload",
+            "schema": {
+              "$ref": "#/definitions/MeterPointConsentManagementBulkReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "appKeys": [],
+            "userId": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MeterPointConsentManagementBulkRevocationRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/user/verification/status/mpxn/{mpxn}/renewal": {
+      "get": {
+        "tags": [
+          "Meter Point Consent & Verification"
+        ],
+        "summary": "Get meter point consent renewals",
+        "operationId": "getMeterPointConsentRenewal",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "mpxn",
+            "in": "path",
+            "description": "meter point number",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "appKeys": [],
+            "userId": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MeterPointConsentAndVerificationRenewalRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Meter Point Consent & Verification"
+        ],
+        "summary": "Renew meter point consent",
+        "description": "A user can renew their consent to access a meter point's data. The consent can be extended to a maximum of 18 months (default).",
+        "operationId": "renewMeterPointConsent",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "mpxn",
+            "in": "path",
+            "description": "meter point number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Payload",
+            "schema": {
+              "$ref": "#/definitions/RenewMeterPointConsentReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "appKeys": [],
+            "userId": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AddUserRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/user/verification/status/mpxn/{mpxn}/revocation": {
+      "get": {
+        "tags": [
+          "Meter Point Consent & Verification"
+        ],
+        "summary": "Get meter point consent revocations",
+        "operationId": "getMeterPointConsentRevocation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "mpxn",
+            "in": "path",
+            "description": "meter point number",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "appKeys": [],
+            "userId": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MeterPointConsentAndVerificationRenewalRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Meter Point Consent & Verification"
+        ],
+        "summary": "Revoke meter point consent",
+        "description": "A user can renew their consent to access a meter point's data. The consent can be extended to a maximum of 18 months (default).",
+        "operationId": "revokeMeterPointConsent",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "mpxn",
+            "in": "path",
+            "description": "meter point number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Payload",
+            "schema": {
+              "$ref": "#/definitions/RenewMeterPointConsentReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "appKeys": [],
+            "userId": []
+          },
+          {
+            "orgAppKeys": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "devUserToken": [],
+            "applicationId": [],
+            "userId": []
+          },
+          {
+            "userToken": [],
+            "applicationId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AddUserRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/MissingElementsError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "oAccessAuthToken": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    },
+    "orgAppKeys": {
+      "type": "basic"
+    },
+    "appKeys": {
+      "type": "basic"
+    },
+    "devUserToken": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    },
+    "internalUserToken": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    },
+    "userToken": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    },
+    "applicationId": {
+      "type": "apiKey",
+      "name": "applicationId",
+      "in": "header"
+    },
+    "userId": {
+      "type": "apiKey",
+      "name": "userId",
+      "in": "header"
+    },
+    "organizationId": {
+      "type": "apiKey",
+      "name": "organizationId",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "TokenDocument": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "69f464fa-bca2-4f2a-83b1-0c69819c5cd0"
+        },
+        "tokenId": {
+          "type": "string",
+          "example": "1aa61ab4-92a0-4f04-b883-e5abdf380523"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2019-06-06T12:02:09.865Z"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2019-06-13T12:02:09.865Z"
+        },
+        "authenticationFramework": {
+          "type": "string",
+          "example": "oauth"
+        },
+        "grant_type": {
+          "type": "string",
+          "example": "refresh_token"
+        }
+      }
+    },
+    "RenewMeterPointConsentReq": {
+      "type": "object",
+      "properties": {
+        "isValidUntil": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-12-13T12:02:09.865Z"
+        }
+      }
+    },
+    "RevokeMeterPointConsentReq": {
+      "type": "object",
+      "properties": {
+        "isValidUntil": {
+          "type": "string",
+          "format": "date-time",
+          "example": "now"
+        }
+      }
+    },
+    "MeterPointConsentAndVerification": {
+      "type": "object",
+      "properties": {
+        "isVerified": {
+          "type": "boolean",
+          "example": true
+        },
+        "isValidUntil": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-12-13T12:02:09.865Z"
+        },
+        "mpxnKey": {
+          "type": "string",
+          "enum": [
+            "mpan",
+            "mprn"
+          ],
+          "example": "mpan"
+        },
+        "mpxn": {
+          "type": "string",
+          "example": 123456789012
+        }
+      }
+    },
+    "MeterPointConsentAndVerificationRenewal": {
+      "type": "object",
+      "properties": {
+        "auditReference": {
+          "type": "object",
+          "properties": {
+            "applicationId": {
+              "type": "string",
+              "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+            }
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "now"
+        },
+        "mpxnKey": {
+          "type": "string",
+          "enum": [
+            "mpan",
+            "mprn"
+          ],
+          "example": "mpan"
+        },
+        "mpxn": {
+          "type": "string",
+          "example": 123456789012
+        },
+        "renewedBy": {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "string",
+              "example": "userId"
+            },
+            "value": {
+              "type": "string",
+              "example": "69f464fa-bca2-4f2a-83b1-0c69819c5cd0"
+            }
+          }
+        },
+        "meterPointVerificationRenewalId": {
+          "type": "string",
+          "example": "aa2464fa-bca2-e22a-83b1-14e9819c54d2"
+        }
+      }
+    },
+    "MeterPointConsentAndVerificationRenewalRes": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean",
+          "example": true
+        },
+        "meterPointRenewals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MeterPointConsentAndVerificationRenewal"
+          }
+        }
+      }
+    },
+    "MeterPointConsentAndVerificationRevocation": {
+      "type": "object",
+      "properties": {
+        "auditReference": {
+          "type": "object",
+          "properties": {
+            "applicationId": {
+              "type": "string",
+              "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+            }
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "now"
+        },
+        "mpxnKey": {
+          "type": "string",
+          "enum": [
+            "mpan",
+            "mprn"
+          ],
+          "example": "mpan"
+        },
+        "mpxn": {
+          "type": "string",
+          "example": 123456789012
+        },
+        "revokedBy": {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "string",
+              "example": "userId"
+            },
+            "value": {
+              "type": "string",
+              "example": "69f464fa-bca2-4f2a-83b1-0c69819c5cd0"
+            }
+          }
+        },
+        "meterPointVerificationRevocationId": {
+          "type": "string",
+          "example": "aa2464fa-bca2-e22a-83b1-14e9819c54d2"
+        }
+      }
+    },
+    "MeterPointConsentAndVerificationRevocationRes": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean",
+          "example": true
+        },
+        "meterPointRenewals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MeterPointConsentAndVerificationRevocation"
+          }
+        }
+      }
+    },
+    "MpxnElem": {
+      "type": "object",
+      "properties": {
+        "mpxn": {
+          "type": "string",
+          "example": "123456789012"
+        }
+      }
+    },
+    "MeterPointVerificationRenewalElem": {
+      "type": "object",
+      "properties": {
+        "mpxn": {
+          "type": "string",
+          "example": "123456789012"
+        },
+        "valid": {
+          "type": "boolean",
+          "example": true
+        },
+        "meterPointVerificationRenewalId": {
+          "type": "string",
+          "example": "bfdf0b3d-42a6-46f0-8142-39c4d5413b58"
+        },
+        "isValidUntil": {
+          "type": "string",
+          "example": "2026-03-05T23:59:59"
+        }
+      }
+    },
+    "MeterPointVerificationRevocationElem": {
+      "type": "object",
+      "properties": {
+        "mpxn": {
+          "type": "string",
+          "example": "123456789012"
+        },
+        "valid": {
+          "type": "boolean",
+          "example": true
+        },
+        "meterPointVerificationRevocationId": {
+          "type": "string",
+          "example": "bfdf0b3d-42a6-46f0-8142-39c4d5413b58"
+        },
+        "isValidUntil": {
+          "type": "string",
+          "example": "2026-03-05T23:59:59"
+        }
+      }
+    },
+    "MeterPointConsentManagementBulkReq": {
+      "type": "object",
+      "properties": {
+        "meterPoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MpxnElem"
+          }
+        }
+      }
+    },
+    "MeterPointConsentManagementBulkRenewalRes": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "meterPointVerificationRenewals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MeterPointVerificationRenewalElem"
+          }
+        }
+      }
+    },
+    "MeterPointConsentManagementBulkRevocationRes": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "meterPointRevocations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MpxnElem"
+          }
+        }
+      }
+    },
+    "UserMeterPointConsentAndVerification": {
+      "type": "object",
+      "properties": {
+        "meterPointVerification": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MeterPointConsentAndVerification"
+          }
+        }
+      }
+    },
+    "AddUserReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Montgomery Christopher Jorgensen"
+        },
+        "username": {
+          "type": "string",
+          "example": "scotty"
+        },
+        "email": {
+          "type": "string",
+          "example": "scotty@enterprise.st"
+        },
+        "password": {
+          "type": "string",
+          "example": "@$tr0ngP@$"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+        },
+        "directoryId": {
+          "type": "string",
+          "example": "2e214dec-bf44-4f58-83d0-2fa89d023e90"
+        }
+      },
+      "required": [
+        "name",
+        "username",
+        "email",
+        "password",
+        "directoryId",
+        "applicationId"
+      ]
+    },
+    "AddUserRes": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "69f464fa-bca2-4f2a-83b1-0c69819c5cd0"
+        },
+        "applications": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "active": {
+                "type": "boolean"
+              },
+              "accountId": {
+                "type": "string",
+                "example": "ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6"
+              },
+              "applicationId": {
+                "type": "string",
+                "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+              }
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "example": "unverified"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CreateUserRes": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "69f464fa-bca2-4f2a-83b1-0c69819c5cd0"
+        },
+        "applications": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "active": {
+                "type": "boolean"
+              },
+              "accountId": {
+                "type": "string",
+                "example": "ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6"
+              },
+              "applicationId": {
+                "type": "string",
+                "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+              }
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "example": "active"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "AccountRes": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "accountId": {
+          "type": "string",
+          "example": "ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+        },
+        "userId": {
+          "type": "string",
+          "example": "69f464fa-bca2-4f2a-83b1-0c69819c5cd0"
+        },
+        "directoryId": {
+          "type": "string",
+          "example": "2e214dec-bf44-4f58-83d0-2fa89d023e90"
+        },
+        "name": {
+          "type": "string",
+          "example": "Montgomery Christopher Jorgensen"
+        },
+        "username": {
+          "type": "string",
+          "example": "scotty"
+        },
+        "email": {
+          "type": "string",
+          "example": "scotty@enterprise.st"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "inactive"
+          ]
+        },
+        "active": {
+          "type": "boolean"
+        }
+      }
+    },
+    "AccountStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "inactive"
+          ]
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "accountId": {
+          "type": "string",
+          "example": "ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+        },
+        "directoryId": {
+          "type": "string",
+          "example": "2e214dec-bf44-4f58-83d0-2fa89d023e90"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "directory": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "tokenIssueDate": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2019-03-22T09:24:28.000Z"
+                },
+                "tokenExpiryDate": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2019-03-29T09:24:28.000Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "AddAccountReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "scotty"
+        },
+        "directoryId": {
+          "type": "string",
+          "example": "2e214dec-bf44-4f58-83d0-2fa89d023e90"
+        }
+      },
+      "required": [
+        "username",
+        "directoryId"
+      ]
+    },
+    "CreateUserReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "scotty"
+        },
+        "directoryId": {
+          "type": "string",
+          "example": "2e214dec-bf44-4f58-83d0-2fa89d023e90"
+        }
+      },
+      "required": [
+        "username",
+        "directoryId"
+      ]
+    },
+    "UserChangeUsernameAdminBodyReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "scotty"
+        },
+        "status": {
+          "type": "string",
+          "example": "active"
+        }
+      }
+    },
+    "UpdateAccountRes": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2017-10-18T17:06:48.549Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "accountId": {
+          "type": "string",
+          "example": "ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+        },
+        "userId": {
+          "type": "string",
+          "example": "69f464fa-bca2-4f2a-83b1-0c69819c5cd0"
+        },
+        "directoryId": {
+          "type": "string",
+          "example": "2e214dec-bf44-4f58-83d0-2fa89d023e90"
+        },
+        "name": {
+          "type": "string",
+          "example": "Montgomery Jorgensen"
+        },
+        "username": {
+          "type": "string",
+          "example": "scotty"
+        },
+        "email": {
+          "type": "string",
+          "example": "scotty@enterprise.st"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "inactive"
+          ]
+        },
+        "active": {
+          "type": "boolean"
+        }
+      }
+    },
+    "AccountProfile": {
+      "type": "object",
+      "required": [
+        "profileName"
+      ],
+      "properties": {
+        "profileName": {
+          "type": "string",
+          "example": "DashBoard"
+        },
+        "InformationAboutDashboard": {
+          "type": "object",
+          "example": {
+            "displayInfo": {
+              "funct": "max",
+              "agg": "daily",
+              "metric": "consumption",
+              "timeframe": "lastMonth"
+            }
+          }
+        }
+      }
+    },
+    "AccountSession": {
+      "type": "object",
+      "properties": {
+        "sessionvalue1": {
+          "type": "string",
+          "example": "192.168.1.1"
+        },
+        "sessionvalue2": {
+          "type": "string",
+          "example": "f2420615-a3e5-4346-9fb4-1cb33cf4844c"
+        }
+      }
+    },
+    "GenerateVerificationTokenUserReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "scotty"
+        },
+        "password": {
+          "type": "string",
+          "example": "@$tr0ngP@$"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+        }
+      },
+      "required": [
+        "username",
+        "password",
+        "applicationId"
+      ]
+    },
+    "VerifyUserReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "scotty"
+        },
+        "password": {
+          "type": "string",
+          "example": "@$tr0ngP@$"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+        },
+        "token": {
+          "type": "string",
+          "example": 8442
+        }
+      },
+      "required": [
+        "token",
+        "username",
+        "password",
+        "applicationId"
+      ]
+    },
+    "GeneratePasswordResetTokenUserReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "scotty"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+        }
+      },
+      "required": [
+        "username",
+        "applicationId"
+      ]
+    },
+    "PasswordResetUserReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "scotty"
+        },
+        "token": {
+          "type": "string",
+          "example": 8442
+        },
+        "newPassword": {
+          "type": "string",
+          "example": "aV3ry$tr0ngp@$"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+        }
+      },
+      "required": [
+        "username",
+        "applicationId",
+        "token",
+        "newPassword"
+      ]
+    },
+    "AddMobileTokenToAccountReq": {
+      "type": "object",
+      "properties": {
+        "newToken": {
+          "type": "string",
+          "example": "ExampleToKEN"
+        }
+      },
+      "required": [
+        "newToken"
+      ]
+    },
+    "RemoveMobileTokenToAccountReq": {
+      "type": "object",
+      "properties": {
+        "removeToken": {
+          "type": "string",
+          "example": "ExampleToKEN"
+        }
+      },
+      "required": [
+        "removeToken"
+      ]
+    },
+    "UserNameLoginReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "scotty"
+        },
+        "password": {
+          "type": "string",
+          "example": "@$tr0ngP@$"
+        },
+        "directoryId": {
+          "type": "string",
+          "example": "2e214dec-bf44-4f58-83d0-2fa89d023e90"
+        }
+      },
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    "OAuthValidAccessToken": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AddUserRes"
+        }
+      ],
+      "type": "object",
+      "properties": {
+        "authenticationFramework": {
+          "type": "string",
+          "example": "oauth"
+        },
+        "status": {
+          "type": "string",
+          "example": "active"
+        }
+      }
+    },
+    "OAuthCodeRes": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean",
+          "example": true
+        },
+        "code": {
+          "type": "string",
+          "example": "2b9d75b3ae36bdf3b66724b89996094ba724278784"
+        },
+        "exp": {
+          "type": "number",
+          "example": 1559824668
+        },
+        "accountId": {
+          "type": "string",
+          "example": "ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6"
+        },
+        "name": {
+          "type": "string",
+          "example": "Montgomery Christopher Jorgensen"
+        }
+      },
+      "xml": {
+        "name": "OAuthCodeRes"
+      }
+    },
+    "OAuthAccessRefreshToken": {
+      "type": "object",
+      "properties": {
+        "client_id": {
+          "type": "boolean",
+          "example": "0537b17c-ab62-491c-8085-9ac2b6206346"
+        },
+        "client_secret": {
+          "type": "string",
+          "example": "2b9d75b3ae36bOQHe28202"
+        },
+        "grant_type": {
+          "type": "string",
+          "example": "authorization_code"
+        },
+        "code": {
+          "type": "string",
+          "example": "2b9d75b3ae36bdf3b66724b89996094ba724278784"
+        }
+      }
+    },
+    "ExchangeAuthorizationCodeWithAccessRes": {
+      "type": "object",
+      "properties": {
+        "token_type": {
+          "type": "string",
+          "example": "bearer"
+        },
+        "access_token": {
+          "type": "string",
+          "example": "9defd68267e8de48a65bb5a9faaef8b81391c7ae69c60ccb826d8060cf500afac1f1441b3067a445af7bbd91ec"
+        },
+        "refresh_type": {
+          "type": "string",
+          "example": "0d3c5b212c6e0d6a09a10d8d613353a32267c009856779a49c258bae52eb7511705ae4916b98441b3067ad445a"
+        },
+        "expires_in": {
+          "type": "number",
+          "example": 604800
+        }
+      }
+    },
+    "IsValidRes": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Error"
+      }
+    },
+    "AccessDeniedError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Access denied"
+        }
+      }
+    },
+    "InternalServerError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "An error has occurred"
+        }
+      }
+    },
+    "IncorrectElementsError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "incorrect elements"
+        }
+      }
+    },
+    "MissingElementsError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "missing elements"
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Glowmarkt",
+    "url": "https://glowmarkt.com/"
+  }
+}

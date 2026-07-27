@@ -1,0 +1,1443 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API definition for CRUD operations on Virtual Entities. In the Glow Platform a Virtual Entity, is the virtual representation of a physical “thing” that is comprised of metadata and a collection of resources that define and describe it. An example of a Virtual Entity is a home with electricity energy readings sourced from a smart meter.",
+    "version": "1.3.0",
+    "title": "Virtual Entity System",
+    "license": {
+      "name": "Copyright © 2012-26 by Hildebrand Technology Limited"
+    }
+  },
+  "host": "api.glowmarkt.com",
+  "basePath": "/api/v0-1/",
+  "tags": [
+    {
+      "name": "Virtual Entity Type",
+      "description": "Entity that belongs and is managed by an application and contains the definition and combination of the Resource Types that are required to create a Virtual Entity."
+    },
+    {
+      "name": "Virtual Entity",
+      "description": "A Virtual Entity is an instance of the Virtual Entity Type and is tied to an owner as well as an applicationId. In order to create a Virtual Entity a user must have all the required resources."
+    },
+    {
+      "name": "Virtual Entity's Metadata",
+      "description": "A Virtual Entity's metadata can be used to save information that will facilitate the virtual representation of the entity. This is typically attribute data that does not change in time."
+    },
+    {
+      "name": "Virtual Entity Statistics",
+      "description": "APIs that return an overview of the Virtual Entities an application has (administrative API)."
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/vetype": {
+      "post": {
+        "tags": [
+          "Virtual Entity Type"
+        ],
+        "summary": "Add a new Virtual Entity Type",
+        "description": "Create a new Virtual Entity Type",
+        "operationId": "veType.addVeType",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Virtual Entity Type payload",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/newVeTypeReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/newVeTypeRes"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/reqError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Virtual Entity Type"
+        ],
+        "summary": "Find all Virtual Entity Types",
+        "description": "Returns a list of the application's Virtual Entity Types.",
+        "operationId": "veType.findAll",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListOfVeType"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/reqError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/vetype/{id}": {
+      "get": {
+        "tags": [
+          "Virtual Entity Type"
+        ],
+        "summary": "Find Virtual Entity Type by ID",
+        "description": "Returns a single Virtual Entity Type",
+        "operationId": "veType.findById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Virtual Entity Type ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VeType"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/reqError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Virtual Entity Type"
+        ],
+        "summary": "Update a  Virtual Entity Type",
+        "description": "Update Virtual Entity Type. Please note that only specific properties of the Virtual Entity Type can be updated, such as the name and the description.",
+        "operationId": "veType.updateVeType",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Virtual Entity Type ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Virtual Entity Type to be updated.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateVeTypeReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/newVeTypeRes"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/reqError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/vetype/{id}/resources": {
+      "get": {
+        "tags": [
+          "Virtual Entity Type"
+        ],
+        "summary": "Find all resources that belong to a user that satisfy the Resource Types in the Virtual Entity Type definition.",
+        "description": "Returns the resources of a user that could potentially be used to create a Virtual Entity of the specified Virtual Entity Type",
+        "operationId": "veType.findResourcesOfVeType",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Virtual Entity Type ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VeTypeResources"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/reqError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/virtualentity": {
+      "post": {
+        "tags": [
+          "Virtual Entity"
+        ],
+        "summary": "Add a new Virtual Entity",
+        "description": "create a new Virtual Entity",
+        "operationId": "virtualentity.addVirtualEntity",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Virtual Entity object to add to the resource system",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VEReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userId": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/AddVeSucess"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/reqError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Virtual Entity"
+        ],
+        "summary": "Find all Virtual Entities",
+        "description": "Returns a list of Virtual Entities that belong to an application (and a user if applicable)",
+        "operationId": "virtualentity.findAll",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListOfVe"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/virtualentity/{id}": {
+      "get": {
+        "tags": [
+          "Virtual Entity"
+        ],
+        "summary": "Find Virtual Entity by ID",
+        "description": "Returns a single Virtual Entity",
+        "operationId": "virtualentity.findById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Virtual Entity ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Ve"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Virtual Entity"
+        ],
+        "summary": "Update a Virtual Entity",
+        "description": "Please note that only specific properties of the Virtual Entity can be updated. These includes the following: name, description, location, city, country, postalCodem geoCoordinates, openStreetMapsRef, timeZone.",
+        "operationId": "virtualentity.updateVirtualEntity",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Virtual Entity ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The data that is to be updated on a Virtual Entity object.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VEUpdateReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userId": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/AddVeSucess"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/reqError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Virtual Entity"
+        ],
+        "summary": "Delete a Virtual Entity",
+        "description": "Delete a single Virtual Entity",
+        "operationId": "virtualentity.deactivateVirtualEntity",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Virtual Entity ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Vedeactive"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/virtualentity/{id}/resources": {
+      "get": {
+        "tags": [
+          "Virtual Entity"
+        ],
+        "summary": "Find the resources of that belong to Virtual Entity with ID",
+        "description": "Returns a single Virtual Entity with a resource list of the full resource docs",
+        "operationId": "virtualentity.findResourcesbyVeId",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Virtual Entity ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VeWithFullResources"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/virtualentity/{id}/attribute": {
+      "get": {
+        "tags": [
+          "Virtual Entity's Metadata"
+        ],
+        "summary": "Find a Virtual Entity's metadata by ID",
+        "description": "Returns all the metadata of a Virtual Entity",
+        "operationId": "virtualentity.getAttributes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Virtual Entity ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetAtrributesRes"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Virtual Entity's Metadata"
+        ],
+        "summary": "Add/Update a Virtual Entity's metadata",
+        "description": "Add/Update a Virtual Entity's metadata. Whichever fields are included in body of call, will be updated",
+        "operationId": "virtualentity.add-updateAttributes",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Virtual Entity ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Virtual Entity metadata to be added or modified,",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VEReqUpdateAttributes"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userId": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/GetAtrributesRes"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/reqError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Virtual Entity's Metadata"
+        ],
+        "summary": "delete metadata from the Virtual Entity",
+        "description": "Pieces of metadata provided in the body will be deleted from the Virtual Entityl",
+        "operationId": "virtualentity.deleteAttributes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Virtual Entity ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Virtual Entity metadata to be deleted",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VEReqDeleteAttributes"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VEResDeletedAttributes"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/vesys/appstats": {
+      "get": {
+        "tags": [
+          "Virtual Entity Statistics"
+        ],
+        "summary": "find statistics on the number of Virtual Entities per application",
+        "description": "Returns a single statistics entity",
+        "operationId": "stats.getApplicationVeStats",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VeStats"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/reqError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "orgAppKeys": {
+      "type": "basic"
+    },
+    "appKeys": {
+      "type": "basic"
+    },
+    "devUserToken": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    },
+    "userToken": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    },
+    "applicationId": {
+      "type": "apiKey",
+      "name": "applicationId",
+      "in": "header"
+    },
+    "userId": {
+      "type": "apiKey",
+      "name": "applicationId",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "newVeTypeReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Smart Home"
+        },
+        "description": {
+          "type": "string",
+          "example": "Smart home, with electricity and gas utilities"
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "resourceTypeId": {
+                "type": "string",
+                "example": "f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"
+              },
+              "required": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "updateVeTypeReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Smart Home"
+        },
+        "description": {
+          "type": "string",
+          "example": "Smart home, with electricity and gas utilities"
+        }
+      }
+    },
+    "reqError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "missing elements"
+        }
+      }
+    },
+    "newVeTypeRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "OK"
+        },
+        "veTypeId": {
+          "type": "string",
+          "example": "b82d4f8b-a097-4b96-acbb-81d891489441"
+        }
+      }
+    },
+    "VeType": {
+      "type": "object",
+      "properties": {
+        "veTypeId": {
+          "type": "string",
+          "example": "cc90b599-2705-4b13-98d4-3306f81169cf"
+        },
+        "name": {
+          "type": "string",
+          "example": "home Virtual Entity"
+        },
+        "description": {
+          "type": "string",
+          "description": "home with two types of resources"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "a0cf21a2-51f6-4df2-9214-0bc762bcee09"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "resourceTypeId": {
+                "type": "string",
+                "example": "f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"
+              },
+              "required": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "VeTypeResources": {
+      "type": "object",
+      "properties": {
+        "veTypeId": {
+          "type": "string",
+          "example": "cc90b599-2705-4b13-98d4-3306f81169cf"
+        },
+        "ownerId": {
+          "type": "string",
+          "example": "f78a3812-d4fc-4b00-99c5-20fd581721a6"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "a0cf21a2-51f6-4df2-9214-0bc762bcee09"
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceTypeAvailableResources"
+          }
+        },
+        "selectionNeeded": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ResourceTypeAvailableResources": {
+      "type": "object",
+      "properties": {
+        "resourceTypeId": {
+          "type": "string",
+          "example": "f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Resource"
+          }
+        }
+      }
+    },
+    "Resource": {
+      "type": "object",
+      "properties": {
+        "resourceId": {
+          "type": "string",
+          "example": "8f2a0722-3b59-47a6-a115-d43fcc0c5d1c"
+        },
+        "resourceTypeId": {
+          "type": "string",
+          "example": "f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"
+        },
+        "name": {
+          "type": "string",
+          "example": "solar updated access test"
+        },
+        "description": {
+          "type": "string",
+          "example": "solar generation of hid"
+        },
+        "dataSourceUnitInfo": {
+          "type": "object",
+          "properties": {
+            "shid": {
+              "type": "string",
+              "example": "f3204e8e5b1a40a39396a15f919f88a5"
+            }
+          }
+        },
+        "ownerId": {
+          "type": "string",
+          "example": "f78a3812-d4fc-4b00-99c5-20fd581721a6"
+        },
+        "label": {
+          "type": "string",
+          "example": "solar resourceType test"
+        },
+        "dataSourceResourceTypeInfo": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "PWER_GAC"
+            }
+          }
+        },
+        "dataSourceType": {
+          "type": "string",
+          "example": "EHSOLAPI"
+        },
+        "active": {
+          "type": "boolean"
+        }
+      }
+    },
+    "VEReq": {
+      "type": "object",
+      "properties": {
+        "veTypeId": {
+          "type": "string",
+          "example": "cc90b599-2705-4b13-98d4-3306f81169cf"
+        },
+        "name": {
+          "type": "string",
+          "example": "My special name"
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "resourceId": {
+                "type": "string",
+                "example": "319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1"
+              }
+            }
+          }
+        }
+      }
+    },
+    "VEUpdateReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "A new name"
+        },
+        "description": {
+          "type": "string",
+          "example": "This virtual entity represents my home."
+        }
+      }
+    },
+    "VEReqUpdateAttributes": {
+      "type": "object",
+      "description": "Anything can be added in a ve's metadata",
+      "properties": {
+        "rooms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "living room"
+          }
+        },
+        "area": {
+          "type": "object",
+          "properties": {
+            "units": {
+              "type": "string",
+              "example": "sqm"
+            },
+            "measurement": {
+              "type": "string",
+              "example": 100
+            }
+          }
+        }
+      }
+    },
+    "VEReqDeleteAttributes": {
+      "type": "object",
+      "description": "Insert the attributes you would like to delete under the field removeAttributes",
+      "properties": {
+        "removeAttributes": {
+          "type": "object",
+          "properties": {
+            "area": {
+              "type": "object",
+              "properties": {
+                "units": {
+                  "type": "string",
+                  "example": "sqm"
+                },
+                "measurement": {
+                  "type": "string",
+                  "example": 100
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "removeAttributes"
+      ]
+    },
+    "VEResDeletedAttributes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "OK"
+        },
+        "veId": {
+          "type": "string",
+          "example": "dc9069a7-7695-43fd-8f27-16b1c94213da"
+        },
+        "rooms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "living room"
+          }
+        }
+      },
+      "required": [
+        "veId",
+        "status"
+      ]
+    },
+    "Ve": {
+      "type": "object",
+      "properties": {
+        "veId": {
+          "type": "string",
+          "example": "dc9069a7-7695-43fd-8f27-16b1c94213da"
+        },
+        "veTypeId": {
+          "type": "string",
+          "example": "cc90b599-2705-4b13-98d4-3306f81169cf"
+        },
+        "name": {
+          "type": "string",
+          "example": "veTry status"
+        },
+        "ownerId": {
+          "type": "string",
+          "example": "f78a3812-d4fc-4b00-99c5-20fd581721a6"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "a0cf21a2-51f6-4df2-9214-0bc762bcee09"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "resourceId": {
+                "type": "string",
+                "example": "319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1"
+              },
+              "resourceTypeId": {
+                "type": "string",
+                "example": "f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"
+              }
+            }
+          }
+        },
+        "attribute": {
+          "type": "object",
+          "description": "Anything can be saved under this field",
+          "properties": {
+            "rooms": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "example": "living room"
+              }
+            },
+            "area": {
+              "type": "object",
+              "properties": {
+                "units": {
+                  "type": "string",
+                  "example": "sqm"
+                },
+                "measurement": {
+                  "type": "string",
+                  "example": 100
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "VeWithFullResources": {
+      "type": "object",
+      "properties": {
+        "veId": {
+          "type": "string",
+          "example": "dc9069a7-7695-43fd-8f27-16b1c94213da"
+        },
+        "veTypeId": {
+          "type": "string",
+          "example": "cc90b599-2705-4b13-98d4-3306f81169cf"
+        },
+        "name": {
+          "type": "string",
+          "example": "veTry status"
+        },
+        "ownerId": {
+          "type": "string",
+          "example": "f78a3812-d4fc-4b00-99c5-20fd581721a6"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "a0cf21a2-51f6-4df2-9214-0bc762bcee09"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Resource"
+          }
+        },
+        "attribute": {
+          "type": "object",
+          "description": "Anything can be saved under this field",
+          "properties": {
+            "rooms": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "example": "living room"
+              }
+            },
+            "area": {
+              "type": "object",
+              "properties": {
+                "units": {
+                  "type": "string",
+                  "example": "sqm"
+                },
+                "measurement": {
+                  "type": "string",
+                  "example": 100
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetAtrributesRes": {
+      "type": "object",
+      "properties": {
+        "veId": {
+          "type": "string"
+        },
+        "attribute": {
+          "type": "object",
+          "description": "Anything can be saved under this field",
+          "properties": {
+            "rooms": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "example": "living room"
+              }
+            },
+            "area": {
+              "type": "object",
+              "properties": {
+                "units": {
+                  "type": "string",
+                  "example": "sqm"
+                },
+                "measurement": {
+                  "type": "string",
+                  "example": 100
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Vedeactive": {
+      "type": "object",
+      "properties": {
+        "veId": {
+          "type": "string",
+          "example": "dc9069a7-7695-43fd-8f27-16b1c94213da"
+        },
+        "veTypeId": {
+          "type": "string",
+          "example": "cc90b599-2705-4b13-98d4-3306f81169cf"
+        },
+        "name": {
+          "type": "string",
+          "example": "veTry status"
+        },
+        "ownerId": {
+          "type": "string",
+          "example": "f78a3812-d4fc-4b00-99c5-20fd581721a6"
+        },
+        "applicationId": {
+          "type": "string",
+          "example": "a0cf21a2-51f6-4df2-9214-0bc762bcee09"
+        },
+        "active": {
+          "type": "boolean",
+          "default": false
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "resourceId": {
+                "type": "string",
+                "example": "319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1"
+              },
+              "resourceTypeId": {
+                "type": "string",
+                "example": "f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"
+              }
+            }
+          }
+        }
+      }
+    },
+    "ListOfVeType": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/VeType"
+      }
+    },
+    "ListOfVe": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Ve"
+      }
+    },
+    "ServerError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "An error has occurred"
+        }
+      },
+      "xml": {
+        "name": "AddResourceError"
+      }
+    },
+    "AddVeSucess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "OK"
+        },
+        "veId": {
+          "type": "string",
+          "example": "e10591ec-4557-4ac7-90d4-a09654aeb5de"
+        }
+      }
+    },
+    "VeStats": {
+      "type": "object",
+      "properties": {
+        "applicationId": {
+          "type": "string",
+          "example": "a0cf21a2-51f6-4df2-9214-0bc762bcee09"
+        },
+        "totalVirtualEntities": {
+          "type": "integer",
+          "example": 3
+        },
+        "newVirtualEntities": {
+          "type": "object",
+          "properties": {
+            "P1D": {
+              "type": "integer",
+              "example": 0
+            },
+            "P1W": {
+              "type": "integer",
+              "example": 1
+            },
+            "P1M": {
+              "type": "integer",
+              "example": 3
+            }
+          }
+        }
+      }
+    },
+    "AccessDeniedError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Access denied"
+        }
+      }
+    }
+  }
+}

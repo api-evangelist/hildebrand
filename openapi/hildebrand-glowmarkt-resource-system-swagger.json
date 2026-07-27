@@ -1,0 +1,1854 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "The Resource System API enables the information management (data retrieval/data storage/control) of resources within the Glow Platform. A Resource is a representation of data collected from a physical device, like sensor readings, or changes in an actuating device state etc.",
+    "version": "1.5.0",
+    "title": "Resource System",
+    "license": {
+      "name": "Copyright © 2012-26 by Hildebrand Technology Limited"
+    }
+  },
+  "host": "api.glowmarkt.com",
+  "basePath": "/api/v0-1/",
+  "tags": [
+    {
+      "name": "Resource",
+      "description": "A Resource is a representation of data collected from a physical device, like sensor readings, or changes in an actuating device state etc."
+    },
+    {
+      "name": "Resource Type",
+      "description": "A Resource Type defines the storage structure of the resources supported by the Glow Platform."
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/resourcetype": {
+      "post": {
+        "tags": [
+          "Resource Type"
+        ],
+        "summary": "Add a new resource type.",
+        "description": "create a new resourceType",
+        "operationId": "resourcetype.addResourceType",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "ResourceType Object to add to the resource system",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResourceTypeReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AddResourceTypeSucess"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/AddResourceReqError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Resource Type"
+        ],
+        "summary": "Find all resource types",
+        "description": "returns a list of resource types",
+        "operationId": "resourcetype.findAll",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListOfResourceType"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resourcetype/{id}": {
+      "get": {
+        "tags": [
+          "Resource Type"
+        ],
+        "summary": "Find resourceType by ID",
+        "description": "Returns a single resourceType",
+        "operationId": "resourcetype.findById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resourceType to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourceType"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resourcetype/{id}/resource": {
+      "get": {
+        "tags": [
+          "Resource Type"
+        ],
+        "summary": "Find resources of a specific resource type that belong to a user",
+        "description": "Returns a list of resources",
+        "operationId": "resourcetype.findResourceByType",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resourceType of the resources that are to be returned",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListOfResource"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/FindResourceReqError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resourcetype/{id}/appresource": {
+      "get": {
+        "tags": [
+          "Resource Type"
+        ],
+        "summary": "Find resources of a specific resource type that an application has access to",
+        "description": "Returns a list of resources",
+        "operationId": "resourcetype.findAppResourceByType",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resourceType of the resources that are to be returned",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListOfResource"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/missingAppIdError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource": {
+      "post": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Add a new resource",
+        "description": "create a new resource",
+        "operationId": "resource.addResource",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Resource Object to add to the resource system",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResourceReq"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AddResourceSucess"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/AddResourceReqNoResourceTypeError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Find all resources per user or application",
+        "description": "returns a list of resources that belong to an application or a user",
+        "operationId": "resource.findAll",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListOfResource"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/missingUserIdError"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Find resource by ID",
+        "description": "Returns a single resource",
+        "operationId": "resource.findById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resource to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}/readings": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Get resource readings",
+        "description": "Returns readings for a specific resource. The requester needs to have access to the Resource.",
+        "operationId": "resource.getReading",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resource to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "the aggregation period of the readings, example, P1D for daily aggregation"
+          },
+          {
+            "name": "function",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "the aggregation function of the readings, example sum, avg, etc."
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The date, data is required from. The date time syntax is yyyy-mm-ddThh:mm:ss (i.e. 2017-09-19T10:00:00)"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The date, data is required to. The date time syntax is yyyy-mm-ddThh:mm:ss (i.e. 2017-10-01T23:59:59)"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "description": "All the data we store is saved in UTC (Coordinated Universal Time), regardless of the timezone it was collected in. For the API to correctly return the data for the period you ask for you must supply the offset in minutes between the timezone you require and UTC. As an example if you wish to request data in BST(British Summer Time, UTC+1) you should specify an offset of -60. EST(New York) would be +300."
+          },
+          {
+            "name": "nulls",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "When this parameter is set to 1, any missing values from a time series resource will return as null instead of zero."
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/readingRes"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}/current": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Get the current resource reading.",
+        "description": "Returns the latest instantaneous reading of a resource. Please note this API may return different responses for different Resource Types.",
+        "operationId": "resource.getCurrentReading",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resource to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CurrentReadingsResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}/first-time": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Get the UTC time of the first available reading",
+        "description": "Returns the time of the first available reading for a given resource.",
+        "operationId": "resource.getFirstTime",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resource to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourceFirstTime"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}/last-time": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Get the UTC time of the most recent available reading",
+        "description": "Returns the time of the  most recent available reading for a given resource.",
+        "operationId": "resource.getLastTime",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resource to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourceLastTime"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}/meterread": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Get the cumulative value reported on a metering device. (Not supported for all resource types).",
+        "description": "This API reports the cumulative value reported on a metering device and is only applicable for a subset of resources. Please note, that for smart metering in the UK the only segment of users who can access this functionality are people who have a Glow IHD/CAD.",
+        "operationId": "resource.getMeterRead",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resource to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/meterReadingRes"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}/tariff": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Get the latest tariff that is being applied to a resource.",
+        "description": "Returns the latest tariff that is being applied to a resource. This call is generally used for energy resources.",
+        "operationId": "resource.getTariff",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resource to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TariffResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}/tariff-list": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Get the tariff history that is being applied to a cost resource.",
+        "description": "Returns the tariff history that is being applied to a cost resource. The tariffs are sourced from various areas (CADs, metering devices, manual settings). The effective dates can be used to determined what the period of a particular tariff is. Please note the following 3 things. <ol> <li>Fistly, the response is not sorted, we recommend it to be sorted by effective date. </li> <li> Secondly, there are multiple types of tariffs i.e. flat rate, time of use, block and and dynamic. The dynamic tariffs can change each half-hour and therefore, for the period that is affected we will return the code of the dynamic code. More information on the rates will need to be requested individually.</li> <li> Thirdly, for DCC compatible smart meters in the UK, please note that we cannot retrieve the tariff history before the time of registration. The tariff history will need to be set over the API by a user (this is a feature which will soon be available).</li>",
+        "operationId": "resource.getTariffHistory",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resource to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TariffListResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}/catchup": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Trigger a request to retrieve the latest available readings from the DCC.",
+        "description": "Applicable to resources that are sourced from the DCC. This API will trigger an asynchronous request to get the latest consumption readings from the DCC up to the last complete half hour. The readings from the DCC are in half hour intervals. To utilise the functionality of this API you need only make this request once on the change of the half hour (preferably with a random delay of up to 2 minutes).",
+        "operationId": "resource.catchUpReadings",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resource to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/catchupRes"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}/glowbinary": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "API that returns the resource's raw data in the Glow Binary format.",
+        "description": "Not all resource types support this format. The return is not in JSON. Please use the available open source SDK libraries to process the binary format.",
+        "operationId": "resource.getGlowBinary",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resource to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}/cache": {
+      "delete": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Remove cached resource data",
+        "description": "Remove any cached data that has been retrieved for the resource. (This does apply to the Glow Binaries.)",
+        "operationId": "resource.deleteCache",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of resource to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/catchupRes"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{id}/daily-consumption-log": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Get daily consumption log (DCC).",
+        "description": "This returns the Daily Consumption Log of a smart meter (DCC). The data is typically in Wh and each value is the sum at midnight for the previous day. The values are in UTC.",
+        "operationId": "resource.getDailyConsumptionLog",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of resource to return"
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": [],
+            "userID": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourceDailyConsumptionLog"
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/resource/count": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "Count the number of resources per resourceType",
+        "description": "Returns an array of the resource count and resourceId list per resourceTypeId",
+        "operationId": "resource.countByResourceType",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "header",
+            "description": "ID of user to count resources for (optional)",
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "userToken": [],
+            "applicationId": []
+          },
+          {
+            "appKeys": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "maxItems": 100,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ResourceByResourceTypeCount"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "schema": {
+              "$ref": "#/definitions/AccessDeniedError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "orgAppKeys": {
+      "type": "basic"
+    },
+    "appKeys": {
+      "type": "basic"
+    },
+    "devUserToken": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    },
+    "userToken": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    },
+    "applicationId": {
+      "type": "apiKey",
+      "name": "applicationId",
+      "in": "header"
+    },
+    "userID": {
+      "type": "apiKey",
+      "name": "userId",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "StorageType": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "timeseries"
+        },
+        "sampling": {
+          "type": "string",
+          "example": "regular"
+        },
+        "start": {
+          "type": "string",
+          "example": "2014-01-06T00:00:00+00:00"
+        },
+        "fields": {
+          "maxItems": 10,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "fieldName": {
+                "type": "string",
+                "example": "GEN"
+              },
+              "unit": {
+                "type": "string",
+                "example": "kWh"
+              },
+              "datatype": {
+                "type": "string",
+                "example": "fixedpoint(2)"
+              },
+              "negative": {
+                "type": "boolean",
+                "example": false
+              }
+            }
+          }
+        }
+      },
+      "xml": {
+        "name": "StorageType"
+      }
+    },
+    "ResourceTypeReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "electricity energy"
+        },
+        "description": {
+          "type": "string",
+          "example": "The storage mechanism for saving electricity energy."
+        },
+        "classifier": {
+          "type": "string",
+          "example": "electricity.consumption"
+        },
+        "storage": {
+          "maxItems": 10,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StorageType"
+          }
+        },
+        "dataSourceType": {
+          "type": "string",
+          "example": "DATA_SOURCE_IDENTIFIER"
+        },
+        "dataSourceResourceTypeInfo": {
+          "type": "string",
+          "example": "ELEC"
+        }
+      },
+      "required": [
+        "name",
+        "classifier",
+        "storage"
+      ]
+    },
+    "ResourceType": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceTypeReq"
+        },
+        {
+          "properties": {
+            "resourceTypeId": {
+              "type": "string",
+              "example": "f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"
+            },
+            "active": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "ResourceReq": {
+      "type": "object",
+      "properties": {
+        "resourceTypeId": {
+          "type": "string",
+          "example": "f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"
+        },
+        "name": {
+          "type": "string",
+          "example": "electricity consumption"
+        },
+        "description": {
+          "type": "string",
+          "example": "my household electricity"
+        },
+        "dataSourceResourceTypeInfo": {
+          "type": "object",
+          "properties": {
+            "shid": {
+              "type": "string",
+              "example": "f3204e8e5a1a40a39396a15f919f88a5"
+            }
+          }
+        }
+      }
+    },
+    "Resource": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceType"
+        },
+        {
+          "properties": {
+            "resourceId": {
+              "type": "string",
+              "example": "8f2a0722-3b59-47a6-a115-d43fcc0c5d1c"
+            },
+            "name": {
+              "type": "string",
+              "example": "electricity consumption"
+            },
+            "description": {
+              "type": "string",
+              "example": "my household electricity"
+            },
+            "dataSourceUnitInfo": {
+              "type": "object",
+              "properties": {
+                "shid": {
+                  "type": "string",
+                  "example": "f3204e8e5a1a40a39396a15f919f88a5"
+                }
+              }
+            },
+            "ownerId": {
+              "type": "string",
+              "example": "f78a3812-d4fc-4b00-99c5-20fd581721a6"
+            }
+          }
+        }
+      ]
+    },
+    "ListOfResourceType": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ResourceType"
+      }
+    },
+    "ListOfResource": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Resource"
+      }
+    },
+    "ResourceByResourceTypeCount": {
+      "type": "object",
+      "properties": {
+        "resourceTypeId": {
+          "type": "string",
+          "example": "f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"
+        },
+        "count": {
+          "type": "number",
+          "example": 2
+        },
+        "resourceIdList": {
+          "maxItems": 100,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "8f2a0722-3b59-47a6-a115-d43fcc0c5d1c",
+            "21ea0722-3b59-47a6-a115-d43fcc0c5d1c"
+          ]
+        }
+      }
+    },
+    "ServerError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "An error has occurred"
+        }
+      },
+      "xml": {
+        "name": "AddResourceError"
+      }
+    },
+    "AccessDeniedError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Access denied"
+        }
+      }
+    },
+    "AddResourceTypeSucess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "OK"
+        },
+        "resourceTypeId": {
+          "type": "string",
+          "example": "9e6d582f-e2e0-4af5-af7c-69b20aeeee20"
+        }
+      }
+    },
+    "AddResourceReqError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "missing elements -body"
+        }
+      }
+    },
+    "AddResourceReqNoResourceTypeError": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "ERROR"
+        },
+        "error": {
+          "type": "string",
+          "example": "incorrect elements -resourceTypeId"
+        },
+        "description": {
+          "type": "string",
+          "example": "resourceType does not exist"
+        },
+        "resourceTypeId": {
+          "type": "string",
+          "example": "f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"
+        }
+      }
+    },
+    "FindResourceReqError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "missing elements -userId"
+        }
+      }
+    },
+    "missingUserIdError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "missing elements -userId"
+        }
+      }
+    },
+    "missingAppIdError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "missing elements -applicationId"
+        }
+      }
+    },
+    "AddResourceSucess": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "OK"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "resourceId": {
+          "type": "string",
+          "example": "c70b0829-7c91-43f3-bdee-744007221a50"
+        },
+        "resourceApplicationAccess": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ResourceDataResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "OK"
+        },
+        "name": {
+          "type": "string",
+          "example": "electicity consumption"
+        },
+        "resourceTypeId": {
+          "type": "string",
+          "format": "uuid",
+          "example": "f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"
+        },
+        "resourceId": {
+          "type": "string",
+          "format": "uuid",
+          "example": "8f2a0722-3b59-47a6-a115-d43fcc0c5d1c"
+        },
+        "classifier": {
+          "type": "string",
+          "example": "electricity.consumption"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "CurrentReadingsResult": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceDataResult"
+        },
+        {
+          "properties": {
+            "units": {
+              "type": "string",
+              "example": "W"
+            },
+            "data": {
+              "maxItems": 100,
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "example": [
+                  1549481709,
+                  1000
+                ],
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TariffResult": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceDataResult"
+        },
+        {
+          "properties": {
+            "data": {
+              "maxItems": 100,
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "example": [
+                {
+                  "plan": [
+                    {
+                      "planDetail": [
+                        {
+                          "rate": 11.88
+                        },
+                        {
+                          "standing": 30.66
+                        }
+                      ]
+                    }
+                  ],
+                  "cid": "PWER",
+                  "commodity": "ELEC",
+                  "from": "2018-12-12 00:00:00",
+                  "name": "TariffFromMeter"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "TariffListResult": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceDataResult"
+        },
+        {
+          "properties": {
+            "classifier": {
+              "example": "electricity.consumption.cost"
+            },
+            "name": {
+              "example": "electricity cost"
+            },
+            "data": {
+              "maxItems": 100,
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "example": [
+                {
+                  "id": "12345",
+                  "plan": [
+                    {
+                      "planDetail": [
+                        {
+                          "rate": 11.88
+                        },
+                        {
+                          "standing": 30.66
+                        }
+                      ]
+                    }
+                  ],
+                  "effectiveDate": "2018-12-12 00:00:00",
+                  "displayName": "TariffFromMeter"
+                },
+                {
+                  "id": "12346",
+                  "plan": [
+                    {
+                      "planDetail": [
+                        {
+                          "standing": 25
+                        },
+                        {
+                          "dynamic": "DYNAMIC_TARIFF_CODE"
+                        }
+                      ]
+                    }
+                  ],
+                  "from": "2019-12-12 00:00:00",
+                  "name": "DYNAMIC_TARIFF_PRODUCT_NAME"
+                },
+                {
+                  "id": "12347",
+                  "plan": [
+                    {
+                      "planDetail": [
+                        {
+                          "standing": 25
+                        },
+                        {
+                          "tier": 1,
+                          "rate": "16.26"
+                        },
+                        {
+                          "tier": 2,
+                          "tourate": "5",
+                          "time": "20:30-00:00"
+                        },
+                        {
+                          "tier": 3,
+                          "tourate": "5",
+                          "time": "00:00-00:30"
+                        }
+                      ]
+                    }
+                  ],
+                  "from": "2020-12-12 00:00:00",
+                  "name": "My TOU Tariff"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "readingRes": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CurrentReadingsResult"
+        },
+        {
+          "properties": {
+            "query": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "string",
+                  "example": "2019-02-06T17:00:00"
+                },
+                "to": {
+                  "type": "string",
+                  "example": "2019-02-06T18:00:00"
+                },
+                "period": {
+                  "type": "string",
+                  "example": "PT1H"
+                },
+                "function": {
+                  "type": "string",
+                  "example": "sum"
+                }
+              }
+            },
+            "units": {
+              "type": "string",
+              "example": "kWh"
+            },
+            "data": {
+              "maxItems": 10000,
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "example": [
+                  1549472400,
+                  1.502
+                ],
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    "meterReadingRes": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CurrentReadingsResult"
+        },
+        {
+          "properties": {
+            "units": {
+              "type": "string",
+              "example": "kWh"
+            }
+          }
+        }
+      ]
+    },
+    "catchupRes": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceDataResult"
+        },
+        {
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ResourceLastTime": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceDataResult"
+        },
+        {
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "lastTs": {
+                  "type": "number",
+                  "example": 1613124302
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ResourceFirstTime": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceDataResult"
+        },
+        {
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "firstTs": {
+                  "type": "number",
+                  "example": 1308400980
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ResourceDailyConsumptionLog": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceDataResult"
+        },
+        {
+          "properties": {
+            "units": {
+              "type": "string",
+              "example": "Wh"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "2025-01-01T00:00:00.00000Z",
+                  "7777.0"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

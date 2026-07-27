@@ -1,0 +1,69 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf (v1.8),
+  https://www.hildebrand.co.uk/services/data-as-a-service, https://data.glowforindustry.com/ and the
+  Notification System Swagger definition. Probed for a published AsyncAPI on api.glowmarkt.com,
+  docs.glowmarkt.com and github.com/HildebrandTechnology on 2026-07-27.
+spec_type: none
+asyncapi_published: false
+finding: >-
+  Hildebrand advertises three distinct event surfaces and publishes a machine-readable contract for
+  none of them. There is no AsyncAPI document anywhere on the provider's surface. This artifact
+  records the advertised surfaces and the evidence for each, so a later round can capture a real
+  contract if one is ever published. NOTHING BELOW IS SYNTHESISED — every channel is quoted from a
+  provider page or the official PDF.
+
+surfaces:
+  - name: Glow MQTT real-time stream
+    kind: mqtt
+    status: advertised, enrolment by email, no published contract
+    enrolment: >-
+      "If, in addition to the Glowmarkt API, you would like access to MQTT please do the following:
+      email support@glowmarkt.com stating that you wish to use the MQTT, provide the Username you
+      used when you created your Bright account and the MAC ID on your Glow CAD (either the
+      GlowStick or the IHD/CAD)."
+    evidence: docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf, Prerequisites step 4
+    requires: Glow hardware (CAD/GlowStick)
+    broker: not published
+    topics: not published
+    payload_schema: not published
+  - name: Real time data streams (Glow Data Service)
+    kind: streaming
+    status: advertised as a product feature
+    evidence: >-
+      "Purchase Glow CADs to access real time data via APIs or MQTT" (data.glowforindustry.com);
+      "Real time data streams with added Glow hardware" (hildebrand.co.uk/services/data-as-a-service).
+    note: >-
+      Instantaneous readings are also available over REST — GET /resource/{id}/current refreshes
+      roughly every 6-10 seconds with Glow hardware — so polling is the documented alternative.
+  - name: Webhook notifications
+    kind: webhooks
+    status: advertised, no catalogue, no schemas, no subscription API
+    evidence: >-
+      "Webhook notifications" listed under Integration on
+      https://www.hildebrand.co.uk/services/data-as-a-service (alongside "Third-party system
+      integration", "Data export formats", "Custom connectors").
+    catalogue: none published
+    subscription_api: none — no webhook/subscription endpoint exists in any of the five Swagger definitions
+    note: >-
+      This is a marketing-page capability statement for contracted Glow Data Service customers, not
+      a documented developer surface. Treat as "advertised, undocumented".
+  - name: Notification System (outbound user alerts)
+    kind: application-alerts
+    status: documented REST API, not a subscriber-facing event stream
+    spec: openapi/hildebrand-glowmarkt-notification-system-swagger.json
+    evidence: >-
+      POST /alert (sendAlert) delivers an alert to a user from a template, per channelType and
+      cultureCode; GET /notification/{notificationId} and /log report delivery state.
+    note: >-
+      This is the platform PUSHING messages to end users (email/app channels) on behalf of an
+      application — the inverse of a webhook feed to a developer. It is catalogued here so the
+      event surface is complete, not because it is an integration event bus.
+
+channels: []
+gaps:
+  - No AsyncAPI document published for the MQTT stream.
+  - No broker host, topic structure or payload schema published for MQTT.
+  - No webhook event catalogue, no signature/verification scheme, no subscription management API.
+  - No 'events' or 'subscriptions' resource anywhere in the five Swagger definitions.

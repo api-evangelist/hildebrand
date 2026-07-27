@@ -1,0 +1,86 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  Compliance claims searched on hildebrand.co.uk (site-wide footer), data.glowforindustry.com and
+  the Smart Energy Code Company register on 2026-07-27; protocol conformance derived from
+  openapi/*.json.
+standards:
+  - id: oauth2
+    conforms: partial
+    evidence: >-
+      The User System implements an OAuth 2.0 authorization-code grant — POST /auth/oauth
+      (generateOAuthorizationCode) and POST /auth/oauth/access
+      (exchangeAuthorizationCodeWithAccess, form-encoded, refresh_token supported). But no oauth2
+      securityScheme is declared in any definition (the schemes are apiKey/basic), no scopes exist,
+      there is no /authorize redirect endpoint documented for third-party clients, and no
+      authorization-server metadata is published.
+  - id: rfc8414-oauth-authorization-server-metadata
+    conforms: false
+    evidence: /.well-known/oauth-authorization-server returns 404 on api.glowmarkt.com.
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returns 404; no id_token, no userinfo endpoint.
+  - id: rfc6750-bearer-token
+    conforms: false
+    evidence: >-
+      The JWT is carried in a bespoke `token` header, not in `Authorization: Bearer`, so the
+      platform is JWT-based but not RFC 6750 conformant.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'Errors are flat proprietary JSON ({"error":"..."}); no application/problem+json anywhere. See errors/hildebrand-problem-types.yml.'
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on every host. See well-known/hildebrand-well-known.yml.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset/Deprecation header support documented; no deprecation policy published.
+  - id: json-api
+    conforms: false
+    evidence: Responses are bespoke JSON envelopes ({status,name,resourceId,query,data}); no JSON:API media type.
+  - id: openapi-3
+    conforms: false
+    evidence: All five definitions are Swagger 2.0, not OpenAPI 3.x.
+  - id: iso8601-durations
+    conforms: true
+    evidence: >-
+      Time-series aggregation periods use ISO 8601 durations verbatim — PT1M, PT30M, PT1H, P1D,
+      P1W, P1M, P1Y — on resource.getReading.
+  - id: iso27001
+    conforms: true
+    evidence: >-
+      "ISO 27001:2022 certified, Certificate Number 10338-ISMS-001" published in the site-wide
+      footer of https://www.hildebrand.co.uk/. Certificate number is published; the certificate
+      body/registrar is not named on the site.
+  - id: uk-smart-energy-code
+    conforms: true
+    evidence: >-
+      SEC Party and DCC Other User, SEC Party Identifier PLK001, self-declared in the
+      hildebrand.co.uk footer and verified against the Smart Energy Code Company's official SEC
+      Parties List (smartenergycodecompany.co.uk/documents/sec/sec-parties-list/) which lists
+      Hildebrand Technology Limited as "Yes - Other User".
+  - id: uk-gdpr-ico-registration
+    conforms: true
+    evidence: ICO registration number Z3161543 published in the hildebrand.co.uk footer.
+  - id: cdr-energy
+    conforms: false
+    evidence: Australian Consumer Data Right; no UK equivalent exists and it does not apply.
+  - id: green-button-espi
+    conforms: false
+    evidence: >-
+      No Green Button / ESPI reference on any Hildebrand surface or in any of the five
+      definitions. GB has no consumer energy data-sharing standard mandate.
+  - id: soc2
+    conforms: false
+    evidence: No SOC 2 claim found on any Hildebrand surface.
+  - id: pci-dss
+    conforms: false
+    evidence: Not applicable — no card data surface.
+certifications_published:
+  - {name: 'ISO/IEC 27001:2022', certificate: 10338-ISMS-001, source: 'https://www.hildebrand.co.uk/'}
+  - {name: 'SEC Party / DCC Other User', identifier: PLK001, source: 'https://smartenergycodecompany.co.uk/documents/sec/sec-parties-list/'}
+  - {name: 'ICO registration', identifier: Z3161543, source: 'https://www.hildebrand.co.uk/'}
+notes: >-
+  Hildebrand's compliance posture is real and verifiable but is published as footer text rather
+  than as a trust centre — there is no trust.hildebrand.co.uk, no security page, no
+  downloadable certificate and no subprocessor list. The `Compliance` pointer in apis.yml points
+  at the corporate site footer where the certifications are stated.

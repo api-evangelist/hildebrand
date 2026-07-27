@@ -1,0 +1,65 @@
+generated: '2026-07-27'
+method: searched
+source: https://data.glowforindustry.com/#pricing (captured 2026-07-27)
+currency: GBP
+billing_unit: MPxN (meter point) per month
+billing_frequency: quarterly
+note: >-
+  This is the Glow Data Service commercial pricing for ORGANISATIONAL access to other people's
+  smart-meter data. Access to your OWN household data through the Bright app applicationId is free
+  and self-serve and is not a plan. All tiers require a signed contract — "create an account with
+  us, set up your organisation and we'll generate a contract."
+plans:
+  - name: Core
+    label: Most Popular — perfect for small and medium enterprises
+    price: 595
+    price_display: "£595 per month"
+    price_note: Charged monthly per MPxN, with a minimum charge of £595 per month
+    minimum_term: 3 months
+    billing: quarterly
+    features:
+      - Access to Glow Support and Development Portals
+      - Organisational API access
+      - Use Glow applications or your own front-end for energy consumer onboarding
+      - Glow hardware optional for real-time data
+      - Up to 5 applications to manage your customers
+      - Email support from Glow
+      - Multi-user team access
+      - Monthly usage reports
+    cta: Start SME plan
+  - name: Enterprise
+    label: Advanced features for large organisations
+    price: 2600
+    price_display: "£2,600 per month + per MPxN"
+    price_note: For high volumes of homes, charged per MPxN with a monthly operations fee
+    minimum_term: 1 year
+    billing: quarterly
+    features:
+      - Access to Glow Support and Development Portals
+      - Organisational API access
+      - Use Glow applications or your own front-end for energy consumer onboarding
+      - Glow hardware optional for real-time data
+      - Priority email support from Glow
+      - Multi-user team access
+      - Custom dashboards and reporting
+    cta: Contact us
+  - name: Dedicated
+    label: Tailored solutions for specific needs
+    price: null
+    price_display: Contact us for pricing
+    billing: quarterly
+    features:
+      - Everything in Enterprise
+      - Custom Glow Portal integrations
+      - Dedicated account manager
+      - Custom SLA agreements
+      - Bespoke analytics solutions
+    cta: Contact us
+free_tier:
+  available: true
+  scope: your own meter data only
+  mechanism: >-
+    Install the Bright app (Android/iOS), create an account, pass meter-point verification, then
+    call the production API with the published individual applicationId
+    b0f1b774-a586-4f72-9edd-27ead8aa7a8d and a JWT from POST /api/v0-1/auth.
+  source: https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf

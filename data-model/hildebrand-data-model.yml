@@ -1,0 +1,174 @@
+generated: '2026-07-27'
+method: derived
+source: >-
+  Derived from the definitions and id-reference fields in openapi/*.json (five Glowmarkt Swagger
+  2.0 definitions) and the object descriptions in
+  https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf (v1.8).
+docs: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+notation: >-
+  relationships use has_one / has_many / belongs_to with the foreign-key field name; direction is
+  from the entity that owns the reference. All ids are bare UUIDs — the Glow Platform uses no
+  type-prefixed id scheme.
+core_shape: >-
+  Device -> Resource -> Virtual Entity. A Device is physical hardware (gateway, sensor, actuator);
+  a Resource is one data stream produced by it, typed by a ResourceType and semantically labelled
+  by a `classifier`; a Virtual Entity is the "thing" (a home, a site) that owns a collection of
+  Resources. Everything is scoped by `applicationId` and owned by a user (`ownerId`).
+
+entities:
+  - name: User
+    system: user
+    id_field: userId
+    description: "A person with an account in one or more applications."
+  - name: Account
+    system: user
+    id_field: accountId
+    description: "A user's account within a single application; carries username, email, status."
+  - name: AccountProfile
+    system: user
+    id_field: profileName
+    description: "Named profile document attached to an account (e.g. dashboard preferences)."
+  - name: AccountSession
+    system: user
+    id_field: null
+    description: "Opaque session values stored against an account."
+  - name: Application
+    system: user
+    id_field: applicationId
+    description: "The calling application. Mandatory header on every request; scopes users, virtual entities, alert types and templates."
+  - name: Organization
+    system: user
+    id_field: organizationId
+    description: "The contracted organisation behind an application (Glow Data Service customers)."
+  - name: Token
+    system: user
+    id_field: tokenId
+    description: "An issued JWT — userId, createdAt, expiresAt, authenticationFramework, grant_type. 7-day lifetime."
+  - name: MeterPointConsent
+    system: user
+    id_field: mpxnKey
+    description: "Per-MPxN verification and consent record — isVerified, isValidUntil, mpxn. The consent unit of the GB smart-metering regime."
+  - name: VirtualEntity
+    system: virtual-entity
+    id_field: veId
+    description: "The virtual representation of a physical thing (a home, a site) — metadata plus a collection of resources."
+  - name: VeType
+    system: virtual-entity
+    id_field: veTypeId
+    description: "The type of a virtual entity; scoped per application."
+  - name: VeAttribute
+    system: virtual-entity
+    id_field: null
+    description: "Free-form metadata attached to a virtual entity."
+  - name: Resource
+    system: resource
+    id_field: resourceId
+    description: "A single data stream — name, description, classifier, baseUnit, ownerId, active."
+  - name: ResourceType
+    system: resource
+    id_field: resourceTypeId
+    description: "The type of a resource; determines storage/sampling shape (StorageType)."
+  - name: Reading
+    system: resource
+    id_field: null
+    description: "A [UTC epoch seconds, value] pair inside the data[] array of a readings/current response."
+  - name: Tariff
+    system: resource
+    id_field: null
+    description: "The unit rate and standing charge applied to a cost resource, with history."
+  - name: Device
+    system: device
+    id_field: deviceId
+    description: "Physical hardware — gateway (Glow CAD/GlowStick), sensor (smart meter) or actuator (load-control switch)."
+  - name: DeviceType
+    system: device
+    id_field: deviceTypeId
+    description: "Device type and its protocol."
+  - name: MeterPoint
+    system: device
+    id_field: meterPointNumber (MPxN)
+    description: "A GB electricity (MPAN) or gas (MPRN) meter point; the DCC inventory key."
+  - name: MeterPointInventoryItem
+    system: device
+    id_field: EUI
+    description: "A DCC-registered device at a meter point — manufacturer, model, firmware, SMETS version, commissioning date, status."
+  - name: AlertType
+    system: notification
+    id_field: alertTypeId
+    description: "A class of alert defined per application."
+  - name: Alert
+    system: notification
+    id_field: alertId
+    description: "An alert instance sent to a user."
+  - name: Template
+    system: notification
+    id_field: templateId
+    description: "Per alertType + channelType + cultureCode message template."
+  - name: Notification
+    system: notification
+    id_field: notificationid
+    description: "The delivery record of an alert on a channel, with status."
+  - name: NotificationLog
+    system: notification
+    id_field: null
+    description: "Per-stage pipeline log of a notification's delivery."
+
+relationships:
+  - {from: User, to: Account, kind: has_many, via: userId}
+  - {from: Account, to: Application, kind: belongs_to, via: applicationId}
+  - {from: Account, to: User, kind: belongs_to, via: userId}
+  - {from: Account, to: AccountProfile, kind: has_many, via: profileName}
+  - {from: Account, to: AccountSession, kind: has_one, via: accountId}
+  - {from: Token, to: User, kind: belongs_to, via: userId}
+  - {from: User, to: MeterPointConsent, kind: has_many, via: meterPointVerification}
+  - {from: MeterPointConsent, to: MeterPoint, kind: belongs_to, via: mpxn}
+  - {from: Application, to: Organization, kind: belongs_to, via: organizationId}
+  - {from: VirtualEntity, to: VeType, kind: belongs_to, via: veTypeId}
+  - {from: VirtualEntity, to: User, kind: belongs_to, via: ownerId}
+  - {from: VirtualEntity, to: Application, kind: belongs_to, via: applicationId}
+  - {from: VirtualEntity, to: Resource, kind: has_many, via: 'resources[].resourceId'}
+  - {from: VirtualEntity, to: VeAttribute, kind: has_many, via: attribute}
+  - {from: VeType, to: ResourceType, kind: has_many, via: resources}
+  - {from: Resource, to: ResourceType, kind: belongs_to, via: resourceTypeId}
+  - {from: Resource, to: User, kind: belongs_to, via: ownerId}
+  - {from: Resource, to: Reading, kind: has_many, via: data}
+  - {from: Resource, to: Tariff, kind: has_many, via: resourceId}
+  - {from: Device, to: DeviceType, kind: belongs_to, via: deviceTypeId}
+  - {from: Device, to: User, kind: belongs_to, via: ownerId}
+  - {from: Device, to: Device, kind: belongs_to, via: parentHardwareId}
+  - {from: Device, to: Resource, kind: has_many, via: 'device.findByResourceId (resourceId -> sourcing device)'}
+  - {from: DeviceType, to: ResourceType, kind: has_many, via: 'ProtocolResourceType.protocolId + resourceTypeId'}
+  - {from: MeterPoint, to: MeterPointInventoryItem, kind: has_many, via: 'ImportMPxN / EUI'}
+  - {from: MeterPoint, to: Resource, kind: has_many, via: 'device.getMeterPointResources'}
+  - {from: AlertType, to: Application, kind: belongs_to, via: applicationId}
+  - {from: AlertType, to: Template, kind: has_many, via: alertTypeId}
+  - {from: Alert, to: AlertType, kind: belongs_to, via: alertTypeId}
+  - {from: Notification, to: Alert, kind: belongs_to, via: ns_alert_id}
+  - {from: Notification, to: User, kind: belongs_to, via: userid}
+  - {from: Notification, to: NotificationLog, kind: has_many, via: notificationid}
+
+classifiers:
+  description: >-
+    The `classifier` string on a Resource carries the data semantics — this is the platform's
+    domain vocabulary and the closest thing Glow has to a data standard. Published verbatim in the
+    individual-user PDF.
+  values:
+    - {classifier: electricity.consumption, unit: kWh, description: Electricity imported at a site.}
+    - {classifier: electricity.consumption.cost, unit: pence, description: Cost of electricity imported at a site.}
+    - {classifier: electricity.export, unit: kWh, description: Electricity exported from a site.}
+    - {classifier: electricity.import.reactive, unit: kVARh, description: Reactive electricity imported; typically relevant for larger non-domestic sites.}
+    - {classifier: electricity.export.reactive, unit: kVARh, description: Reactive electricity exported; typically relevant for large non-domestic sites.}
+    - {classifier: gas.consumption, unit: kWh, description: Gas readings of a customer in energy units.}
+    - {classifier: gas.consumption.cost, unit: pence, description: Gas readings of a customer in monetary units.}
+  note: >-
+    A dual-fuel household has four resources (electricity energy, electricity cost, gas energy,
+    gas cost); an electricity-only household has two.
+
+traversal:
+  description: The canonical read path an integrator follows, all operationIds verified in the specs.
+  steps:
+    - {step: 1, operation: usernamelogin, note: 'POST /auth -> JWT (7-day expiry)'}
+    - {step: 2, operation: virtualentity.findAll, note: 'GET /virtualentity -> veIds and their resource id pairs'}
+    - {step: 3, operation: virtualentity.findResourcesbyVeId, note: 'GET /virtualentity/{id}/resources -> full resource documents incl. classifier and baseUnit'}
+    - {step: 4, operation: resource.getReading, note: 'GET /resource/{id}/readings?from&to&period&offset&function -> [[ts, value], ...]'}
+    - {step: 4b, operation: resource.getCurrentReading, note: 'GET /resource/{id}/current -> single latest pair'}

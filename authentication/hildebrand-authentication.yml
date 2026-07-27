@@ -1,0 +1,56 @@
+generated: '2026-07-27'
+method: derived
+source: openapi/hildebrand-glowmarkt-device-management-system-swagger.json, openapi/hildebrand-glowmarkt-notification-system-swagger.json,
+  openapi/hildebrand-glowmarkt-resource-system-swagger.json, openapi/hildebrand-glowmarkt-user-system-swagger.json,
+  openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: orgAppKeys
+  type: http
+  scheme: basic
+  sources:
+  - openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+  - openapi/hildebrand-glowmarkt-notification-system-swagger.json
+  - openapi/hildebrand-glowmarkt-resource-system-swagger.json
+  - openapi/hildebrand-glowmarkt-user-system-swagger.json
+  - openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
+- name: devUserToken
+  type: apiKey
+  in: header
+  parameter: token
+  sources:
+  - openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+  - openapi/hildebrand-glowmarkt-notification-system-swagger.json
+  - openapi/hildebrand-glowmarkt-resource-system-swagger.json
+  - openapi/hildebrand-glowmarkt-user-system-swagger.json
+  - openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
+- name: applicationId
+  type: apiKey
+  in: header
+  parameter: applicationId
+  sources:
+  - openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+  - openapi/hildebrand-glowmarkt-notification-system-swagger.json
+  - openapi/hildebrand-glowmarkt-resource-system-swagger.json
+  - openapi/hildebrand-glowmarkt-user-system-swagger.json
+  - openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
+- name: userId
+  type: apiKey
+  in: header
+  parameter: userId
+  sources:
+  - openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+  - openapi/hildebrand-glowmarkt-resource-system-swagger.json
+  - openapi/hildebrand-glowmarkt-user-system-swagger.json
+- name: organizationId
+  type: apiKey
+  in: header
+  parameter: organizationId
+  sources:
+  - openapi/hildebrand-glowmarkt-notification-system-swagger.json
+  - openapi/hildebrand-glowmarkt-user-system-swagger.json

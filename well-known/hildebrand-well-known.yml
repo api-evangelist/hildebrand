@@ -1,0 +1,45 @@
+generated: '2026-07-27'
+method: searched
+source: live probes of every apis.yml host and every OpenAPI servers/host value on 2026-07-27
+result: none
+finding: >-
+  Hildebrand publishes no /.well-known/ discovery surface on any of its hosts. Every document
+  probed returned 404 on the API host (api.glowmarkt.com) and on the corporate site
+  (www.hildebrand.co.uk). glowmarkt.com and data.glowforindustry.com are Next.js/SPA sites whose
+  catch-all route answers 200 with the site shell for ANY path — those 200s are NOT documents and
+  are recorded as such. No security.txt, no OIDC/OAuth discovery metadata (even though the User
+  System implements an OAuth 2.0 authorization-code grant), no api-catalog, no ai-plugin.json.
+  Because nothing is published, this repo deliberately does NOT carry a WellKnown, APICatalog or
+  SecurityTxt pointer — this file is the negative record.
+hosts:
+  - host: https://api.glowmarkt.com
+    role: API host (all five OpenAPI definitions; basePath /api/v0-1/)
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /openapi.json, status: 404}
+      - {path: /swagger.json, status: 404}
+      - {path: /api-docs, status: 404, note: 'JSON body {"error":"not found"} — the Swagger UI lives at /api-docs/v0-1/{system}/'}
+      - {path: /llms.txt, status: 404}
+  - host: https://www.hildebrand.co.uk
+    role: corporate website
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /llms.txt, status: 404, note: Next.js 404 page returned with the site shell}
+  - host: https://glowmarkt.com
+    role: Glow product site
+    documents:
+      - {path: /.well-known/security.txt, status: 200, valid: false, note: 'SPA catch-all serving the homepage HTML, not a security.txt'}
+  - host: https://data.glowforindustry.com
+    role: Glow Data Service commercial site
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /robots.txt, status: 404}
+  - host: https://docs.glowmarkt.com
+    role: documents host (public PDFs)
+    documents:
+      - {path: /llms.txt, status: 404}
+      - {path: /, status: 403, note: directory listing forbidden; individual document paths are readable}

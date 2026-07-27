@@ -33,7 +33,7 @@ accessModel:
   - https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
   generated: '2026-07-27'
   method: manual
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/groq.png
+image: https://www.hildebrand.co.uk/images/favicon.ico
 tags:
 - Energy
 - United Kingdom
@@ -69,6 +69,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/hildebrand-glowmarkt-user-system-swagger.json
+  - type: Overlay
+    url: overlays/hildebrand-glowmarkt-user-system-overlay.yaml
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   - type: Documentation
@@ -94,6 +96,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/hildebrand-glowmarkt-resource-system-swagger.json
+  - type: Overlay
+    url: overlays/hildebrand-glowmarkt-resource-system-overlay.yaml
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
   - type: Documentation
@@ -115,6 +119,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
+  - type: Overlay
+    url: overlays/hildebrand-glowmarkt-virtual-entity-system-overlay.yaml
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
   - type: Documentation
@@ -138,6 +144,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+  - type: Overlay
+    url: overlays/hildebrand-glowmarkt-device-management-system-overlay.yaml
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
 - aid: hildebrand:glowmarkt-notification-system-api
@@ -156,9 +164,47 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/hildebrand-glowmarkt-notification-system-swagger.json
+  - type: Overlay
+    url: overlays/hildebrand-glowmarkt-notification-system-overlay.yaml
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
 common:
+- type: GettingStarted
+  url: https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+- type: Blog
+  url: https://data.glowforindustry.com/articles
+- type: GitHubOrganization
+  url: https://github.com/HildebrandTechnology
+- type: Compliance
+  url: https://www.hildebrand.co.uk/about
+- type: Conformance
+  url: conformance/hildebrand-conformance.yml
+- type: Conventions
+  url: conventions/hildebrand-conventions.yml
+- type: ErrorCatalog
+  url: errors/hildebrand-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/hildebrand-lifecycle.yml
+- type: DataModel
+  url: data-model/hildebrand-data-model.yml
+- type: Packages
+  url: packages/hildebrand-packages.yml
+- type: Plans
+  url: plans/hildebrand-plans.yml
+- type: MCPServer
+  url: mcp/hildebrand-mcp.yml
+- type: LLMsTxt
+  url: llms/hildebrand-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Webhooks
+  url: asyncapi/hildebrand-event-surface.yml
+- type: AgenticAccess
+  url: agentic-access/hildebrand-agentic-access.yml
+- type: DomainSecurity
+  url: security/hildebrand-domain-security.yml
+- type: Authentication
+  url: authentication/hildebrand-authentication.yml
 - type: Website
   url: https://www.hildebrand.co.uk/
 - type: Documentation

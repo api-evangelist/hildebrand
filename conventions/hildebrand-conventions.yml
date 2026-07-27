@@ -1,0 +1,158 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  (v1.8, last updated 09 April 2026) and the five public Swagger 2.0 definitions at
+  https://api.glowmarkt.com/api-docs/v0-1/{usersys,vesys,resourcesys,dmssys,notificationsys}/.
+description: >-
+  How the Glowmarkt Platform API behaves across every operation: the two-header auth model,
+  the absence of idempotency and of any rate-limit signal, the per-period query-window caps on
+  time-series retrieval, the flat error envelope, and the URI-path version. These are the
+  runtime semantics the Swagger definitions do not express.
+
+base_url: https://api.glowmarkt.com/api/v0-1
+notification_base_url: https://api.glowmarkt.com/api/v0-1/ns
+api_style: REST over HTTPS, JSON request and response bodies
+
+authentication:
+  scheme: >-
+    Two custom headers on EVERY call — `token` (a JWT) and `applicationId` (a UUID). There is no
+    Authorization header; the JWT travels in a bespoke `token` header.
+  token_issue: POST /api/v0-1/auth with {username, password} and the applicationId header
+  token_lifetime: 7 days (documented in the PDF; `exp` is returned on the auth response)
+  application_id: >-
+    b0f1b774-a586-4f72-9edd-27ead8aa7a8d is the published applicationId for individual users of the
+    Bright app. Organisations are issued their own applicationId under a Glow Data Service contract.
+  oauth2: >-
+    The User System also implements an OAuth 2.0 authorization-code grant — POST /auth/oauth
+    (generateOAuthorizationCode) then POST /auth/oauth/access (exchangeAuthorizationCodeWithAccess,
+    application/x-www-form-urlencoded, also accepts refresh_token). No scopes are defined anywhere in
+    the spec or docs, and no authorization-server metadata is published.
+  anonymous_behaviour: >-
+    Every documented endpoint returns HTTP 400 (not 401) when the applicationId header is absent —
+    e.g. GET /api/v0-1/resource returns {"error":"bad request","message":"bad request"}.
+  detail: authentication/hildebrand-authentication.yml
+
+idempotency:
+  supported: false
+  mechanism: null
+  note: >-
+    No Idempotency-Key header, parameter or replay semantics appear in any of the five Swagger
+    definitions or in the published documentation. Writes (POST /resource, POST /virtualentity,
+    POST /alert, consent renewal/revocation) are not replay-safe by contract. No `Idempotency`
+    pointer is emitted for this provider.
+
+pagination:
+  style: none
+  note: >-
+    No cursor, offset, page or limit parameters exist on any list operation. Collections
+    (GET /virtualentity, GET /resource, GET /device) return the full array for the caller's scope.
+    Volume is bounded by the query-window caps below rather than by pagination.
+
+query_limits:
+  applies_to: GET /resource/{id}/readings (resource.getReading)
+  mechanism: >-
+    The maximum span between `from` and `to` depends on the requested aggregation `period`. These
+    are per-request data-volume caps, NOT request-rate limits.
+  limits:
+    - {period: PT30M, description: 30-minute level, max_span: 10 days}
+    - {period: PT1H, description: 1-hour level, max_span: 31 days}
+    - {period: P1D, description: 1-day level, max_span: 31 days}
+    - {period: P1W, description: 1-week level, max_span: 6 weeks}
+    - {period: P1M, description: 1-month level, max_span: 366 days}
+    - {period: P1Y, description: 1-year level, max_span: 366 days}
+  alignment_rule: >-
+    For P1W and P1M the query start date must be the beginning of the week (Monday) or of the month
+    (1st) respectively.
+  source: >-
+    PDF v1.8 — "Important: depending on the aggregation period, there is a limit to the volume of
+    data that can be requested per query"
+
+time_series_conventions:
+  request_params:
+    from: yyyy-mm-ddThh:mm:ss (no timezone suffix)
+    to: yyyy-mm-ddThh:mm:ss
+    period: ISO 8601 duration — PT1M (electricity only), PT30M, PT1H, P1D, P1W, P1M, P1Y
+    offset: >-
+      Minutes between the timezone you want and UTC, sign-inverted — BST (UTC+1) is offset=-60,
+      US East Coast is offset=+300. All storage is UTC.
+    function: aggregating function applied to the data; `sum` for total per period
+  response_shape: >-
+    {"status":"OK","name":...,"resourceTypeId":...,"resourceId":...,"query":{from,to,period},
+    "data":[[utc_timestamp, reading], ...]} — data is an array of [UTC epoch seconds, value] pairs.
+  current_readings: >-
+    GET /resource/{id}/current returns a single [timestamp, reading] pair; with Glow hardware the
+    instantaneous read typically refreshes every 6-10 seconds. For cost resources /current returns
+    power (electricity) and the cumulative meter reading (gas) — Glow deliberately does not
+    extrapolate a cost from an instantaneous power reading.
+
+field_expansion:
+  supported: partial
+  note: >-
+    Not a general mechanism. Two purpose-built expansions exist: GET /virtualentity/{id}/resources
+    (virtualentity.findResourcesbyVeId) returns each resource's full document inline rather than
+    the id-pair form returned by GET /virtualentity, and GET /vetype/{id}/resources does the same
+    per virtual-entity type.
+
+metadata:
+  supported: true
+  mechanism: >-
+    Virtual entities carry arbitrary metadata attributes — GET/POST/DELETE
+    /virtualentity/{id}/attribute (virtualentity.getAttributes, virtualentity.add-updateAttributes,
+    virtualentity.deleteAttributes).
+  note: Resources carry a fixed `classifier` string (electricity.consumption, gas.consumption.cost, ...) rather than free-form metadata.
+
+request_tracing:
+  request_id_header: none documented
+  note: No X-Request-Id / correlation-id convention appears in the specs or the docs.
+
+versioning:
+  scheme: uri-path
+  current: v0-1
+  mechanism: The version segment is fixed in the base path — https://api.glowmarkt.com/api/v0-1
+  per_system_versions:
+    Glowmarkt User System: 1.0.5
+    Virtual Entity System: 1.3.0
+    Resource System: 1.5.0
+    Device Management System: 1.1.0
+    Notification System: 1.0.0
+  note: >-
+    The v0-1 path segment has been stable since at least 2018 while each system's Swagger
+    info.version moves independently. There is no version header and no published version policy.
+  detail: lifecycle/hildebrand-lifecycle.yml
+
+error_envelope:
+  format: proprietary flat JSON (NOT RFC 9457 application/problem+json)
+  shape: '{"error": "<message>"}'
+  variants:
+    - '{"error":"missing elements"} / {"error":"missing elements -userId"} / {"error":"missing elements -applicationId"}'
+    - '{"error":"incorrect elements"}'
+    - '{"error":"Access denied"}'
+    - '{"error":"An error has occurred"}'
+    - '{"error":"bad request","message":"bad request"} — observed live on anonymous calls'
+    - '{"status":"ERROR","error":"incorrect elements -resourceTypeId","description":"resourceType does not exist","resourceTypeId":"..."} — the one enriched variant'
+  no_error_codes: There is no stable machine-readable error code; callers must match on the message string.
+  detail: errors/hildebrand-problem-types.yml
+
+rate_limiting:
+  documented: false
+  headers: none documented
+  retry_after: not documented
+  status_429: not declared on any operation in any of the five definitions
+  note: >-
+    Neither the specs nor the published documentation describe request-rate limits or throttling
+    headers. The only published quantitative constraint is the per-period query window above.
+
+streaming:
+  mqtt: >-
+    A real-time MQTT stream is offered to customers with Glow hardware but has no published
+    contract. Enrolment is by email to support@glowmarkt.com quoting the Bright username and the
+    CAD MAC ID. See asyncapi/hildebrand-event-surface.yml.
+
+related:
+  authentication: authentication/hildebrand-authentication.yml
+  errors: errors/hildebrand-problem-types.yml
+  lifecycle: lifecycle/hildebrand-lifecycle.yml
+  data_model: data-model/hildebrand-data-model.yml
+  event_surface: asyncapi/hildebrand-event-surface.yml
+  plans: plans/hildebrand-plans.yml

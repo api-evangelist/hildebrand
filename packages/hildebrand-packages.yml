@@ -1,0 +1,71 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  Registry searches on 2026-07-27 across npm, PyPI, crates.io, NuGet, RubyGems and GitHub code
+  search for "glowmarkt" / "hildebrand glow", plus the provider's own surfaces
+  (hildebrand.co.uk, glowmarkt.com, api.glowmarkt.com, data.glowforindustry.com) and the
+  official individual-user PDF.
+official_sdks: none
+finding: >-
+  Hildebrand publishes NO first-party client libraries in any language. The only public
+  Hildebrand GitHub organisation (github.com/HildebrandTechnology) holds a single repository,
+  a GitHub Pages placeholder last touched in 2014. What exists instead is a healthy
+  third-party ecosystem built by Bright/Glow users against the public Swagger definitions —
+  catalogued below with `official: false`. The official PDF itself points developers at a
+  community resource (bitbucket.org/ijosh/brightglowmarkt) rather than an SDK of its own.
+  Because no library is first-party, this repo deliberately does NOT carry an `SDKs` pointer.
+packages: []
+community_packages:
+  - language: python
+    registry: pypi
+    name: pyglowmarkt
+    url: https://pypi.org/project/pyglowmarkt/
+    install: pip install pyglowmarkt
+    repository: https://github.com/cybermaggedon/pyglowmarkt
+    license: GPL-3.0-or-later
+    official: false
+    note: Python client for the Bright/Glowmarkt/Hildebrand API; the most widely referenced community library.
+  - language: rust
+    registry: crates.io
+    name: glowmarkt
+    url: https://crates.io/crates/glowmarkt
+    install: cargo add glowmarkt
+    repository: https://github.com/Mossop/glowmarkt-rs
+    official: false
+    note: Crate for accessing the Glowmarkt API.
+  - language: dotnet
+    registry: github
+    name: AeroXuk/GlowmarktApi
+    url: https://github.com/AeroXuk/GlowmarktApi
+    official: false
+    note: >-
+      .NET client library for the Glowmarkt Web API (UK SMETS2 smart meter data). Source only —
+      no NuGet package was found for `GlowmarktApi` on 2026-07-27.
+  - language: php
+    registry: github
+    name: willtomlinson/glowmarkt-php
+    url: https://github.com/willtomlinson/glowmarkt-php
+    official: false
+    note: Simple PHP SDK for the Glowmarkt API. Source only, not on Packagist.
+  - language: python
+    registry: github
+    name: TomBrien/glowmarkt-ha
+    url: https://github.com/TomBrien/glowmarkt-ha
+    official: false
+    note: Python library written to be consumed by the Home Assistant Glowmarkt integration.
+  - language: java
+    registry: github
+    name: rtuck99/openhab-binding
+    url: https://github.com/rtuck99/openhab-binding
+    official: false
+    note: openHAB binding covering the Glowmarkt API.
+probe_log:
+  - {registry: npm, query: glowmarkt, result: no matching package}
+  - {registry: npm, query: hildebrand glow, result: no matching package}
+  - {registry: pypi, name: glowmarkt, status: 404}
+  - {registry: pypi, name: hildebrand-glow, status: 404}
+  - {registry: pypi, name: pyglowmarkt, status: 200, official: false}
+  - {registry: crates.io, name: glowmarkt, status: 200, official: false}
+  - {registry: nuget, name: GlowmarktApi, status: 404}
+  - {registry: github, org: HildebrandTechnology, status: 200, public_repos: 1, note: 'placeholder pages repo, last updated 2014'}
+  - {registry: github, org: hildebrand, status: 404}

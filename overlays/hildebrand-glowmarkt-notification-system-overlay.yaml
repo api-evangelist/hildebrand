@@ -1,0 +1,38 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Hildebrand Notification System
+  version: 1.0.0
+extends: openapi/hildebrand-glowmarkt-notification-system-swagger.json
+x-generated: '2026-07-27'
+x-method: generated
+x-source: >-
+  Generated from openapi/hildebrand-glowmarkt-notification-system-swagger.json (Swagger 2.0 1.0.0, 10 paths) plus the artifacts in this repo.
+  The harvested definition is never mutated; every enhancement below is expressed as an
+  overlay action.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: hildebrand
+      x-apievangelist-system: Notification System
+      x-apievangelist-artifacts:
+        authentication: authentication/hildebrand-authentication.yml
+        conventions: conventions/hildebrand-conventions.yml
+        errors: errors/hildebrand-problem-types.yml
+        lifecycle: lifecycle/hildebrand-lifecycle.yml
+        data_model: data-model/hildebrand-data-model.yml
+        agentic_access: agentic-access/hildebrand-agentic-access.yml
+      x-apievangelist-market: United Kingdom
+      x-apievangelist-regime: >-
+        Smart Energy Code / DCC Other User (SEC Party Identifier PLK001). There is no UK
+        consumer energy data right; this API is a commercial product, not a compliance artifact.
+      x-apievangelist-access: >-
+        Free self-serve for your OWN meter data via the Bright app applicationId; organisational
+        access to other people's data requires a Glow Data Service contract from GBP 595/month per MPxN.
+  - target: $
+    update:
+      x-apievangelist-required-headers:
+        token: JWT issued by POST /api/v0-1/auth; expires after 7 days.
+        applicationId: >-
+          UUID identifying the calling application. Every documented endpoint returns HTTP 400
+          without it. b0f1b774-a586-4f72-9edd-27ead8aa7a8d is the published Bright individual-user
+          applicationId.

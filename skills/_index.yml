@@ -1,0 +1,24 @@
+generated: '2026-07-27'
+method: generated
+source: >-
+  Packaged Agent Skills generated from the five Glowmarkt Swagger 2.0 definitions in ../openapi/.
+  Every step is grounded in an operationId verified verbatim in those definitions; cross-cutting
+  rules cite ../conventions/, ../errors/ and ../authentication/. No provider-published skills or
+  AGENTS.md were found on any Hildebrand surface (probed 2026-07-27).
+skills:
+  - file: hildebrand-retrieve-smart-meter-consumption.md
+    name: Retrieve GB smart-meter consumption data
+    api: openapi/hildebrand-glowmarkt-resource-system-swagger.json
+    operations: [usernamelogin, virtualentity.findAll, virtualentity.findResourcesbyVeId, resource.getFirstTime, resource.getLastTime, resource.getReading, resource.getCurrentReading]
+  - file: hildebrand-manage-meter-point-consent.md
+    name: Manage per-MPxN consent and verification
+    api: openapi/hildebrand-glowmarkt-user-system-swagger.json
+    operations: [usernamelogin, getUserMeterPointVerificationConsentStatus, getMeterPointConsentRenewal, renewMeterPointConsent, renewMeterPointConsentBulk, getMeterPointConsentRevocation, revokeMeterPointConsent, renewMeterPointConsentRevokeBulk]
+  - file: hildebrand-read-tariffs-and-energy-cost.md
+    name: Read tariffs and calculate energy cost
+    api: openapi/hildebrand-glowmarkt-resource-system-swagger.json
+    operations: [usernamelogin, virtualentity.findResourcesbyVeId, resource.getTariff, resource.getTariffHistory, resource.getReading, resource.getCurrentReading, resource.getMeterRead]
+  - file: hildebrand-inspect-meter-point-and-devices.md
+    name: Inspect a meter point, its DCC inventory and Glow hardware
+    api: openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+    operations: [usernamelogin, device.getMeterPointInventory, device.getMeterPointInventoryByEUI, device.getMeterPointResources, device.findAll, device.findById, device.findByResourceId, device.getStatusbyDeviceId, device.getStatusbyHardwareId, resource.catchUpReadings, resource.getDailyConsumptionLog]

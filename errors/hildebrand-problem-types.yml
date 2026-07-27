@@ -1,0 +1,124 @@
+generated: '2026-07-27'
+method: derived
+source: >-
+  Derived from the 4xx/5xx responses and error definitions in openapi/*.json (five Glowmarkt
+  Swagger 2.0 definitions), plus live anonymous probes of api.glowmarkt.com/api/v0-1/* on
+  2026-07-27.
+format: proprietary
+rfc9457: false
+note: >-
+  Glowmarkt does not use RFC 9457 problem+json. Every error is a flat JSON object whose single
+  `error` property carries a human-readable string; there is no `type`, `title`, `status` or
+  `instance` member and no stable machine-readable error code. Callers must switch on the message
+  text. Hildebrand publishes no error-code reference page — this catalogue is derived entirely
+  from the specs and from observed live responses.
+envelope:
+  media_type: application/json
+  shape: '{"error": "<message>"}'
+  enriched_variant: '{"status":"ERROR","error":"...","description":"...","<offendingField>":"<value>"}'
+problems:
+  - status: 400
+    title: Missing elements
+    schema: MissingElementsError
+    example: '{"error":"missing elements"}'
+    meaning: A required header, path parameter or body field was absent.
+    remediation: >-
+      Send both the `token` and `applicationId` headers and the full documented body. Anonymous
+      calls to every documented endpoint return 400 — not 401 — because applicationId is missing.
+    source_specs:
+      - openapi/hildebrand-glowmarkt-user-system-swagger.json
+      - openapi/hildebrand-glowmarkt-notification-system-swagger.json
+      - openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+  - status: 400
+    title: Missing elements - userId
+    schema: missingUserIdError / FindResourceReqError
+    example: '{"error":"missing elements -userId"}'
+    meaning: The `userId` header was required for this operation and was not supplied.
+    source_specs:
+      - openapi/hildebrand-glowmarkt-resource-system-swagger.json
+      - openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+  - status: 400
+    title: Missing elements - applicationId
+    schema: missingAppIdError
+    example: '{"error":"missing elements -applicationId"}'
+    meaning: The mandatory `applicationId` header was not supplied.
+    source_specs:
+      - openapi/hildebrand-glowmarkt-resource-system-swagger.json
+  - status: 400
+    title: Missing elements - body
+    schema: AddResourceReqError
+    example: '{"error":"missing elements -body"}'
+    meaning: A write operation was called without its request body.
+    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.addResource
+  - status: 400
+    title: Incorrect elements
+    schema: IncorrectElementsError / reqError
+    example: '{"error":"incorrect elements"}'
+    meaning: A supplied value failed validation or referenced a non-existent object.
+    source_specs:
+      - openapi/hildebrand-glowmarkt-user-system-swagger.json
+      - openapi/hildebrand-glowmarkt-notification-system-swagger.json
+      - openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
+      - openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+  - status: 400
+    title: Incorrect elements - resourceTypeId
+    schema: AddResourceReqNoResourceTypeError
+    example: '{"status":"ERROR","error":"incorrect elements -resourceTypeId","description":"resourceType does not exist","resourceTypeId":"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2"}'
+    meaning: The referenced resourceType does not exist. The richest error shape in the platform — it names the offending field and echoes its value.
+    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.addResource
+  - status: 400
+    title: Bad request (live)
+    schema: null
+    example: '{"error":"bad request","message":"bad request"}'
+    meaning: Observed live on anonymous GET /api/v0-1/resource, /virtualentity, /resourcetype and /resource/count. This two-field shape is not declared in any spec.
+    observed: 2026-07-27
+  - status: 400
+    title: Bad request missing info (live, auth)
+    schema: null
+    example: '{"message":"Bad request missing info"}'
+    meaning: Observed live on anonymous POST /api/v0-1/auth. Single `message` member — a third undeclared envelope shape.
+    observed: 2026-07-27
+  - status: 401
+    title: Unauthorised
+    schema: AccessDeniedError
+    example: '{"error":"Access denied"}'
+    meaning: The `token` JWT is missing, expired (7-day lifetime) or not entitled to the requested object.
+    remediation: Re-authenticate with POST /auth (usernamelogin) and retry with the fresh token.
+    source_specs:
+      - openapi/hildebrand-glowmarkt-user-system-swagger.json
+      - openapi/hildebrand-glowmarkt-resource-system-swagger.json
+      - openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
+      - openapi/hildebrand-glowmarkt-notification-system-swagger.json
+    note: Spelled both "Unauthorised" and "Unauthorized" across the definitions.
+  - status: 404
+    title: Not Found
+    schema: null
+    meaning: The requested object id does not exist or is not visible to the caller. Declared with no response schema on five find-by-id style operations.
+    source_specs:
+      - openapi/hildebrand-glowmarkt-user-system-swagger.json
+      - openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
+      - openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+      - openapi/hildebrand-glowmarkt-resource-system-swagger.json
+  - status: 404
+    title: Not Acceptable
+    schema: null
+    meaning: >-
+      Declared verbatim as "Not Acceptable" against HTTP 404 on
+      resourcetype.findAll — a spec defect (406 semantics on a 404 code), recorded here as found.
+    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resourcetype.findAll
+  - status: 500
+    title: Internal Server Error
+    schema: InternalServerError / ServerError
+    example: '{"error":"An error has occurred"}'
+    meaning: Unhandled platform error. Declared on every operation in all five systems.
+    source_specs:
+      - openapi/hildebrand-glowmarkt-user-system-swagger.json
+      - openapi/hildebrand-glowmarkt-resource-system-swagger.json
+      - openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
+      - openapi/hildebrand-glowmarkt-device-management-system-swagger.json
+      - openapi/hildebrand-glowmarkt-notification-system-swagger.json
+gaps:
+  - No 429 / rate-limit error is declared anywhere.
+  - No 403 is declared; entitlement failures collapse into 401 "Access denied".
+  - Three different envelope shapes exist (`{error}`, `{error,message}`, `{message}`) and only the first is specified.
+  - No published error reference page to enrich these titles from.

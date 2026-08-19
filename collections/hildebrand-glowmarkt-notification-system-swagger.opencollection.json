@@ -1,0 +1,303 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Notification System",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "alerttype",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all alert types of an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/alerttype"
+          },
+          "docs": "Returns all alert types, created by an application"
+        },
+        {
+          "info": {
+            "name": "Create an alert type",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/alerttype"
+          },
+          "docs": "Create an alert type"
+        },
+        {
+          "info": {
+            "name": "Find alert type by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/alerttype/:alertTypeId",
+            "params": [
+              {
+                "name": "alertTypeId",
+                "value": "",
+                "type": "path",
+                "description": "ID of alert type that is being queried"
+              }
+            ]
+          },
+          "docs": "Returns a single alert type"
+        },
+        {
+          "info": {
+            "name": "Updates the alert type's metadata.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/alerttype/:alertTypeId",
+            "params": [
+              {
+                "name": "alertTypeId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the alert type that needs to be updated"
+              }
+            ]
+          },
+          "docs": "Updates the alert type's metadata."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "alert",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send an alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/alert"
+          },
+          "docs": "Send an alert to a user"
+        },
+        {
+          "info": {
+            "name": "Get an alert by Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/alert/:alertId",
+            "params": [
+              {
+                "name": "alertId",
+                "value": "",
+                "type": "path",
+                "description": "ID of alert that is being queried"
+              }
+            ]
+          },
+          "docs": "Get an alert by Id"
+        },
+        {
+          "info": {
+            "name": "Get the alerts sent to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/alert/user"
+          },
+          "docs": "Get the alerts sent to a user"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "template",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all templates of an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/template"
+          },
+          "docs": "Returns all templates that belong to an application."
+        },
+        {
+          "info": {
+            "name": "Create a template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/template"
+          },
+          "docs": "Create a template"
+        },
+        {
+          "info": {
+            "name": "Find template type by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/template/:templateId",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the template that is being queried"
+              }
+            ]
+          },
+          "docs": "Returns a single template of an application"
+        },
+        {
+          "info": {
+            "name": "Updates the teplate's metadata.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/template/:templateId",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the alert type that needs to be updated"
+              }
+            ]
+          },
+          "docs": "Updates the teplate's metadata."
+        },
+        {
+          "info": {
+            "name": "Find template by alertTypeId, channeType and cultureCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/template/:alertTypeId/:channelType/:cultureCode",
+            "params": [
+              {
+                "name": "alertTypeId",
+                "value": "",
+                "type": "path",
+                "description": "ID of alert type that is being queried"
+              },
+              {
+                "name": "channelType",
+                "value": "",
+                "type": "path",
+                "description": "the channel type of the template (push, email, inbox)"
+              },
+              {
+                "name": "cultureCode",
+                "value": "",
+                "type": "path",
+                "description": "language specific information en-GB, en_US"
+              }
+            ]
+          },
+          "docs": "Returns a single template of an application."
+        },
+        {
+          "info": {
+            "name": "Create template by alertTypeId, channeType and cultureCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/template/:alertTypeId/:channelType/:cultureCode",
+            "params": [
+              {
+                "name": "alertTypeId",
+                "value": "",
+                "type": "path",
+                "description": "ID of alert type that is being queried"
+              },
+              {
+                "name": "channelType",
+                "value": "",
+                "type": "path",
+                "description": "the channel type of the template (push, email, inbox)"
+              },
+              {
+                "name": "cultureCode",
+                "value": "",
+                "type": "path",
+                "description": "language specific information en-GB, en_US"
+              }
+            ]
+          },
+          "docs": "Create template by alertTypeId, channeType and cultureCode"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "notification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a notification by Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/notification/:notificationId",
+            "params": [
+              {
+                "name": "notificationId",
+                "value": "",
+                "type": "path",
+                "description": "ID of notification that is being queried"
+              }
+            ]
+          },
+          "docs": "Get a notification by Id"
+        },
+        {
+          "info": {
+            "name": "Get the logs of a particular notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/notification/:notificationId/log",
+            "params": [
+              {
+                "name": "notificationId",
+                "value": "",
+                "type": "path",
+                "description": "ID of notification that is being queried"
+              }
+            ]
+          },
+          "docs": "Get the logs of a particular notification"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

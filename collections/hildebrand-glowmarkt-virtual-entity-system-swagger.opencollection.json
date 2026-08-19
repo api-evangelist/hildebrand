@@ -1,0 +1,287 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Virtual Entity System",
+    "version": "1.3.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Virtual Entity Type",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all Virtual Entity Types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vetype"
+          },
+          "docs": "Returns a list of the application's Virtual Entity Types."
+        },
+        {
+          "info": {
+            "name": "Add a new Virtual Entity Type",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/vetype"
+          },
+          "docs": "Create a new Virtual Entity Type"
+        },
+        {
+          "info": {
+            "name": "Find Virtual Entity Type by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vetype/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Virtual Entity Type ID"
+              }
+            ]
+          },
+          "docs": "Returns a single Virtual Entity Type"
+        },
+        {
+          "info": {
+            "name": "Update a  Virtual Entity Type",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/vetype/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Virtual Entity Type ID"
+              }
+            ]
+          },
+          "docs": "Update Virtual Entity Type. Please note that only specific properties of the Virtual Entity Type can be updated, such as the name and the description."
+        },
+        {
+          "info": {
+            "name": "Find all resources that belong to a user that satisfy the Resource Types in the Virtual Entity Type definition.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vetype/:id/resources",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Virtual Entity Type ID"
+              }
+            ]
+          },
+          "docs": "Returns the resources of a user that could potentially be used to create a Virtual Entity of the specified Virtual Entity Type"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Virtual Entity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all Virtual Entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/virtualentity"
+          },
+          "docs": "Returns a list of Virtual Entities that belong to an application (and a user if applicable)"
+        },
+        {
+          "info": {
+            "name": "Add a new Virtual Entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/virtualentity"
+          },
+          "docs": "create a new Virtual Entity"
+        },
+        {
+          "info": {
+            "name": "Find Virtual Entity by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/virtualentity/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Virtual Entity ID"
+              }
+            ]
+          },
+          "docs": "Returns a single Virtual Entity"
+        },
+        {
+          "info": {
+            "name": "Update a Virtual Entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/virtualentity/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Virtual Entity ID"
+              }
+            ]
+          },
+          "docs": "Please note that only specific properties of the Virtual Entity can be updated. These includes the following: name, description, location, city, country, postalCodem geoCoordinates, openStreetMapsRef, timeZone."
+        },
+        {
+          "info": {
+            "name": "Delete a Virtual Entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/virtualentity/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Virtual Entity ID"
+              }
+            ]
+          },
+          "docs": "Delete a single Virtual Entity"
+        },
+        {
+          "info": {
+            "name": "Find the resources of that belong to Virtual Entity with ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/virtualentity/:id/resources",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Virtual Entity ID"
+              }
+            ]
+          },
+          "docs": "Returns a single Virtual Entity with a resource list of the full resource docs"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Virtual Entity's Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find a Virtual Entity's metadata by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/virtualentity/:id/attribute",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Virtual Entity ID"
+              }
+            ]
+          },
+          "docs": "Returns all the metadata of a Virtual Entity"
+        },
+        {
+          "info": {
+            "name": "Add/Update a Virtual Entity's metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/virtualentity/:id/attribute",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Virtual Entity ID"
+              }
+            ]
+          },
+          "docs": "Add/Update a Virtual Entity's metadata. Whichever fields are included in body of call, will be updated"
+        },
+        {
+          "info": {
+            "name": "delete metadata from the Virtual Entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/virtualentity/:id/attribute",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Virtual Entity ID"
+              }
+            ]
+          },
+          "docs": "Pieces of metadata provided in the body will be deleted from the Virtual Entityl"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Virtual Entity Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "find statistics on the number of Virtual Entities per application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vesys/appstats"
+          },
+          "docs": "Returns a single statistics entity"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

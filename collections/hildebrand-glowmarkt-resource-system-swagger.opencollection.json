@@ -1,0 +1,418 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Resource System",
+    "version": "1.5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Resource Type",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all resource types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resourcetype"
+          },
+          "docs": "returns a list of resource types"
+        },
+        {
+          "info": {
+            "name": "Add a new resource type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/resourcetype"
+          },
+          "docs": "create a new resourceType"
+        },
+        {
+          "info": {
+            "name": "Find resourceType by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resourcetype/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resourceType to return"
+              }
+            ]
+          },
+          "docs": "Returns a single resourceType"
+        },
+        {
+          "info": {
+            "name": "Find resources of a specific resource type that belong to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resourcetype/:id/resource",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resourceType of the resources that are to be returned"
+              }
+            ]
+          },
+          "docs": "Returns a list of resources"
+        },
+        {
+          "info": {
+            "name": "Find resources of a specific resource type that an application has access to",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resourcetype/:id/appresource",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resourceType of the resources that are to be returned"
+              }
+            ]
+          },
+          "docs": "Returns a list of resources"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Resource",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all resources per user or application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource"
+          },
+          "docs": "returns a list of resources that belong to an application or a user"
+        },
+        {
+          "info": {
+            "name": "Add a new resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/resource"
+          },
+          "docs": "create a new resource"
+        },
+        {
+          "info": {
+            "name": "Find resource by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              }
+            ]
+          },
+          "docs": "Returns a single resource"
+        },
+        {
+          "info": {
+            "name": "Get resource readings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/:id/readings",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "the aggregation period of the readings, example, P1D for daily aggregation"
+              },
+              {
+                "name": "function",
+                "value": "",
+                "type": "query",
+                "description": "the aggregation function of the readings, example sum, avg, etc."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The date, data is required from. The date time syntax is yyyy-mm-ddThh:mm:ss (i.e. 2017-09-19T10:00:00)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "The date, data is required to. The date time syntax is yyyy-mm-ddThh:mm:ss (i.e. 2017-10-01T23:59:59)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "All the data we store is saved in UTC (Coordinated Universal Time), regardless of the timezone it was collected in. For the API to correctly return the data for the period you ask for you must supply the offset in minutes between the timezone you require and UTC. As an example if you wish to request data in BST(British Summer Time, UTC+1) you should specify an offset of -60. EST(New York) would be +300."
+              },
+              {
+                "name": "nulls",
+                "value": "",
+                "type": "query",
+                "description": "When this parameter is set to 1, any missing values from a time series resource will return as null instead of zero."
+              }
+            ]
+          },
+          "docs": "Returns readings for a specific resource. The requester needs to have access to the Resource."
+        },
+        {
+          "info": {
+            "name": "Get the current resource reading.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/:id/current",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              }
+            ]
+          },
+          "docs": "Returns the latest instantaneous reading of a resource. Please note this API may return different responses for different Resource Types."
+        },
+        {
+          "info": {
+            "name": "Get the UTC time of the first available reading",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/:id/first-time",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              }
+            ]
+          },
+          "docs": "Returns the time of the first available reading for a given resource."
+        },
+        {
+          "info": {
+            "name": "Get the UTC time of the most recent available reading",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/:id/last-time",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              }
+            ]
+          },
+          "docs": "Returns the time of the  most recent available reading for a given resource."
+        },
+        {
+          "info": {
+            "name": "Get the cumulative value reported on a metering device. (Not supported for all resource types).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/:id/meterread",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              }
+            ]
+          },
+          "docs": "This API reports the cumulative value reported on a metering device and is only applicable for a subset of resources. Please note, that for smart metering in the UK the only segment of users who can access this functionality are people who have a Glow IHD/CAD."
+        },
+        {
+          "info": {
+            "name": "Get the latest tariff that is being applied to a resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/:id/tariff",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              }
+            ]
+          },
+          "docs": "Returns the latest tariff that is being applied to a resource. This call is generally used for energy resources."
+        },
+        {
+          "info": {
+            "name": "Get the tariff history that is being applied to a cost resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/:id/tariff-list",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              }
+            ]
+          },
+          "docs": "Returns the tariff history that is being applied to a cost resource. The tariffs are sourced from various areas (CADs, metering devices, manual settings). The effective dates can be used to determined what the period of a particular tariff is. Please note the following 3 things. <ol> <li>Fistly, the response is not sorted, we recommend it to be sorted by effective date. </li> <li> Secondly, there are multiple types of tariffs i.e. flat rate, time of use, block and and dynamic. The dynamic tariff"
+        },
+        {
+          "info": {
+            "name": "Trigger a request to retrieve the latest available readings from the DCC.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/:id/catchup",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              }
+            ]
+          },
+          "docs": "Applicable to resources that are sourced from the DCC. This API will trigger an asynchronous request to get the latest consumption readings from the DCC up to the last complete half hour. The readings from the DCC are in half hour intervals. To utilise the functionality of this API you need only make this request once on the change of the half hour (preferably with a random delay of up to 2 minutes)."
+        },
+        {
+          "info": {
+            "name": "API that returns the resource's raw data in the Glow Binary format.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/:id/glowbinary",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              }
+            ]
+          },
+          "docs": "Not all resource types support this format. The return is not in JSON. Please use the available open source SDK libraries to process the binary format."
+        },
+        {
+          "info": {
+            "name": "Remove cached resource data",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/resource/:id/cache",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              }
+            ]
+          },
+          "docs": "Remove any cached data that has been retrieved for the resource. (This does apply to the Glow Binaries.)"
+        },
+        {
+          "info": {
+            "name": "Get daily consumption log (DCC).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/:id/daily-consumption-log",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of resource to return"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "This returns the Daily Consumption Log of a smart meter (DCC). The data is typically in Wh and each value is the sum at midnight for the previous day. The values are in UTC."
+        },
+        {
+          "info": {
+            "name": "Count the number of resources per resourceType",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/count",
+            "headers": [
+              {
+                "name": "userId",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns an array of the resource count and resourceId list per resourceTypeId"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

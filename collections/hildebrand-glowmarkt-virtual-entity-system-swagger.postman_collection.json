@@ -1,0 +1,3316 @@
+{
+  "item": [
+    {
+      "id": "10337bee-d948-414c-a963-9c2d9dba3122",
+      "name": "Virtual Entity Type",
+      "description": {
+        "content": "Entity that belongs and is managed by an application and contains the definition and combination of the Resource Types that are required to create a Virtual Entity.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "774c1422-81ba-42fb-b5c9-bf01d424ae96",
+          "name": "Add a new Virtual Entity Type",
+          "request": {
+            "name": "Add a new Virtual Entity Type",
+            "description": {
+              "content": "Create a new Virtual Entity Type",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vetype"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"resources\": [\n    {\n      \"resourceTypeId\": \"<string>\",\n      \"required\": \"<boolean>\"\n    },\n    {\n      \"resourceTypeId\": \"<string>\",\n      \"required\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ee84610f-5846-4c3c-ac73-3dd1d6ac55cc",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Smart Home\",\n  \"description\": \"Smart home, with electricity and gas utilities\",\n  \"resources\": [\n    {\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"required\": \"<boolean>\"\n    },\n    {\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"required\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"OK\",\n  \"veTypeId\": \"b82d4f8b-a097-4b96-acbb-81d891489441\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b30d7a5-31b7-45d9-a0f2-c351936d828c",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Smart Home\",\n  \"description\": \"Smart home, with electricity and gas utilities\",\n  \"resources\": [\n    {\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"required\": \"<boolean>\"\n    },\n    {\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"required\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"missing elements\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7db50e9-de50-464b-9b3d-7e5919f98bc1",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Smart Home\",\n  \"description\": \"Smart home, with electricity and gas utilities\",\n  \"resources\": [\n    {\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"required\": \"<boolean>\"\n    },\n    {\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"required\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "51dbb5a6-9515-44ff-8f02-240f35624bb6",
+          "name": "Find all Virtual Entity Types",
+          "request": {
+            "name": "Find all Virtual Entity Types",
+            "description": {
+              "content": "Returns a list of the application's Virtual Entity Types.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vetype"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a25294e8-62e3-442a-b5f8-0b1cd87f9e1f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n    \"name\": \"home Virtual Entity\",\n    \"description\": \"string\",\n    \"applicationId\": \"a0cf21a2-51f6-4df2-9214-0bc762bcee09\",\n    \"active\": false,\n    \"resources\": [\n      {\n        \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n        \"required\": false\n      },\n      {\n        \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n        \"required\": true\n      }\n    ]\n  },\n  {\n    \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n    \"name\": \"home Virtual Entity\",\n    \"description\": \"string\",\n    \"applicationId\": \"a0cf21a2-51f6-4df2-9214-0bc762bcee09\",\n    \"active\": false,\n    \"resources\": [\n      {\n        \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n        \"required\": false\n      },\n      {\n        \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n        \"required\": true\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5556845-9bd5-4884-8e48-aef3a9ea3751",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"missing elements\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f953a05a-8e4d-4ea0-a3f3-d1c012672aa7",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2e6ab8f-b100-4b79-acc4-f6b322264772",
+          "name": "Find Virtual Entity Type by ID",
+          "request": {
+            "name": "Find Virtual Entity Type by ID",
+            "description": {
+              "content": "Returns a single Virtual Entity Type",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vetype",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Virtual Entity Type ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "98b55b9d-2bb6-45cc-b2e3-a3402b77a36d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity Type ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n  \"name\": \"home Virtual Entity\",\n  \"description\": \"string\",\n  \"applicationId\": \"a0cf21a2-51f6-4df2-9214-0bc762bcee09\",\n  \"active\": false,\n  \"resources\": [\n    {\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"required\": true\n    },\n    {\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"required\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "536edecf-ec7e-429d-b474-e4986184b16d",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity Type ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"missing elements\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26a4fb2f-2080-46bf-b370-cb4efef05c48",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity Type ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d433e77-996d-47f2-a6c6-e1edd0782f58",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity Type ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9c226a8e-274d-40dd-844e-1cf9b175038e",
+          "name": "Update a  Virtual Entity Type",
+          "request": {
+            "name": "Update a  Virtual Entity Type",
+            "description": {
+              "content": "Update Virtual Entity Type. Please note that only specific properties of the Virtual Entity Type can be updated, such as the name and the description.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vetype",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Virtual Entity Type ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e994a8b1-3c94-451c-b9b7-92306941222b",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity Type ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Smart Home\",\n  \"description\": \"Smart home, with electricity and gas utilities\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"OK\",\n  \"veTypeId\": \"b82d4f8b-a097-4b96-acbb-81d891489441\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0d9aaca-3553-44c5-9d4e-2aa5b74cb200",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity Type ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Smart Home\",\n  \"description\": \"Smart home, with electricity and gas utilities\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"missing elements\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd8003dc-ced6-480d-b8db-7e044c4adbbc",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity Type ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Smart Home\",\n  \"description\": \"Smart home, with electricity and gas utilities\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70962a31-4529-4878-b76f-344ae6fbbae4",
+          "name": "Find all resources that belong to a user that satisfy the Resource Types in the Virtual Entity Type definition.",
+          "request": {
+            "name": "Find all resources that belong to a user that satisfy the Resource Types in the Virtual Entity Type definition.",
+            "description": {
+              "content": "Returns the resources of a user that could potentially be used to create a Virtual Entity of the specified Virtual Entity Type",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vetype",
+                ":id",
+                "resources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Virtual Entity Type ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ff0337c8-1e0f-4eb7-94f0-b2d858bcc980",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype",
+                    ":id",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity Type ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n  \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n  \"applicationId\": \"a0cf21a2-51f6-4df2-9214-0bc762bcee09\",\n  \"resources\": [\n    {\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"required\": false,\n      \"options\": [\n        {\n          \"resourceId\": \"8f2a0722-3b59-47a6-a115-d43fcc0c5d1c\",\n          \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n          \"name\": \"solar updated access test\",\n          \"description\": \"solar generation of hid\",\n          \"dataSourceUnitInfo\": {\n            \"shid\": \"f3204e8e5b1a40a39396a15f919f88a5\"\n          },\n          \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n          \"label\": \"solar resourceType test\",\n          \"dataSourceResourceTypeInfo\": {\n            \"type\": \"PWER_GAC\"\n          },\n          \"dataSourceType\": \"EHSOLAPI\",\n          \"active\": false\n        },\n        {\n          \"resourceId\": \"8f2a0722-3b59-47a6-a115-d43fcc0c5d1c\",\n          \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n          \"name\": \"solar updated access test\",\n          \"description\": \"solar generation of hid\",\n          \"dataSourceUnitInfo\": {\n            \"shid\": \"f3204e8e5b1a40a39396a15f919f88a5\"\n          },\n          \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n          \"label\": \"solar resourceType test\",\n          \"dataSourceResourceTypeInfo\": {\n            \"type\": \"PWER_GAC\"\n          },\n          \"dataSourceType\": \"EHSOLAPI\",\n          \"active\": true\n        }\n      ]\n    },\n    {\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"required\": false,\n      \"options\": [\n        {\n          \"resourceId\": \"8f2a0722-3b59-47a6-a115-d43fcc0c5d1c\",\n          \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n          \"name\": \"solar updated access test\",\n          \"description\": \"solar generation of hid\",\n          \"dataSourceUnitInfo\": {\n            \"shid\": \"f3204e8e5b1a40a39396a15f919f88a5\"\n          },\n          \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n          \"label\": \"solar resourceType test\",\n          \"dataSourceResourceTypeInfo\": {\n            \"type\": \"PWER_GAC\"\n          },\n          \"dataSourceType\": \"EHSOLAPI\",\n          \"active\": false\n        },\n        {\n          \"resourceId\": \"8f2a0722-3b59-47a6-a115-d43fcc0c5d1c\",\n          \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n          \"name\": \"solar updated access test\",\n          \"description\": \"solar generation of hid\",\n          \"dataSourceUnitInfo\": {\n            \"shid\": \"f3204e8e5b1a40a39396a15f919f88a5\"\n          },\n          \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n          \"label\": \"solar resourceType test\",\n          \"dataSourceResourceTypeInfo\": {\n            \"type\": \"PWER_GAC\"\n          },\n          \"dataSourceType\": \"EHSOLAPI\",\n          \"active\": false\n        }\n      ]\n    }\n  ],\n  \"selectionNeeded\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ea4e627-918a-4a94-afda-f8de2b6db896",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype",
+                    ":id",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity Type ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"missing elements\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82a8ed0c-1052-4af6-bf99-7613f03a1384",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vetype",
+                    ":id",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity Type ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "87669f72-ef08-4bd2-a43f-f6e4cb1bfc13",
+      "name": "Virtual Entity",
+      "description": {
+        "content": "A Virtual Entity is an instance of the Virtual Entity Type and is tied to an owner as well as an applicationId. In order to create a Virtual Entity a user must have all the required resources.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "486b78fc-50b0-4839-a123-97548971e017",
+          "name": "Add a new Virtual Entity",
+          "request": {
+            "name": "Add a new Virtual Entity",
+            "description": {
+              "content": "create a new Virtual Entity",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "virtualentity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"veTypeId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"resources\": [\n    {\n      \"resourceId\": \"<string>\"\n    },\n    {\n      \"resourceId\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "734ca5e5-b6bd-487d-ad34-14b0dd13618b",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n  \"name\": \"My special name\",\n  \"resources\": [\n    {\n      \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\"\n    },\n    {\n      \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"OK\",\n  \"veId\": \"e10591ec-4557-4ac7-90d4-a09654aeb5de\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0cccdbe-aa0f-468d-bce4-f262b16e8147",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n  \"name\": \"My special name\",\n  \"resources\": [\n    {\n      \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\"\n    },\n    {\n      \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"missing elements\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b9aae38-a14a-4232-bd15-c71481b52425",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n  \"name\": \"My special name\",\n  \"resources\": [\n    {\n      \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\"\n    },\n    {\n      \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "33df8697-6a5f-460a-8bfe-451bcf390a38",
+          "name": "Find all Virtual Entities",
+          "request": {
+            "name": "Find all Virtual Entities",
+            "description": {
+              "content": "Returns a list of Virtual Entities that belong to an application (and a user if applicable)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "virtualentity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9467b120-6337-4fb0-abcb-362424def8a8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"veId\": \"dc9069a7-7695-43fd-8f27-16b1c94213da\",\n    \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n    \"name\": \"veTry status\",\n    \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n    \"applicationId\": \"a0cf21a2-51f6-4df2-9214-0bc762bcee09\",\n    \"active\": true,\n    \"resources\": [\n      {\n        \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\",\n        \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\"\n      },\n      {\n        \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\",\n        \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\"\n      }\n    ],\n    \"attribute\": {\n      \"rooms\": [\n        \"living room\",\n        \"living room\"\n      ],\n      \"area\": {\n        \"units\": \"sqm\",\n        \"measurement\": \"string\"\n      }\n    }\n  },\n  {\n    \"veId\": \"dc9069a7-7695-43fd-8f27-16b1c94213da\",\n    \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n    \"name\": \"veTry status\",\n    \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n    \"applicationId\": \"a0cf21a2-51f6-4df2-9214-0bc762bcee09\",\n    \"active\": true,\n    \"resources\": [\n      {\n        \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\",\n        \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\"\n      },\n      {\n        \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\",\n        \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\"\n      }\n    ],\n    \"attribute\": {\n      \"rooms\": [\n        \"living room\",\n        \"living room\"\n      ],\n      \"area\": {\n        \"units\": \"sqm\",\n        \"measurement\": \"string\"\n      }\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7920c25-38ca-4eb1-a044-05a6d9e61ba0",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a24d42e4-e34b-476c-a211-633cc3eaf40d",
+          "name": "Find Virtual Entity by ID",
+          "request": {
+            "name": "Find Virtual Entity by ID",
+            "description": {
+              "content": "Returns a single Virtual Entity",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "virtualentity",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Virtual Entity ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f2442687-95f6-4601-a596-60cd961b2f98",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"veId\": \"dc9069a7-7695-43fd-8f27-16b1c94213da\",\n  \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n  \"name\": \"veTry status\",\n  \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n  \"applicationId\": \"a0cf21a2-51f6-4df2-9214-0bc762bcee09\",\n  \"active\": false,\n  \"resources\": [\n    {\n      \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\",\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\"\n    },\n    {\n      \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\",\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\"\n    }\n  ],\n  \"attribute\": {\n    \"rooms\": [\n      \"living room\",\n      \"living room\"\n    ],\n    \"area\": {\n      \"units\": \"sqm\",\n      \"measurement\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df75dd38-81da-4504-9208-2da55f82953d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "897cb6d3-dcae-4ecf-970d-c7a83dbc3e8f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "388335ce-09aa-408c-a2cf-b1377b12fc32",
+          "name": "Update a Virtual Entity",
+          "request": {
+            "name": "Update a Virtual Entity",
+            "description": {
+              "content": "Please note that only specific properties of the Virtual Entity can be updated. These includes the following: name, description, location, city, country, postalCodem geoCoordinates, openStreetMapsRef, timeZone.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "virtualentity",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Virtual Entity ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "15620bed-257c-45f4-aaef-276991929d46",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"A new name\",\n  \"description\": \"This virtual entity represents my home.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"OK\",\n  \"veId\": \"e10591ec-4557-4ac7-90d4-a09654aeb5de\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc53d4f4-a12b-4cf8-ad61-df624cc7cde8",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"A new name\",\n  \"description\": \"This virtual entity represents my home.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"missing elements\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e341361-f35d-462f-946b-6b99338f088c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"A new name\",\n  \"description\": \"This virtual entity represents my home.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "edd7ee8e-a17d-4bd1-a61d-ee41d8ef0c60",
+          "name": "Delete a Virtual Entity",
+          "request": {
+            "name": "Delete a Virtual Entity",
+            "description": {
+              "content": "Delete a single Virtual Entity",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "virtualentity",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Virtual Entity ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7b3cada8-aac1-4e1c-9345-8c6b330259dd",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"veId\": \"dc9069a7-7695-43fd-8f27-16b1c94213da\",\n  \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n  \"name\": \"veTry status\",\n  \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n  \"applicationId\": \"a0cf21a2-51f6-4df2-9214-0bc762bcee09\",\n  \"active\": false,\n  \"resources\": [\n    {\n      \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\",\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\"\n    },\n    {\n      \"resourceId\": \"319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1\",\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b60645e7-84fd-441b-8b25-a735f1273704",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50c3d60b-0154-4854-aa40-067573eab9c7",
+          "name": "Find the resources of that belong to Virtual Entity with ID",
+          "request": {
+            "name": "Find the resources of that belong to Virtual Entity with ID",
+            "description": {
+              "content": "Returns a single Virtual Entity with a resource list of the full resource docs",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "virtualentity",
+                ":id",
+                "resources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Virtual Entity ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f3c5d966-d6a1-423b-b580-78873ec4a5e9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"veId\": \"dc9069a7-7695-43fd-8f27-16b1c94213da\",\n  \"veTypeId\": \"cc90b599-2705-4b13-98d4-3306f81169cf\",\n  \"name\": \"veTry status\",\n  \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n  \"applicationId\": \"a0cf21a2-51f6-4df2-9214-0bc762bcee09\",\n  \"active\": false,\n  \"resources\": [\n    {\n      \"resourceId\": \"8f2a0722-3b59-47a6-a115-d43fcc0c5d1c\",\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"name\": \"solar updated access test\",\n      \"description\": \"solar generation of hid\",\n      \"dataSourceUnitInfo\": {\n        \"shid\": \"f3204e8e5b1a40a39396a15f919f88a5\"\n      },\n      \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n      \"label\": \"solar resourceType test\",\n      \"dataSourceResourceTypeInfo\": {\n        \"type\": \"PWER_GAC\"\n      },\n      \"dataSourceType\": \"EHSOLAPI\",\n      \"active\": true\n    },\n    {\n      \"resourceId\": \"8f2a0722-3b59-47a6-a115-d43fcc0c5d1c\",\n      \"resourceTypeId\": \"f8e6fb07-6307-4e0e-8a17-4b94bc7249c2\",\n      \"name\": \"solar updated access test\",\n      \"description\": \"solar generation of hid\",\n      \"dataSourceUnitInfo\": {\n        \"shid\": \"f3204e8e5b1a40a39396a15f919f88a5\"\n      },\n      \"ownerId\": \"f78a3812-d4fc-4b00-99c5-20fd581721a6\",\n      \"label\": \"solar resourceType test\",\n      \"dataSourceResourceTypeInfo\": {\n        \"type\": \"PWER_GAC\"\n      },\n      \"dataSourceType\": \"EHSOLAPI\",\n      \"active\": false\n    }\n  ],\n  \"attribute\": {\n    \"rooms\": [\n      \"living room\",\n      \"living room\"\n    ],\n    \"area\": {\n      \"units\": \"sqm\",\n      \"measurement\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42c131f1-0ce0-41dc-91d0-acdac4479998",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "417702ca-cb90-47df-8edf-f4b3be51d660",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "55b2eede-c6e2-442e-a507-147c86c3d0be",
+      "name": "Virtual Entity's Metadata",
+      "description": {
+        "content": "A Virtual Entity's metadata can be used to save information that will facilitate the virtual representation of the entity. This is typically attribute data that does not change in time.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "15e79fc0-8cbf-4a46-af78-01d13f4e9f46",
+          "name": "Find a Virtual Entity's metadata by ID",
+          "request": {
+            "name": "Find a Virtual Entity's metadata by ID",
+            "description": {
+              "content": "Returns all the metadata of a Virtual Entity",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "virtualentity",
+                ":id",
+                "attribute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Virtual Entity ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ddef9932-c366-4bc1-ad6b-0685dac56415",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "attribute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"veId\": \"string\",\n  \"attribute\": {\n    \"rooms\": [\n      \"living room\",\n      \"living room\"\n    ],\n    \"area\": {\n      \"units\": \"sqm\",\n      \"measurement\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a760e0b2-681b-428b-80b5-9ce97209af26",
+              "name": "Unauthorised",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "attribute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Access denied\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8b491eb-db55-4899-b0d6-25af1d567d8d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "attribute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0ce5f77-f21e-4b12-a24c-3d0bb8fcd1c0",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "attribute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74c92994-3626-40f7-aef3-baeabc281c69",
+          "name": "Add/Update a Virtual Entity's metadata",
+          "request": {
+            "name": "Add/Update a Virtual Entity's metadata",
+            "description": {
+              "content": "Add/Update a Virtual Entity's metadata. Whichever fields are included in body of call, will be updated",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "virtualentity",
+                ":id",
+                "attribute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Virtual Entity ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rooms\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"area\": {\n    \"units\": \"<string>\",\n    \"measurement\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1141faed-ba67-46aa-9628-f30d2937e028",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "attribute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rooms\": [\n    \"living room\",\n    \"living room\"\n  ],\n  \"area\": {\n    \"units\": \"sqm\",\n    \"measurement\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"veId\": \"string\",\n  \"attribute\": {\n    \"rooms\": [\n      \"living room\",\n      \"living room\"\n    ],\n    \"area\": {\n      \"units\": \"sqm\",\n      \"measurement\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0ac720b-a5d9-4968-bb5e-8d4a721b9b92",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "attribute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rooms\": [\n    \"living room\",\n    \"living room\"\n  ],\n  \"area\": {\n    \"units\": \"sqm\",\n    \"measurement\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"missing elements\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0345ced8-e04d-40a8-8aae-5c240ad14db3",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "attribute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rooms\": [\n    \"living room\",\n    \"living room\"\n  ],\n  \"area\": {\n    \"units\": \"sqm\",\n    \"measurement\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "88303247-5305-4f1e-8fca-ad42062d8a91",
+          "name": "delete metadata from the Virtual Entity",
+          "request": {
+            "name": "delete metadata from the Virtual Entity",
+            "description": {
+              "content": "Pieces of metadata provided in the body will be deleted from the Virtual Entityl",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "virtualentity",
+                ":id",
+                "attribute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Virtual Entity ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"removeAttributes\": {\n    \"area\": {\n      \"units\": \"<string>\",\n      \"measurement\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "715b493c-ae0f-4b89-9428-f5372139d6ae",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "attribute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"removeAttributes\": {\n    \"area\": {\n      \"units\": \"sqm\",\n      \"measurement\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"veId\": \"dc9069a7-7695-43fd-8f27-16b1c94213da\",\n  \"status\": \"OK\",\n  \"rooms\": [\n    \"living room\",\n    \"living room\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d06bab96-29b6-483d-ba97-2e3628a9675e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "virtualentity",
+                    ":id",
+                    "attribute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Virtual Entity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"removeAttributes\": {\n    \"area\": {\n      \"units\": \"sqm\",\n      \"measurement\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "40842482-1b29-47bb-8fb9-85689ff45c66",
+      "name": "Virtual Entity Statistics",
+      "description": {
+        "content": "APIs that return an overview of the Virtual Entities an application has (administrative API).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f5808276-d243-4bd9-b90c-1254eff01d33",
+          "name": "find statistics on the number of Virtual Entities per application",
+          "request": {
+            "name": "find statistics on the number of Virtual Entities per application",
+            "description": {
+              "content": "Returns a single statistics entity",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vesys",
+                "appstats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5f868fa6-f192-4c51-9725-e41cf8563594",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vesys",
+                    "appstats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"applicationId\": \"a0cf21a2-51f6-4df2-9214-0bc762bcee09\",\n  \"totalVirtualEntities\": 3,\n  \"newVirtualEntities\": {\n    \"P1D\": 0,\n    \"P1W\": 1,\n    \"P1M\": 3\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf150808-62c4-4c24-9026-6facf892c5b6",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vesys",
+                    "appstats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"missing elements\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d307a59-fdca-469f-9ae8-fbe3de6af890",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vesys",
+                    "appstats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"An error has occurred\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.glowmarkt.com/api/v0-1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9d9cdbac-b0c1-4b15-8ab8-a73f4eceeebd",
+    "name": "Virtual Entity System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API definition for CRUD operations on Virtual Entities. In the Glow Platform a Virtual Entity, is the virtual representation of a physical “thing” that is comprised of metadata and a collection of resources that define and describe it. An example of a Virtual Entity is a home with electricity energy readings sourced from a smart meter.",
+      "type": "text/plain"
+    }
+  }
+}

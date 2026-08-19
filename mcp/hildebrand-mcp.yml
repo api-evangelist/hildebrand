@@ -4,438 +4,449 @@ status: candidate
 source: openapi/*.json (Glowmarkt Swagger 2.0 definitions harvested from api.glowmarkt.com/api-docs)
 searched:
   result: none
-  note: >-
-    No official or community Model Context Protocol server for Hildebrand / Glowmarkt was
-    found on 2026-07-27. Probed the provider surface (hildebrand.co.uk, glowmarkt.com,
-    api.glowmarkt.com, data.glowforindustry.com), the npm registry (`glowmarkt`,
-    `@modelcontextprotocol` scope), PyPI, and GitHub code search. The tools below are a
-    DERIVED candidate surface generated one-per-operationId from the five public Swagger
-    definitions — they are a proposal for what an MCP server over the Glow Platform would
-    expose, not a server Hildebrand publishes.
+  note: No official or community Model Context Protocol server for Hildebrand / Glowmarkt was found on
+    2026-07-27. Probed the provider surface (hildebrand.co.uk, glowmarkt.com, api.glowmarkt.com, data.glowforindustry.com),
+    the npm registry (`glowmarkt`, `@modelcontextprotocol` scope), PyPI, and GitHub code search. The tools
+    below are a DERIVED candidate surface generated one-per-operationId from the five public Swagger definitions
+    — they are a proposal for what an MCP server over the Glow Platform would expose, not a server Hildebrand
+    publishes.
 server:
   name: hildebrand-glowmarkt
   transport: http
   url: null
   status: not-published
 auth:
-  note: >-
-    Any MCP server over this API must carry BOTH the `token` (JWT from POST /api/v0-1/auth,
-    7-day expiry) and `applicationId` headers on every call. See
-    authentication/hildebrand-authentication.yml.
+  note: Any MCP server over this API must carry BOTH the `token` (JWT from POST /api/v0-1/auth, 7-day
+    expiry) and `applicationId` headers on every call. See authentication/hildebrand-authentication.yml.
 tools:
-  - name: device_type_add_device_type
-    description: "Add a new Device Type"
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#deviceType.addDeviceType
-    http: POST /devicetype
-  - name: device_type_find_all
-    description: "Find all device types"
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#deviceType.findAll
-    http: GET /devicetype
-  - name: device_type_find_by_id
-    description: "Find Device Type by ID"
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#deviceType.findById
-    http: GET /devicetype/{id}
-  - name: device_find_all
-    description: "Get a user's devices"
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.findAll
-    http: GET /device
-  - name: device_add_device
-    description: "Add a new device"
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.addDevice
-    http: POST /device
-  - name: device_find_by_id
-    description: "Find device by ID"
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.findById
-    http: GET /device/{id}
-  - name: device_find_by_resource_id
-    description: "Find the device that sources a specified resource."
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.findByResourceId
-    http: GET /device/resource/{resourceId}
-  - name: device_get_meter_point_inventory
-    description: "Get the DCC inventory of a meter point"
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.getMeterPointInventory
-    http: GET /device/meter-point/{meterPointNumber}/inventory
-  - name: device_get_meter_point_inventory_by_eui
-    description: "Get the DCC inventory of a meter point by providing an EUI."
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.getMeterPointInventoryByEUI
-    http: GET /device/smart-meter/{eui}/inventory
-  - name: device_get_meter_point_resources
-    description: "Get the resources associated to a meter point"
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.getMeterPointResources
-    http: GET /device/meter-point/{meterPointNumber}/resources
-  - name: device_get_statusby_device_id
-    description: "This call can be used to see whether a gateway device is sending packets to the Glow Platform (i.e. via WiFi)."
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.getStatusbyDeviceId
-    http: GET /device/{id}/status
-  - name: device_get_statusby_hardware_id
-    description: "This call can be used to see whether a gateway device is sending packets to the Glow Platform (i.e. via WiFi)."
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.getStatusbyHardwareId
-    http: GET /device/status
-  - name: discover_devices_assets
-    description: "Find device by ID"
-    source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#discoverDevicesAssets
-    http: GET /discover/{hardwareId}
-  - name: get_alert_types
-    description: "Find all alert types of an application"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getAlertTypes
-    http: GET /alerttype
-  - name: add_alert_type
-    description: "Create an alert type"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#addAlertType
-    http: POST /alerttype
-  - name: get_alert_typeby_id
-    description: "Find alert type by ID"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getAlertTypebyId
-    http: GET /alerttype/{alertTypeId}
-  - name: update_alert_type
-    description: "Updates the alert type's metadata."
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#updateAlertType
-    http: PUT /alerttype/{alertTypeId}
-  - name: send_alert
-    description: "Send an alert"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#sendAlert
-    http: POST /alert
-  - name: find_alert_by_id
-    description: "Get an alert by Id"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#findAlertById
-    http: GET /alert/{alertId}
-  - name: find_alerts_of_user
-    description: "Get the alerts sent to a user"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#findAlertsOfUser
-    http: GET /alert/user
-  - name: get_templates
-    description: "Find all templates of an application"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getTemplates
-    http: GET /template
-  - name: add_template
-    description: "Create a template"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#addTemplate
-    http: POST /template
-  - name: get_templateby_id
-    description: "Find template type by ID"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getTemplatebyId
-    http: GET /template/{templateId}
-  - name: update_template
-    description: "Updates the teplate's metadata."
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#updateTemplate
-    http: PUT /template/{templateId}
-  - name: get_templateby_characteristics
-    description: "Find template by alertTypeId, channeType and cultureCode"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getTemplatebyCharacteristics
-    http: GET /template/{alertTypeId}/{channelType}/{cultureCode}
-  - name: add_templateby_code
-    description: "Create template by alertTypeId, channeType and cultureCode"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#addTemplatebyCode
-    http: POST /template/{alertTypeId}/{channelType}/{cultureCode}
-  - name: find_notification_by_id
-    description: "Get a notification by Id"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#findNotificationById
-    http: GET /notification/{notificationId}
-  - name: get_notification_logs
-    description: "Get the logs of a particular notification"
-    source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getNotificationLogs
-    http: GET /notification/{notificationId}/log
-  - name: resourcetype_add_resource_type
-    description: "Add a new resource type."
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resourcetype.addResourceType
-    http: POST /resourcetype
-  - name: resourcetype_find_all
-    description: "Find all resource types"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resourcetype.findAll
-    http: GET /resourcetype
-  - name: resourcetype_find_by_id
-    description: "Find resourceType by ID"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resourcetype.findById
-    http: GET /resourcetype/{id}
-  - name: resourcetype_find_resource_by_type
-    description: "Find resources of a specific resource type that belong to a user"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resourcetype.findResourceByType
-    http: GET /resourcetype/{id}/resource
-  - name: resourcetype_find_app_resource_by_type
-    description: "Find resources of a specific resource type that an application has access to"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resourcetype.findAppResourceByType
-    http: GET /resourcetype/{id}/appresource
-  - name: resource_add_resource
-    description: "Add a new resource"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.addResource
-    http: POST /resource
-  - name: resource_find_all
-    description: "Find all resources per user or application"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.findAll
-    http: GET /resource
-  - name: resource_find_by_id
-    description: "Find resource by ID"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.findById
-    http: GET /resource/{id}
-  - name: resource_get_reading
-    description: "Get resource readings"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getReading
-    http: GET /resource/{id}/readings
-  - name: resource_get_current_reading
-    description: "Get the current resource reading."
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getCurrentReading
-    http: GET /resource/{id}/current
-  - name: resource_get_first_time
-    description: "Get the UTC time of the first available reading"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getFirstTime
-    http: GET /resource/{id}/first-time
-  - name: resource_get_last_time
-    description: "Get the UTC time of the most recent available reading"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getLastTime
-    http: GET /resource/{id}/last-time
-  - name: resource_get_meter_read
-    description: "Get the cumulative value reported on a metering device. (Not supported for all resource types)."
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getMeterRead
-    http: GET /resource/{id}/meterread
-  - name: resource_get_tariff
-    description: "Get the latest tariff that is being applied to a resource."
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getTariff
-    http: GET /resource/{id}/tariff
-  - name: resource_get_tariff_history
-    description: "Get the tariff history that is being applied to a cost resource."
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getTariffHistory
-    http: GET /resource/{id}/tariff-list
-  - name: resource_catch_up_readings
-    description: "Trigger a request to retrieve the latest available readings from the DCC."
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.catchUpReadings
-    http: GET /resource/{id}/catchup
-  - name: resource_get_glow_binary
-    description: "API that returns the resource's raw data in the Glow Binary format."
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getGlowBinary
-    http: GET /resource/{id}/glowbinary
-  - name: resource_delete_cache
-    description: "Remove cached resource data"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.deleteCache
-    http: DELETE /resource/{id}/cache
-  - name: resource_get_daily_consumption_log
-    description: "Get daily consumption log (DCC)."
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getDailyConsumptionLog
-    http: GET /resource/{id}/daily-consumption-log
-  - name: resource_count_by_resource_type
-    description: "Count the number of resources per resourceType"
-    source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.countByResourceType
-    http: GET /resource/count
-  - name: add_user
-    description: "Create a user"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#addUser
-    http: POST /register
-  - name: get_userby_username
-    description: "Find specific user that has an account in an application from the username."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getUserbyUsername
-    http: GET /user
-  - name: create_user
-    description: "Create a user"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#createUser
-    http: POST /user
-  - name: get_userby_id
-    description: "Find specific user that has an account in an application."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getUserbyId
-    http: GET /user/{userId}
-  - name: delete_userby_id
-    description: "Delete specific user. This will delete all the accounts of a user. Please refer to delete account API. This API requires specific permissions."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#deleteUserbyId
-    http: DELETE /user/{userId}
-  - name: generate_user_verification_token
-    description: "Generate a user verification token"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#generateUserVerificationToken
-    http: POST /user/verify
-  - name: verify_user
-    description: "Verify a user verification token"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#verifyUser
-    http: PUT /user/verify
-  - name: generate_user_password_reset_token
-    description: "Generate a token that can be used by user to reset their password."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#generateUserPasswordResetToken
-    http: POST /user/resetpassword
-  - name: reset_password_user
-    description: "A user resets their password"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#resetPasswordUser
-    http: PUT /user/resetpassword
-  - name: get_accounts
-    description: "Find all accounts of an application"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccounts
-    http: GET /account
-  - name: add_account
-    description: "Add an account to an existing user"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#addAccount
-    http: POST /account
-  - name: get_accountby_id
-    description: "Find specific account of an application."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountbyId
-    http: GET /account/{accountId}
-  - name: update_account
-    description: "Updates the account's metadata."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#updateAccount
-    http: PUT /account/{accountId}
-  - name: delete_account
-    description: "Delete account"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#deleteAccount
-    http: DELETE /account/{accountId}
-  - name: get_account_statusby_id
-    description: "Find the status of a specified account. If the account is using an external directory service, this call will confirm whether the user is authenticated against it. This call requires administrative application level credentials."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountStatusbyId
-    http: GET /account/{accountId}/status
-  - name: get_account_statusby_user_token
-    description: "With a given JWT token a user can have their account status verfied. If their account is created under an external directory service, this call will establish whether a user's token to the external service is still valid."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountStatusbyUserToken
-    http: GET /account/status
-  - name: user_change_email
-    description: "Change a user's email"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#userChangeEmail
-    http: POST /account/email
-  - name: update_username_user_id
-    description: "Change a user's username"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#updateUsernameUserId
-    http: PUT /user/{userId}/username
-  - name: user_change_name
-    description: "Change a user's name"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#userChangeName
-    http: POST /account/name
-  - name: user_change_pass_word
-    description: "Change a user's password"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#userChangePassWord
-    http: POST /account/changepassword
-  - name: get_account_profile
-    description: "Find all the profiles of an account"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountProfile
-    http: GET /accountprofile
-  - name: add_account_profile
-    description: "Create an account profile under a given profileName."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#addAccountProfile
-    http: POST /accountprofile
-  - name: get_account_profileby_profile_name
-    description: "Find specific group of application"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountProfilebyProfileName
-    http: GET /accountprofile/{profileName}
-  - name: get_account_session
-    description: "get the session of an account"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountSession
-    http: GET /accountsession
-  - name: update_account_session
-    description: "Update an account session."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#updateAccountSession
-    http: PUT /accountsession
-  - name: tokencheck
-    description: "Checks whether a user token is valid."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#tokencheck
-    http: GET /auth
-  - name: usernamelogin
-    description: "authenticate an account"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#usernamelogin
-    http: POST /auth
-  - name: get_token_of_user
-    description: "Returns all the tokens that are active and valid for a specified user."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getTokenOfUser
-    http: GET /auth/token
-  - name: delete_token_by_id
-    description: "Deletes a token, specified by its tokenId."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#deleteTokenById
-    http: DELETE /auth/token/{tokenId}
-  - name: new_token
-    description: "Generate a new token for an account."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#newToken
-    http: GET /auth/newToken
-  - name: delete_token
-    description: "delete a token"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#deleteToken
-    http: DELETE /auth/deleteToken
-  - name: validate_oauth_access_token
-    description: "Check and validate an Oauth Access token."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#validateOAuthAccessToken
-    http: GET /auth/oauth
-  - name: generate_oauthorization_code
-    description: "Authenticate a user and generate an OAuth 2.0 Authorization Code Grant."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#generateOAuthorizationCode
-    http: POST /auth/oauth
-  - name: exchange_authorization_code_with_access
-    description: "Exchange the Authorization Code for an Access Token."
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#exchangeAuthorizationCodeWithAccess
-    http: POST /auth/oauth/access
-  - name: get_user_meter_point_verification_consent_status
-    description: "API to retrieve user's meter points' consent and verification"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getUserMeterPointVerificationConsentStatus
-    http: GET /user/verification/status
-  - name: renew_meter_point_consent_bulk
-    description: "Renew consent for a number of meterpoints"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#renewMeterPointConsentBulk
-    http: POST /user/verification/status/mpxns/renewal
-  - name: renew_meter_point_consent_revoke_bulk
-    description: "Revoke consent for a number of meterpoints"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#renewMeterPointConsentRevokeBulk
-    http: POST /user/verification/status/mpxns/revocation
-  - name: get_meter_point_consent_renewal
-    description: "Get meter point consent renewals"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getMeterPointConsentRenewal
-    http: GET /user/verification/status/mpxn/{mpxn}/renewal
-  - name: renew_meter_point_consent
-    description: "Renew meter point consent"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#renewMeterPointConsent
-    http: POST /user/verification/status/mpxn/{mpxn}/renewal
-  - name: get_meter_point_consent_revocation
-    description: "Get meter point consent revocations"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getMeterPointConsentRevocation
-    http: GET /user/verification/status/mpxn/{mpxn}/revocation
-  - name: revoke_meter_point_consent
-    description: "Revoke meter point consent"
-    source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#revokeMeterPointConsent
-    http: POST /user/verification/status/mpxn/{mpxn}/revocation
-  - name: ve_type_add_ve_type
-    description: "Add a new Virtual Entity Type"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#veType.addVeType
-    http: POST /vetype
-  - name: ve_type_find_all
-    description: "Find all Virtual Entity Types"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#veType.findAll
-    http: GET /vetype
-  - name: ve_type_find_by_id
-    description: "Find Virtual Entity Type by ID"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#veType.findById
-    http: GET /vetype/{id}
-  - name: ve_type_update_ve_type
-    description: "Update a Virtual Entity Type"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#veType.updateVeType
-    http: PUT /vetype/{id}
-  - name: ve_type_find_resources_of_ve_type
-    description: "Find all resources that belong to a user that satisfy the Resource Types in the Virtual Entity Type definition."
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#veType.findResourcesOfVeType
-    http: GET /vetype/{id}/resources
-  - name: virtualentity_add_virtual_entity
-    description: "Add a new Virtual Entity"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.addVirtualEntity
-    http: POST /virtualentity
-  - name: virtualentity_find_all
-    description: "Find all Virtual Entities"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.findAll
-    http: GET /virtualentity
-  - name: virtualentity_find_by_id
-    description: "Find Virtual Entity by ID"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.findById
-    http: GET /virtualentity/{id}
-  - name: virtualentity_update_virtual_entity
-    description: "Update a Virtual Entity"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.updateVirtualEntity
-    http: PUT /virtualentity/{id}
-  - name: virtualentity_deactivate_virtual_entity
-    description: "Delete a Virtual Entity"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.deactivateVirtualEntity
-    http: DELETE /virtualentity/{id}
-  - name: virtualentity_find_resourcesby_ve_id
-    description: "Find the resources of that belong to Virtual Entity with ID"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.findResourcesbyVeId
-    http: GET /virtualentity/{id}/resources
-  - name: virtualentity_get_attributes
-    description: "Find a Virtual Entity's metadata by ID"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.getAttributes
-    http: GET /virtualentity/{id}/attribute
-  - name: virtualentity_add_update_attributes
-    description: "Add/Update a Virtual Entity's metadata"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.add-updateAttributes
-    http: POST /virtualentity/{id}/attribute
-  - name: virtualentity_delete_attributes
-    description: "delete metadata from the Virtual Entity"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.deleteAttributes
-    http: DELETE /virtualentity/{id}/attribute
-  - name: stats_get_application_ve_stats
-    description: "find statistics on the number of Virtual Entities per application"
-    source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#stats.getApplicationVeStats
-    http: GET /vesys/appstats
+- name: device_type_add_device_type
+  description: Add a new Device Type
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#deviceType.addDeviceType
+  http: POST /devicetype
+- name: device_type_find_all
+  description: Find all device types
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#deviceType.findAll
+  http: GET /devicetype
+- name: device_type_find_by_id
+  description: Find Device Type by ID
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#deviceType.findById
+  http: GET /devicetype/{id}
+- name: device_find_all
+  description: Get a user's devices
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.findAll
+  http: GET /device
+- name: device_add_device
+  description: Add a new device
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.addDevice
+  http: POST /device
+- name: device_find_by_id
+  description: Find device by ID
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.findById
+  http: GET /device/{id}
+- name: device_find_by_resource_id
+  description: Find the device that sources a specified resource.
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.findByResourceId
+  http: GET /device/resource/{resourceId}
+- name: device_get_meter_point_inventory
+  description: Get the DCC inventory of a meter point
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.getMeterPointInventory
+  http: GET /device/meter-point/{meterPointNumber}/inventory
+- name: device_get_meter_point_inventory_by_eui
+  description: Get the DCC inventory of a meter point by providing an EUI.
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.getMeterPointInventoryByEUI
+  http: GET /device/smart-meter/{eui}/inventory
+- name: device_get_meter_point_resources
+  description: Get the resources associated to a meter point
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.getMeterPointResources
+  http: GET /device/meter-point/{meterPointNumber}/resources
+- name: device_get_statusby_device_id
+  description: This call can be used to see whether a gateway device is sending packets to the Glow Platform
+    (i.e. via WiFi).
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.getStatusbyDeviceId
+  http: GET /device/{id}/status
+- name: device_get_statusby_hardware_id
+  description: This call can be used to see whether a gateway device is sending packets to the Glow Platform
+    (i.e. via WiFi).
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#device.getStatusbyHardwareId
+  http: GET /device/status
+- name: discover_devices_assets
+  description: Find device by ID
+  source_operation: openapi/hildebrand-glowmarkt-device-management-system-swagger.json#discoverDevicesAssets
+  http: GET /discover/{hardwareId}
+- name: get_alert_types
+  description: Find all alert types of an application
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getAlertTypes
+  http: GET /alerttype
+- name: add_alert_type
+  description: Create an alert type
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#addAlertType
+  http: POST /alerttype
+- name: get_alert_typeby_id
+  description: Find alert type by ID
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getAlertTypebyId
+  http: GET /alerttype/{alertTypeId}
+- name: update_alert_type
+  description: Updates the alert type's metadata.
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#updateAlertType
+  http: PUT /alerttype/{alertTypeId}
+- name: send_alert
+  description: Send an alert
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#sendAlert
+  http: POST /alert
+- name: find_alert_by_id
+  description: Get an alert by Id
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#findAlertById
+  http: GET /alert/{alertId}
+- name: find_alerts_of_user
+  description: Get the alerts sent to a user
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#findAlertsOfUser
+  http: GET /alert/user
+- name: get_templates
+  description: Find all templates of an application
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getTemplates
+  http: GET /template
+- name: add_template
+  description: Create a template
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#addTemplate
+  http: POST /template
+- name: get_templateby_id
+  description: Find template type by ID
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getTemplatebyId
+  http: GET /template/{templateId}
+- name: update_template
+  description: Updates the teplate's metadata.
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#updateTemplate
+  http: PUT /template/{templateId}
+- name: get_templateby_characteristics
+  description: Find template by alertTypeId, channeType and cultureCode
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getTemplatebyCharacteristics
+  http: GET /template/{alertTypeId}/{channelType}/{cultureCode}
+- name: add_templateby_code
+  description: Create template by alertTypeId, channeType and cultureCode
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#addTemplatebyCode
+  http: POST /template/{alertTypeId}/{channelType}/{cultureCode}
+- name: find_notification_by_id
+  description: Get a notification by Id
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#findNotificationById
+  http: GET /notification/{notificationId}
+- name: get_notification_logs
+  description: Get the logs of a particular notification
+  source_operation: openapi/hildebrand-glowmarkt-notification-system-swagger.json#getNotificationLogs
+  http: GET /notification/{notificationId}/log
+- name: resourcetype_add_resource_type
+  description: Add a new resource type.
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resourcetype.addResourceType
+  http: POST /resourcetype
+- name: resourcetype_find_all
+  description: Find all resource types
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resourcetype.findAll
+  http: GET /resourcetype
+- name: resourcetype_find_by_id
+  description: Find resourceType by ID
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resourcetype.findById
+  http: GET /resourcetype/{id}
+- name: resourcetype_find_resource_by_type
+  description: Find resources of a specific resource type that belong to a user
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resourcetype.findResourceByType
+  http: GET /resourcetype/{id}/resource
+- name: resourcetype_find_app_resource_by_type
+  description: Find resources of a specific resource type that an application has access to
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resourcetype.findAppResourceByType
+  http: GET /resourcetype/{id}/appresource
+- name: resource_add_resource
+  description: Add a new resource
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.addResource
+  http: POST /resource
+- name: resource_find_all
+  description: Find all resources per user or application
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.findAll
+  http: GET /resource
+- name: resource_find_by_id
+  description: Find resource by ID
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.findById
+  http: GET /resource/{id}
+- name: resource_get_reading
+  description: Get resource readings
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getReading
+  http: GET /resource/{id}/readings
+- name: resource_get_current_reading
+  description: Get the current resource reading.
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getCurrentReading
+  http: GET /resource/{id}/current
+- name: resource_get_first_time
+  description: Get the UTC time of the first available reading
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getFirstTime
+  http: GET /resource/{id}/first-time
+- name: resource_get_last_time
+  description: Get the UTC time of the most recent available reading
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getLastTime
+  http: GET /resource/{id}/last-time
+- name: resource_get_meter_read
+  description: Get the cumulative value reported on a metering device. (Not supported for all resource
+    types).
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getMeterRead
+  http: GET /resource/{id}/meterread
+- name: resource_get_tariff
+  description: Get the latest tariff that is being applied to a resource.
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getTariff
+  http: GET /resource/{id}/tariff
+- name: resource_get_tariff_history
+  description: Get the tariff history that is being applied to a cost resource.
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getTariffHistory
+  http: GET /resource/{id}/tariff-list
+- name: resource_catch_up_readings
+  description: Trigger a request to retrieve the latest available readings from the DCC.
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.catchUpReadings
+  http: GET /resource/{id}/catchup
+- name: resource_get_glow_binary
+  description: API that returns the resource's raw data in the Glow Binary format.
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getGlowBinary
+  http: GET /resource/{id}/glowbinary
+- name: resource_delete_cache
+  description: Remove cached resource data
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.deleteCache
+  http: DELETE /resource/{id}/cache
+- name: resource_get_daily_consumption_log
+  description: Get daily consumption log (DCC).
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.getDailyConsumptionLog
+  http: GET /resource/{id}/daily-consumption-log
+- name: resource_count_by_resource_type
+  description: Count the number of resources per resourceType
+  source_operation: openapi/hildebrand-glowmarkt-resource-system-swagger.json#resource.countByResourceType
+  http: GET /resource/count
+- name: add_user
+  description: Create a user
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#addUser
+  http: POST /register
+- name: get_userby_username
+  description: Find specific user that has an account in an application from the username.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getUserbyUsername
+  http: GET /user
+- name: create_user
+  description: Create a user
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#createUser
+  http: POST /user
+- name: get_userby_id
+  description: Find specific user that has an account in an application.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getUserbyId
+  http: GET /user/{userId}
+- name: delete_userby_id
+  description: Delete specific user. This will delete all the accounts of a user. Please refer to delete
+    account API. This API requires specific permissions.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#deleteUserbyId
+  http: DELETE /user/{userId}
+- name: generate_user_verification_token
+  description: Generate a user verification token
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#generateUserVerificationToken
+  http: POST /user/verify
+- name: verify_user
+  description: Verify a user verification token
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#verifyUser
+  http: PUT /user/verify
+- name: generate_user_password_reset_token
+  description: Generate a token that can be used by user to reset their password.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#generateUserPasswordResetToken
+  http: POST /user/resetpassword
+- name: reset_password_user
+  description: A user resets their password
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#resetPasswordUser
+  http: PUT /user/resetpassword
+- name: get_accounts
+  description: Find all accounts of an application
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccounts
+  http: GET /account
+- name: add_account
+  description: Add an account to an existing user
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#addAccount
+  http: POST /account
+- name: get_accountby_id
+  description: Find specific account of an application.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountbyId
+  http: GET /account/{accountId}
+- name: update_account
+  description: Updates the account's metadata.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#updateAccount
+  http: PUT /account/{accountId}
+- name: delete_account
+  description: Delete account
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#deleteAccount
+  http: DELETE /account/{accountId}
+- name: get_account_statusby_id
+  description: Find the status of a specified account. If the account is using an external directory service,
+    this call will confirm whether the user is authenticated against it. This call requires administrative
+    application level credentials.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountStatusbyId
+  http: GET /account/{accountId}/status
+- name: get_account_statusby_user_token
+  description: With a given JWT token a user can have their account status verfied. If their account is
+    created under an external directory service, this call will establish whether a user's token to the
+    external service is still valid.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountStatusbyUserToken
+  http: GET /account/status
+- name: user_change_email
+  description: Change a user's email
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#userChangeEmail
+  http: POST /account/email
+- name: update_username_user_id
+  description: Change a user's username
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#updateUsernameUserId
+  http: PUT /user/{userId}/username
+- name: user_change_name
+  description: Change a user's name
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#userChangeName
+  http: POST /account/name
+- name: user_change_pass_word
+  description: Change a user's password
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#userChangePassWord
+  http: POST /account/changepassword
+- name: get_account_profile
+  description: Find all the profiles of an account
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountProfile
+  http: GET /accountprofile
+- name: add_account_profile
+  description: Create an account profile under a given profileName.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#addAccountProfile
+  http: POST /accountprofile
+- name: get_account_profileby_profile_name
+  description: Find specific group of application
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountProfilebyProfileName
+  http: GET /accountprofile/{profileName}
+- name: get_account_session
+  description: get the session of an account
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getAccountSession
+  http: GET /accountsession
+- name: update_account_session
+  description: Update an account session.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#updateAccountSession
+  http: PUT /accountsession
+- name: tokencheck
+  description: Checks whether a user token is valid.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#tokencheck
+  http: GET /auth
+- name: usernamelogin
+  description: authenticate an account
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#usernamelogin
+  http: POST /auth
+- name: get_token_of_user
+  description: Returns all the tokens that are active and valid for a specified user.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getTokenOfUser
+  http: GET /auth/token
+- name: delete_token_by_id
+  description: Deletes a token, specified by its tokenId.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#deleteTokenById
+  http: DELETE /auth/token/{tokenId}
+- name: new_token
+  description: Generate a new token for an account.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#newToken
+  http: GET /auth/newToken
+- name: delete_token
+  description: delete a token
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#deleteToken
+  http: DELETE /auth/deleteToken
+- name: validate_oauth_access_token
+  description: Check and validate an Oauth Access token.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#validateOAuthAccessToken
+  http: GET /auth/oauth
+- name: generate_oauthorization_code
+  description: Authenticate a user and generate an OAuth 2.0 Authorization Code Grant.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#generateOAuthorizationCode
+  http: POST /auth/oauth
+- name: exchange_authorization_code_with_access
+  description: Exchange the Authorization Code for an Access Token.
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#exchangeAuthorizationCodeWithAccess
+  http: POST /auth/oauth/access
+- name: get_user_meter_point_verification_consent_status
+  description: API to retrieve user's meter points' consent and verification
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getUserMeterPointVerificationConsentStatus
+  http: GET /user/verification/status
+- name: renew_meter_point_consent_bulk
+  description: Renew consent for a number of meterpoints
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#renewMeterPointConsentBulk
+  http: POST /user/verification/status/mpxns/renewal
+- name: renew_meter_point_consent_revoke_bulk
+  description: Revoke consent for a number of meterpoints
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#renewMeterPointConsentRevokeBulk
+  http: POST /user/verification/status/mpxns/revocation
+- name: get_meter_point_consent_renewal
+  description: Get meter point consent renewals
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getMeterPointConsentRenewal
+  http: GET /user/verification/status/mpxn/{mpxn}/renewal
+- name: renew_meter_point_consent
+  description: Renew meter point consent
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#renewMeterPointConsent
+  http: POST /user/verification/status/mpxn/{mpxn}/renewal
+- name: get_meter_point_consent_revocation
+  description: Get meter point consent revocations
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#getMeterPointConsentRevocation
+  http: GET /user/verification/status/mpxn/{mpxn}/revocation
+- name: revoke_meter_point_consent
+  description: Revoke meter point consent
+  source_operation: openapi/hildebrand-glowmarkt-user-system-swagger.json#revokeMeterPointConsent
+  http: POST /user/verification/status/mpxn/{mpxn}/revocation
+- name: ve_type_add_ve_type
+  description: Add a new Virtual Entity Type
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#veType.addVeType
+  http: POST /vetype
+- name: ve_type_find_all
+  description: Find all Virtual Entity Types
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#veType.findAll
+  http: GET /vetype
+- name: ve_type_find_by_id
+  description: Find Virtual Entity Type by ID
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#veType.findById
+  http: GET /vetype/{id}
+- name: ve_type_update_ve_type
+  description: Update a Virtual Entity Type
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#veType.updateVeType
+  http: PUT /vetype/{id}
+- name: ve_type_find_resources_of_ve_type
+  description: Find all resources that belong to a user that satisfy the Resource Types in the Virtual
+    Entity Type definition.
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#veType.findResourcesOfVeType
+  http: GET /vetype/{id}/resources
+- name: virtualentity_add_virtual_entity
+  description: Add a new Virtual Entity
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.addVirtualEntity
+  http: POST /virtualentity
+- name: virtualentity_find_all
+  description: Find all Virtual Entities
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.findAll
+  http: GET /virtualentity
+- name: virtualentity_find_by_id
+  description: Find Virtual Entity by ID
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.findById
+  http: GET /virtualentity/{id}
+- name: virtualentity_update_virtual_entity
+  description: Update a Virtual Entity
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.updateVirtualEntity
+  http: PUT /virtualentity/{id}
+- name: virtualentity_deactivate_virtual_entity
+  description: Delete a Virtual Entity
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.deactivateVirtualEntity
+  http: DELETE /virtualentity/{id}
+- name: virtualentity_find_resourcesby_ve_id
+  description: Find the resources of that belong to Virtual Entity with ID
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.findResourcesbyVeId
+  http: GET /virtualentity/{id}/resources
+- name: virtualentity_get_attributes
+  description: Find a Virtual Entity's metadata by ID
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.getAttributes
+  http: GET /virtualentity/{id}/attribute
+- name: virtualentity_add_update_attributes
+  description: Add/Update a Virtual Entity's metadata
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.add-updateAttributes
+  http: POST /virtualentity/{id}/attribute
+- name: virtualentity_delete_attributes
+  description: delete metadata from the Virtual Entity
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#virtualentity.deleteAttributes
+  http: DELETE /virtualentity/{id}/attribute
+- name: stats_get_application_ve_stats
+  description: find statistics on the number of Virtual Entities per application
+  source_operation: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json#stats.getApplicationVeStats
+  http: GET /vesys/appstats
+deployment:
+  mode: none
+  verified: derived
+  tools: 104
+  checked: '2026-08-12'
+  source: catalog MCP census

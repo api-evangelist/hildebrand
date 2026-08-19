@@ -1,0 +1,265 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Device Management System",
+    "version": "1.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DeviceType",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all device types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/devicetype"
+          },
+          "docs": "returns a list of devicetypes"
+        },
+        {
+          "info": {
+            "name": "Add a new Device Type",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/devicetype"
+          },
+          "docs": "create a new Device Type"
+        },
+        {
+          "info": {
+            "name": "Find Device Type by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/devicetype/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of Device Type to return"
+              }
+            ]
+          },
+          "docs": "Returns a single Device Type"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Device",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a user's devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/device",
+            "params": [
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "hardwareId of a device"
+              }
+            ]
+          },
+          "docs": "Returns an array of the devices that belong to a user."
+        },
+        {
+          "info": {
+            "name": "Add a new device",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/device"
+          },
+          "docs": "create a new device"
+        },
+        {
+          "info": {
+            "name": "Find device by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/device/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of device to return"
+              }
+            ]
+          },
+          "docs": "Returns a single device"
+        },
+        {
+          "info": {
+            "name": "Find the device that sources a specified resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/device/resource/:resourceId",
+            "params": [
+              {
+                "name": "resourceId",
+                "value": "",
+                "type": "path",
+                "description": "Resource ID"
+              }
+            ]
+          },
+          "docs": "Returns a Device, that sources a specified resource."
+        },
+        {
+          "info": {
+            "name": "This call can be used to see whether a gateway device is sending packets to the Glow Platform (i.e. via WiFi).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/device/:id/status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of device to return"
+              }
+            ]
+          },
+          "docs": "This call can be used to see whether a gateway device is sending packets to the Glow Platform (i.e. via WiFi)."
+        },
+        {
+          "info": {
+            "name": "This call can be used to see whether a gateway device is sending packets to the Glow Platform (i.e. via WiFi).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/device/status",
+            "params": [
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "the HardwareId of the device"
+              }
+            ]
+          },
+          "docs": "This call can be used to see whether a gateway device is sending packets to the Glow Platform (i.e. via WiFi)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Device Meter Point DCC inventory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the DCC inventory of a meter point",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/device/meter-point/:meterPointNumber/inventory",
+            "params": [
+              {
+                "name": "meterPointNumber",
+                "value": "",
+                "type": "path",
+                "description": "Meter Point Number"
+              }
+            ]
+          },
+          "docs": "Returns the DCC inventory"
+        },
+        {
+          "info": {
+            "name": "Get the DCC inventory of a meter point by providing an EUI.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/device/smart-meter/:eui/inventory",
+            "params": [
+              {
+                "name": "eui",
+                "value": "",
+                "type": "path",
+                "description": "EUI"
+              }
+            ]
+          },
+          "docs": "Returns the DCC inventory"
+        },
+        {
+          "info": {
+            "name": "Get the resources associated to a meter point",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/device/meter-point/:meterPointNumber/resources",
+            "params": [
+              {
+                "name": "meterPointNumber",
+                "value": "",
+                "type": "path",
+                "description": "Meter Point Number"
+              }
+            ]
+          },
+          "docs": "Returns the resources that are associated to a meter point"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "discover",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find device by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/discover/:hardwareId",
+            "params": [
+              {
+                "name": "hardwareId",
+                "value": "",
+                "type": "path",
+                "description": "A hardware identifier of a Device. For a network device, we typically use the MAC address."
+              }
+            ]
+          },
+          "docs": "Returns the devices and if they do not exist the assets and product types"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

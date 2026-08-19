@@ -1,0 +1,695 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Glowmarkt User System",
+    "version": "1.0.5"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/register"
+          },
+          "docs": "Create a User a directory account for username and password login using this action. More specifically this is a registration process which creates a user and adds an account to the given application id. Self-Registration process should use this action. This call requires no authentication."
+        },
+        {
+          "info": {
+            "name": "Find specific user that has an account in an application from the username.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/user",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "The username of user that is being queried (lowercase, trimmed etc). Please note that this API is prone to errors if the username contains characters that are affected by URL encoding."
+              }
+            ]
+          },
+          "docs": "Returns a user."
+        },
+        {
+          "info": {
+            "name": "Create a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/user"
+          },
+          "docs": "This call can be used by an application to create a user. No verification will be required"
+        },
+        {
+          "info": {
+            "name": "Find specific user that has an account in an application.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/user/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "ID of user that is being queried"
+              }
+            ]
+          },
+          "docs": "Returns a user."
+        },
+        {
+          "info": {
+            "name": "Delete specific user. This will delete all the accounts of a user. Please refer to delete account API. This API requires specific permissions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/user/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "ID of user that is being queried"
+              }
+            ]
+          },
+          "docs": "Deletes a user."
+        },
+        {
+          "info": {
+            "name": "Generate a user verification token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/user/verify"
+          },
+          "docs": "This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email)."
+        },
+        {
+          "info": {
+            "name": "Verify a user verification token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/user/verify"
+          },
+          "docs": "This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email)."
+        },
+        {
+          "info": {
+            "name": "Generate a token that can be used by user to reset their password.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/user/resetpassword"
+          },
+          "docs": "This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email). The user can then use this token to reset their password."
+        },
+        {
+          "info": {
+            "name": "A user resets their password",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/user/resetpassword"
+          },
+          "docs": "This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email)."
+        },
+        {
+          "info": {
+            "name": "Change a user's username",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/user/:userId/username",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "ID of user that is being queried"
+              }
+            ]
+          },
+          "docs": "API to update a user's username"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all accounts of an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/account"
+          },
+          "docs": "Returns all accounts that belong to an application."
+        },
+        {
+          "info": {
+            "name": "Add an account to an existing user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/account"
+          },
+          "docs": "This call should be used when a user is registered via  on the Glow ecosystem. By providing the username of the user a directory account may be added to the application."
+        },
+        {
+          "info": {
+            "name": "Find specific account of an application.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/account/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "ID of account that is being queried"
+              }
+            ]
+          },
+          "docs": "Returns an account."
+        },
+        {
+          "info": {
+            "name": "Updates the account's metadata.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/account/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "ID of user that needs to be updated"
+              }
+            ]
+          },
+          "docs": "Updates the account s metadata. Elements that can be updated include name. This can be used in on an administrative level."
+        },
+        {
+          "info": {
+            "name": "Delete account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/account/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "ID of account that is to be deleted"
+              }
+            ]
+          },
+          "docs": "Delete account"
+        },
+        {
+          "info": {
+            "name": "Find the status of a specified account. If the account is using an external directory service, this call will confirm whether the user is authenticated against it. This call requires administrative application level credentials.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/account/:accountId/status",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "ID of account that is being queried"
+              }
+            ]
+          },
+          "docs": "Returns the status an account."
+        },
+        {
+          "info": {
+            "name": "With a given JWT token a user can have their account status verfied. If their account is created under an external directory service, this call will establish whether a user's token to the external service is still valid.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/account/status"
+          },
+          "docs": "Returns the status an account."
+        },
+        {
+          "info": {
+            "name": "Change a user's email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/account/email"
+          },
+          "docs": "A user can update their email"
+        },
+        {
+          "info": {
+            "name": "Change a user's name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/account/name"
+          },
+          "docs": "A user can update their name"
+        },
+        {
+          "info": {
+            "name": "Change a user's password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/account/changepassword"
+          },
+          "docs": "A user can change their passwrod. They would neeed to have knowledge of their previous password and provide it in the body."
+        },
+        {
+          "info": {
+            "name": "Add mobile app token to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/account/:accountId/mobileapptoken",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "ID of account that is being queried"
+              }
+            ]
+          },
+          "docs": "Mobile app token can be added to the user, who will then be able to receive push notifications."
+        },
+        {
+          "info": {
+            "name": "Remove a mobile app token to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/account/:accountId/mobileapptoken",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "ID of account that is being queried"
+              }
+            ]
+          },
+          "docs": "Mobile app tokens can be removed from a user."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account Profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all the profiles of an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accountprofile"
+          },
+          "docs": "Returns all the profileNames of profiles an account has saved."
+        },
+        {
+          "info": {
+            "name": "Create an account profile under a given profileName.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accountprofile"
+          },
+          "docs": "Create an account profile under a given profileName. profileName is a required field. Please note that anything under the profileName will be overwritten."
+        },
+        {
+          "info": {
+            "name": "Find specific group of application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accountprofile/:profileName",
+            "params": [
+              {
+                "name": "profileName",
+                "value": "",
+                "type": "path",
+                "description": "profileName of the system to be retrieved"
+              }
+            ]
+          },
+          "docs": "Returns an application's group."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account Session",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "get the session of an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accountsession"
+          },
+          "docs": "Returns the session of an account"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "accountsession",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update an account session.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/accountsession"
+          },
+          "docs": "Update fields of an account session. The fields that are updated are completely overwritten if they exist."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Checks whether a user token is valid.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth"
+          },
+          "docs": "Checks whether a user token is valid."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "authenticate an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth",
+            "headers": [
+              {
+                "name": "applicationId",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Autheticates the user and generates a JWT token."
+        },
+        {
+          "info": {
+            "name": "Returns all the tokens that are active and valid for a specified user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/token"
+          },
+          "docs": "This call enables a customer to view all the tokens that have been generated and used for their accounts. This includes all the JWT and OAuth tokens. By enabling this a user can then manage and monitor the access to their accounts."
+        },
+        {
+          "info": {
+            "name": "Deletes a token, specified by its tokenId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/auth/token/:tokenId",
+            "params": [
+              {
+                "name": "tokenId",
+                "value": "",
+                "type": "path",
+                "description": "GUID of token that is to be deleted"
+              }
+            ]
+          },
+          "docs": "This call enables an user to delete and token and revoke access. JWT as well as OAuth tokens can be deleted."
+        },
+        {
+          "info": {
+            "name": "Generate a new token for an account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/newToken"
+          },
+          "docs": "An account provides an old token and gets a new one generated."
+        },
+        {
+          "info": {
+            "name": "delete a token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/auth/deleteToken"
+          },
+          "docs": "Delete the token the account used to make this call."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OAuth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check and validate an Oauth Access token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/oauth"
+          },
+          "docs": "The user system supports an OAuth 2.0 Authorization Code Grant. This call validates that a generated access key is valid."
+        },
+        {
+          "info": {
+            "name": "Authenticate a user and generate an OAuth 2.0 Authorization Code Grant.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/oauth",
+            "headers": [
+              {
+                "name": "applicationId",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The user system supports an OAuth 2.0 Authorization Code Grant. This call authenticates a user and generates an OAuth 2.0 Authorization Code Grant."
+        },
+        {
+          "info": {
+            "name": "Exchange the Authorization Code for an Access Token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/oauth/access"
+          },
+          "docs": "The user system supports an OAuth 2.0 Authorization Code Grant. This call generates an access and refresh token from an OAuth 2.0 Authorization Code Grant. This API can also be used to generate a new access token with a given refresh token. Instead of using the authorization code in the body of the request (code), use the refresh token (refresh_token)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Meter Point Consent & Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "API to retrieve user's meter points' consent and verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/user/verification/status"
+          },
+          "docs": "API to retrieve user's meter points' consent and verification status"
+        },
+        {
+          "info": {
+            "name": "Renew consent for a number of meterpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/user/verification/status/mpxns/renewal"
+          },
+          "docs": "A user can renew their consent for a number of meterpoints.  The consent can be extended to a maximum of 18 months (default)."
+        },
+        {
+          "info": {
+            "name": "Revoke consent for a number of meterpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/user/verification/status/mpxns/revocation"
+          },
+          "docs": "A user can revoke their consent for a number of meterpoints."
+        },
+        {
+          "info": {
+            "name": "Get meter point consent renewals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/user/verification/status/mpxn/:mpxn/renewal",
+            "params": [
+              {
+                "name": "mpxn",
+                "value": "",
+                "type": "path",
+                "description": "meter point number"
+              }
+            ]
+          },
+          "docs": "Get meter point consent renewals"
+        },
+        {
+          "info": {
+            "name": "Renew meter point consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/user/verification/status/mpxn/:mpxn/renewal",
+            "params": [
+              {
+                "name": "mpxn",
+                "value": "",
+                "type": "path",
+                "description": "meter point number"
+              }
+            ]
+          },
+          "docs": "A user can renew their consent to access a meter point's data. The consent can be extended to a maximum of 18 months (default)."
+        },
+        {
+          "info": {
+            "name": "Get meter point consent revocations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/user/verification/status/mpxn/:mpxn/revocation",
+            "params": [
+              {
+                "name": "mpxn",
+                "value": "",
+                "type": "path",
+                "description": "meter point number"
+              }
+            ]
+          },
+          "docs": "Get meter point consent revocations"
+        },
+        {
+          "info": {
+            "name": "Revoke meter point consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/user/verification/status/mpxn/:mpxn/revocation",
+            "params": [
+              {
+                "name": "mpxn",
+                "value": "",
+                "type": "path",
+                "description": "meter point number"
+              }
+            ]
+          },
+          "docs": "A user can renew their consent to access a meter point's data. The consent can be extended to a maximum of 18 months (default)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

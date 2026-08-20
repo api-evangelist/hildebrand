@@ -60,6 +60,12 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
+  - User
+  - Account
+  - Authentication
+  - Consent
+  - Meter Points
+  tags_raw:
   - Users
   - Accounts
   - Authentication
@@ -157,6 +163,11 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
   baseURL: https://api.glowmarkt.com/api/v0-1/ns
   tags:
+  - Notification
+  - Alerts
+  - Templates
+  - Messaging
+  tags_raw:
   - Notifications
   - Alerts
   - Templates

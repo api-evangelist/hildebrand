@@ -49,137 +49,545 @@ created: '2026-07-27'
 modified: '2026-07-27'
 specificationVersion: '0.23'
 apis:
-- aid: hildebrand:glowmarkt-user-system-api
-  name: Glowmarkt User System API
+- aid: hildebrand:hildebrand-account-api
+  name: Hildebrand Account API
+  description: The Account API from Hildebrand — 8 operation(s) for account.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-account-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-account-profile-api
+  name: Hildebrand Account Profile API
+  description: The Account Profile API from Hildebrand — 2 operation(s) for account profile.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Account Profile
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-account-profile-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-account-session-api
+  name: Hildebrand Account Session API
+  description: The Account Session API from Hildebrand — 1 operation(s) for account session.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Account Session
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-account-session-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-accountsession-api
+  name: Hildebrand Accountsession API
+  description: The accountsession API from Hildebrand — 1 operation(s) for accountsession.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - accountsession
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-accountsession-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-alert-api
+  name: Hildebrand Alert API
   description: >-
-    User, account, authentication and consent management for the Glow Platform. Covers user
-    registration, account profiles and sessions, JWT issuance via POST /auth, an OAuth 2.0
-    authorization-code grant (POST /auth/oauth and POST /auth/oauth/access), and — the part that
-    matters most in the British smart-metering context — Meter Point Consent and Verification, where
-    consent to retrieve data is renewed and revoked per MPxN.
+    An application can send an alert to a customer across multiple channels (email, push, inbox) which
+    will convey some type of specific message (defined by the alert type).
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - alert
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-alert-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-alerttype-api
+  name: Hildebrand Alerttype API
+  description: >-
+    The definition of an alert, what functionality the alert represents. It is an identifier which amongst
+    other elements will point us to the correct template. An alert type belongs to an application.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - alerttype
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-alerttype-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-auth-api
+  name: Hildebrand Auth API
+  description: The Auth API from Hildebrand — 5 operation(s) for auth.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-auth-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-device-api
+  name: Hildebrand Device API
+  description: The Device API from Hildebrand — 5 operation(s) for device.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Device
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-device-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-device-meter-point-dcc-inventory-api
+  name: Hildebrand Device Meter Point DCC inventory API
+  description: >-
+    The Device Meter Point DCC inventory API from Hildebrand — 3 operation(s) for device meter point dcc
+    inventory.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Device Meter Point DCC inventory
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-device-meter-point-dcc-inventory-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-devicetype-api
+  name: Hildebrand Device Type API
+  description: The DeviceType API from Hildebrand — 2 operation(s) for devicetype.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - DeviceType
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-devicetype-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-discover-api
+  name: Hildebrand Discover API
+  description: The discover API from Hildebrand — 1 operation(s) for discover.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - discover
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-discover-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-meter-point-consent-verification-api
+  name: Hildebrand Meter Point Consent & Verification API
+  description: >-
+    The Meter Point Consent & Verification API from Hildebrand — 5 operation(s) for meter point consent
+    & verification.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Meter Point Consent & Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-meter-point-consent-verification-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-notification-api
+  name: Hildebrand Notification API
+  description: >-
+    When an application triggeers an alert, for each channel of communication a notification is created.
+    This enables the system to monitor seperately whant happens in each channel.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - notification
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-notification-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-oauth-api
+  name: Hildebrand O Auth API
+  description: The OAuth API from Hildebrand — 2 operation(s) for oauth.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-oauth-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-resource-api
+  name: Hildebrand Resource API
+  description: >-
+    A Resource is a representation of data collected from a physical device, like sensor readings, or
+    changes in an actuating device state etc.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Resource
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-resource-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-resource-type-api
+  name: Hildebrand Resource Type API
+  description: >-
+    A Resource Type defines the storage structure of the resources supported by the Glow Platform.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Resource Type
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-resource-type-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-template-api
+  name: Hildebrand Template API
+  description: >-
+    The template of the message that is being sent; it can be passed through as HTML or JSON. Each template
+    has an alert type, is specific to a single channel of communication and a culrture code.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - template
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-template-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-user-api
+  name: Hildebrand User API
+  description: The User API from Hildebrand — 6 operation(s) for user.
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
   - User
-  - Account
-  - Authentication
-  - Consent
-  - Meter Points
-  tags_raw:
-  - Users
-  - Accounts
-  - Authentication
-  - OAuth
-  - Consent
-  - Meter Points
   properties:
   - type: OpenAPI
-    url: openapi/hildebrand-glowmarkt-user-system-swagger.json
-  - type: Overlay
-    url: overlays/hildebrand-glowmarkt-user-system-overlay.yaml
+    url: openapi/hildebrand-user-api-openapi.yml
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   - type: Documentation
-    url: https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
-- aid: hildebrand:glowmarkt-resource-system-api
-  name: Glowmarkt Resource System API
-  description: >-
-    Time-series energy data retrieval. A resource is a single data stream — electricity consumption,
-    electricity cost, gas consumption, gas cost, electricity export, reactive import/export — each
-    carrying a classifier such as electricity.consumption or gas.consumption.cost. Exposes historical
-    readings with ISO 8601 aggregation periods (PT1M through P1Y), current readings, first/last reading
-    times, cumulative meter reads, the tariff applied to a cost resource and its history, a DCC catchup
-    trigger, a DCC daily consumption log, and raw data in Hildebrand's Glow Binary format.
-  humanURL: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
-  baseURL: https://api.glowmarkt.com/api/v0-1
-  tags:
-  - Energy Data
-  - Consumption
-  - Tariffs
-  - Time Series
-  - Smart Metering
-  - DCC
-  properties:
-  - type: OpenAPI
-    url: openapi/hildebrand-glowmarkt-resource-system-swagger.json
-  - type: Overlay
-    url: overlays/hildebrand-glowmarkt-resource-system-overlay.yaml
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
-  - type: Documentation
-    url: https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
-- aid: hildebrand:glowmarkt-virtual-entity-system-api
-  name: Glowmarkt Virtual Entity System API
-  description: >-
-    CRUD over Virtual Entities — the Glow Platform's model of a physical "thing" such as a home or a
-    site, made up of metadata and a collection of resources. Lists the virtual entities a caller has
-    access to, resolves the resources belonging to each, manages virtual entity types and metadata
-    attributes, and reports per-application virtual entity statistics.
-  humanURL: https://api.glowmarkt.com/api-docs/v0-1/vesys/
-  baseURL: https://api.glowmarkt.com/api/v0-1
-  tags:
-  - Virtual Entities
-  - Sites
-  - Metadata
-  - Energy Data
-  properties:
-  - type: OpenAPI
-    url: openapi/hildebrand-glowmarkt-virtual-entity-system-swagger.json
-  - type: Overlay
-    url: overlays/hildebrand-glowmarkt-virtual-entity-system-overlay.yaml
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
-  - type: Documentation
-    url: https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
-- aid: hildebrand:glowmarkt-device-management-system-api
-  name: Glowmarkt Device Management System API
-  description: >-
-    Registration and status of the physical hardware feeding the platform — gateways such as the Glow
-    CAD and GlowStick, sensors such as smart electricity meters, and actuators such as auxiliary load
-    control switches. Also exposes the DCC inventory of a meter point by MPxN or by smart-meter EUI,
-    the resources associated to a meter point, and gateway packet-delivery status.
-  humanURL: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
-  baseURL: https://api.glowmarkt.com/api/v0-1
-  tags:
-  - Devices
-  - Hardware
-  - Gateways
-  - Smart Metering
-  - DCC
-  - IoT
-  properties:
-  - type: OpenAPI
-    url: openapi/hildebrand-glowmarkt-device-management-system-swagger.json
-  - type: Overlay
-    url: overlays/hildebrand-glowmarkt-device-management-system-overlay.yaml
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
-- aid: hildebrand:glowmarkt-notification-system-api
-  name: Glowmarkt Notification System API
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-virtual-entity-api
+  name: Hildebrand Virtual Entity API
   description: >-
-    Alerting and messaging for Glow-based applications. Defines alert types, manages per-channel and
-    per-culture message templates, sends alerts to users, and reports notification delivery and logs.
-    Served from its own base path, /api/v0-1/ns.
-  humanURL: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
-  baseURL: https://api.glowmarkt.com/api/v0-1/ns
+    A Virtual Entity is an instance of the Virtual Entity Type and is tied to an owner as well as an applicationId.
+    In order to create a Virtual Entity a user must have all the required resources.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
-  - Notification
-  - Alerts
-  - Templates
-  - Messaging
-  tags_raw:
-  - Notifications
-  - Alerts
-  - Templates
-  - Messaging
+  - Virtual Entity
   properties:
   - type: OpenAPI
-    url: openapi/hildebrand-glowmarkt-notification-system-swagger.json
-  - type: Overlay
-    url: overlays/hildebrand-glowmarkt-notification-system-overlay.yaml
+    url: openapi/hildebrand-virtual-entity-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-virtual-entity-s-metadata-api
+  name: Hildebrand Virtual Entity's Metadata API
+  description: >-
+    A Virtual Entity's metadata can be used to save information that will facilitate the virtual representation
+    of the entity. This is typically attribute data that does not change in time.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Virtual Entity's Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-virtual-entity-s-metadata-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-virtual-entity-statistics-api
+  name: Hildebrand Virtual Entity Statistics API
+  description: >-
+    APIs that return an overview of the Virtual Entities an application has (administrative API).
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Virtual Entity Statistics
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-virtual-entity-statistics-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-virtual-entity-type-api
+  name: Hildebrand Virtual Entity Type API
+  description: >-
+    Entity that belongs and is managed by an application and contains the definition and combination of
+    the Resource Types that are required to create a Virtual Entity.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - Virtual Entity Type
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-virtual-entity-type-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
 common:
+- type: Overlay
+  url: overlays/hildebrand-glowmarkt-user-system-overlay.yaml
+- type: Overlay
+  url: overlays/hildebrand-glowmarkt-resource-system-overlay.yaml
+- type: Overlay
+  url: overlays/hildebrand-glowmarkt-virtual-entity-system-overlay.yaml
+- type: Overlay
+  url: overlays/hildebrand-glowmarkt-device-management-system-overlay.yaml
+- type: Overlay
+  url: overlays/hildebrand-glowmarkt-notification-system-overlay.yaml
 - type: GettingStarted
   url: https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
 - type: Blog

@@ -20,6 +20,18 @@ description: >-
   per MPxN, with consumer verification and consent captured per meter point. Hildebrand publishes no
   open grid or market data of any kind: every documented endpoint returns HTTP 400 without an
   applicationId header, so this is a closed-market-data, consent-gated-consumer-data provider.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: request

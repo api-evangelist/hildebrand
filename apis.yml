@@ -590,6 +590,9 @@ apis:
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
 common:
+- type: CapabilityMap
+  url: capabilities/hildebrand-capability-edges.yml
+  name: Hildebrand Business Capability Map
 - type: Overlay
   url: overlays/hildebrand-glowmarkt-user-system-overlay.yaml
 - type: Overlay

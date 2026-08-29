@@ -1,0 +1,25 @@
+slug: hildebrand
+provider: Hildebrand
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Power & Water Utilities
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Device Meter Point DCC inventory
+  spec_file: hildebrand-device-meter-point-dcc-inventory-api-openapi.yml
+  capability_id: BC-3910.20
+  capability_id_l1: BC-3910
+  capability_name: Meter Asset Management
+  confidence: 0.75
+  evidence: GET /device/meter-point/{meterPointNumber}/inventory  device.getMeterPointInventory  Get the
+    DCC inventory of a meter point
+  reason: Returns the smart-metering device inventory registered against a meter point in the DCC — meter
+    and communications asset lifecycle/inventory information.

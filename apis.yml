@@ -136,6 +136,8 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
+  - Account Session
+  tags_raw:
   - accountsession
   properties:
   - type: OpenAPI
@@ -161,6 +163,8 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
+  - Alert
+  tags_raw:
   - alert
   properties:
   - type: OpenAPI
@@ -209,6 +213,8 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -303,6 +309,8 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
+  - Discover
+  tags_raw:
   - discover
   properties:
   - type: OpenAPI
@@ -353,6 +361,8 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
+  - Notification
+  tags_raw:
   - notification
   properties:
   - type: OpenAPI
@@ -376,6 +386,8 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
@@ -425,6 +437,8 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
+  - ResourceType
+  tags_raw:
   - Resource Type
   properties:
   - type: OpenAPI
@@ -450,6 +464,8 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
+  - Template
+  tags_raw:
   - template
   properties:
   - type: OpenAPI

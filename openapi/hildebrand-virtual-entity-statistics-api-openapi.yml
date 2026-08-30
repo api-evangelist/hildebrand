@@ -1,0 +1,103 @@
+openapi: 3.2.0
+info:
+  description: API definition for CRUD operations on Virtual Entities. In the Glow Platform a Virtual Entity, is the virtual representation of a physical “thing” that is comprised of metadata and a collection of resources that define and describe it. An example of a Virtual Entity is a home with electricity energy readings sourced from a smart meter.
+  version: 1.3.0
+  title: Virtual Entity System Virtual Entity Statistics API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Virtual Entity Statistics
+  description: APIs that return an overview of the Virtual Entities an application has (administrative API).
+paths:
+  /vesys/appstats:
+    get:
+      tags:
+      - Virtual Entity Statistics
+      summary: find statistics on the number of Virtual Entities per application
+      description: Returns a single statistics entity
+      operationId: stats.getApplicationVeStats
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VeStats'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reqError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+components:
+  schemas:
+    VeStats:
+      type: object
+      properties:
+        applicationId:
+          type: string
+          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
+        totalVirtualEntities:
+          type: integer
+          example: 3
+        newVirtualEntities:
+          type: object
+          properties:
+            P1D:
+              type: integer
+              example: 0
+            P1W:
+              type: integer
+              example: 1
+            P1M:
+              type: integer
+              example: 3
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    reqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+  securitySchemes:
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: applicationId
+      in: header

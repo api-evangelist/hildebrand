@@ -1,0 +1,568 @@
+openapi: 3.2.0
+info:
+  description: The document enlists and describes the APIs for the User.
+  version: 1.0.5
+  title: Glowmarkt User System Meter Point Consent & Verification API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Meter Point Consent & Verification
+paths:
+  /user/verification/status:
+    get:
+      tags:
+      - Meter Point Consent & Verification
+      summary: API to retrieve user's meter points' consent and verification
+      description: API to retrieve user's meter points' consent and verification status
+      operationId: getUserMeterPointVerificationConsentStatus
+      security:
+      - appKeys: []
+        userId: []
+      - orgAppKeys: []
+        applicationId: []
+        userId: []
+      - devUserToken: []
+        applicationId: []
+        userId: []
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMeterPointConsentAndVerification'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /user/verification/status/mpxns/renewal:
+    post:
+      tags:
+      - Meter Point Consent & Verification
+      summary: Renew consent for a number of meterpoints
+      description: A user can renew their consent for a number of meterpoints.  The consent can be extended to a maximum of 18 months (default).
+      operationId: renewMeterPointConsentBulk
+      security:
+      - appKeys: []
+        userId: []
+      - orgAppKeys: []
+        applicationId: []
+        userId: []
+      - devUserToken: []
+        applicationId: []
+        userId: []
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterPointConsentManagementBulkRenewalRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeterPointConsentManagementBulkReq'
+  /user/verification/status/mpxns/revocation:
+    post:
+      tags:
+      - Meter Point Consent & Verification
+      summary: Revoke consent for a number of meterpoints
+      description: A user can revoke their consent for a number of meterpoints.
+      operationId: renewMeterPointConsentRevokeBulk
+      security:
+      - appKeys: []
+        userId: []
+      - orgAppKeys: []
+        applicationId: []
+        userId: []
+      - devUserToken: []
+        applicationId: []
+        userId: []
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterPointConsentManagementBulkRevocationRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeterPointConsentManagementBulkReq'
+  /user/verification/status/mpxn/{mpxn}/renewal:
+    get:
+      tags:
+      - Meter Point Consent & Verification
+      summary: Get meter point consent renewals
+      operationId: getMeterPointConsentRenewal
+      parameters:
+      - name: mpxn
+        in: path
+        description: meter point number
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+        userId: []
+      - orgAppKeys: []
+        applicationId: []
+        userId: []
+      - devUserToken: []
+        applicationId: []
+        userId: []
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterPointConsentAndVerificationRenewalRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+      - Meter Point Consent & Verification
+      summary: Renew meter point consent
+      description: A user can renew their consent to access a meter point's data. The consent can be extended to a maximum of 18 months (default).
+      operationId: renewMeterPointConsent
+      parameters:
+      - name: mpxn
+        in: path
+        description: meter point number
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+        userId: []
+      - orgAppKeys: []
+        applicationId: []
+        userId: []
+      - devUserToken: []
+        applicationId: []
+        userId: []
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddUserRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenewMeterPointConsentReq'
+  /user/verification/status/mpxn/{mpxn}/revocation:
+    get:
+      tags:
+      - Meter Point Consent & Verification
+      summary: Get meter point consent revocations
+      operationId: getMeterPointConsentRevocation
+      parameters:
+      - name: mpxn
+        in: path
+        description: meter point number
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+        userId: []
+      - orgAppKeys: []
+        applicationId: []
+        userId: []
+      - devUserToken: []
+        applicationId: []
+        userId: []
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterPointConsentAndVerificationRenewalRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+      - Meter Point Consent & Verification
+      summary: Revoke meter point consent
+      description: A user can renew their consent to access a meter point's data. The consent can be extended to a maximum of 18 months (default).
+      operationId: revokeMeterPointConsent
+      parameters:
+      - name: mpxn
+        in: path
+        description: meter point number
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+        userId: []
+      - orgAppKeys: []
+        applicationId: []
+        userId: []
+      - devUserToken: []
+        applicationId: []
+        userId: []
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddUserRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenewMeterPointConsentReq'
+components:
+  schemas:
+    MeterPointConsentAndVerificationRenewal:
+      type: object
+      properties:
+        auditReference:
+          type: object
+          properties:
+            applicationId:
+              type: string
+              example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        createdAt:
+          type: string
+          format: date-time
+          example: now
+        mpxnKey:
+          type: string
+          enum:
+          - mpan
+          - mprn
+          example: mpan
+        mpxn:
+          type: string
+          example: 123456789012
+        renewedBy:
+          type: object
+          properties:
+            key:
+              type: string
+              example: userId
+            value:
+              type: string
+              example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        meterPointVerificationRenewalId:
+          type: string
+          example: aa2464fa-bca2-e22a-83b1-14e9819c54d2
+    UserMeterPointConsentAndVerification:
+      type: object
+      properties:
+        meterPointVerification:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointConsentAndVerification'
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    MeterPointVerificationRenewalElem:
+      type: object
+      properties:
+        mpxn:
+          type: string
+          example: '123456789012'
+        valid:
+          type: boolean
+          example: true
+        meterPointVerificationRenewalId:
+          type: string
+          example: bfdf0b3d-42a6-46f0-8142-39c4d5413b58
+        isValidUntil:
+          type: string
+          example: '2026-03-05T23:59:59'
+    MpxnElem:
+      type: object
+      properties:
+        mpxn:
+          type: string
+          example: '123456789012'
+    MeterPointConsentAndVerificationRenewalRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+        meterPointRenewals:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointConsentAndVerificationRenewal'
+    MeterPointConsentAndVerification:
+      type: object
+      properties:
+        isVerified:
+          type: boolean
+          example: true
+        isValidUntil:
+          type: string
+          format: date-time
+          example: '2024-12-13T12:02:09.865Z'
+        mpxnKey:
+          type: string
+          enum:
+          - mpan
+          - mprn
+          example: mpan
+        mpxn:
+          type: string
+          example: 123456789012
+    RenewMeterPointConsentReq:
+      type: object
+      properties:
+        isValidUntil:
+          type: string
+          format: date-time
+          example: '2024-12-13T12:02:09.865Z'
+    AddUserRes:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        applications:
+          type: array
+          items:
+            type: object
+            properties:
+              active:
+                type: boolean
+              accountId:
+                type: string
+                example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+              applicationId:
+                type: string
+                example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        status:
+          type: string
+          example: unverified
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    MeterPointConsentManagementBulkRevocationRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        meterPointRevocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MpxnElem'
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    MeterPointConsentManagementBulkRenewalRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        meterPointVerificationRenewals:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointVerificationRenewalElem'
+    MeterPointConsentManagementBulkReq:
+      type: object
+      properties:
+        meterPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/MpxnElem'
+  securitySchemes:
+    oAccessAuthToken:
+      type: apiKey
+      name: token
+      in: header
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    internalUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: userId
+      in: header
+    organizationId:
+      type: apiKey
+      name: organizationId
+      in: header
+externalDocs:
+  description: Find out more about Glowmarkt
+  url: https://glowmarkt.com/

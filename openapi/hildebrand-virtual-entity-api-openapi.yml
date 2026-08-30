@@ -1,0 +1,463 @@
+openapi: 3.2.0
+info:
+  description: API definition for CRUD operations on Virtual Entities. In the Glow Platform a Virtual Entity, is the virtual representation of a physical “thing” that is comprised of metadata and a collection of resources that define and describe it. An example of a Virtual Entity is a home with electricity energy readings sourced from a smart meter.
+  version: 1.3.0
+  title: System Virtual Entity API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Virtual Entity
+  description: A Virtual Entity is an instance of the Virtual Entity Type and is tied to an owner as well as an applicationId. In order to create a Virtual Entity a user must have all the required resources.
+paths:
+  /virtualentity:
+    post:
+      tags:
+      - Virtual Entity
+      summary: Add a new Virtual Entity
+      description: create a new Virtual Entity
+      operationId: virtualentity.addVirtualEntity
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+        userId: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddVeSucess'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reqError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VEReq'
+        description: Virtual Entity object to add to the resource system
+        required: true
+    get:
+      tags:
+      - Virtual Entity
+      summary: Find all Virtual Entities
+      description: Returns a list of Virtual Entities that belong to an application (and a user if applicable)
+      operationId: virtualentity.findAll
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOfVe'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /virtualentity/{id}:
+    get:
+      tags:
+      - Virtual Entity
+      summary: Find Virtual Entity by ID
+      description: Returns a single Virtual Entity
+      operationId: virtualentity.findById
+      parameters:
+      - name: id
+        in: path
+        description: Virtual Entity ID
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ve'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    put:
+      tags:
+      - Virtual Entity
+      summary: Update a Virtual Entity
+      description: 'Please note that only specific properties of the Virtual Entity can be updated. These includes the following: name, description, location, city, country, postalCodem geoCoordinates, openStreetMapsRef, timeZone.'
+      operationId: virtualentity.updateVirtualEntity
+      parameters:
+      - name: id
+        in: path
+        description: Virtual Entity ID
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+        userId: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddVeSucess'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reqError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VEUpdateReq'
+        description: The data that is to be updated on a Virtual Entity object.
+        required: true
+    delete:
+      tags:
+      - Virtual Entity
+      summary: Delete a Virtual Entity
+      description: Delete a single Virtual Entity
+      operationId: virtualentity.deactivateVirtualEntity
+      parameters:
+      - name: id
+        in: path
+        description: Virtual Entity ID
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vedeactive'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /virtualentity/{id}/resources:
+    get:
+      tags:
+      - Virtual Entity
+      summary: Find the resources of that belong to Virtual Entity with ID
+      description: Returns a single Virtual Entity with a resource list of the full resource docs
+      operationId: virtualentity.findResourcesbyVeId
+      parameters:
+      - name: id
+        in: path
+        description: Virtual Entity ID
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VeWithFullResources'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+components:
+  schemas:
+    Ve:
+      type: object
+      properties:
+        veId:
+          type: string
+          example: dc9069a7-7695-43fd-8f27-16b1c94213da
+        veTypeId:
+          type: string
+          example: cc90b599-2705-4b13-98d4-3306f81169cf
+        name:
+          type: string
+          example: veTry status
+        ownerId:
+          type: string
+          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+        applicationId:
+          type: string
+          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
+        active:
+          type: boolean
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                example: 319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1
+              resourceTypeId:
+                type: string
+                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        attribute:
+          type: object
+          description: Anything can be saved under this field
+          properties:
+            rooms:
+              type: array
+              items:
+                type: string
+                example: living room
+            area:
+              type: object
+              properties:
+                units:
+                  type: string
+                  example: sqm
+                measurement:
+                  type: string
+                  example: 100
+    Vedeactive:
+      type: object
+      properties:
+        veId:
+          type: string
+          example: dc9069a7-7695-43fd-8f27-16b1c94213da
+        veTypeId:
+          type: string
+          example: cc90b599-2705-4b13-98d4-3306f81169cf
+        name:
+          type: string
+          example: veTry status
+        ownerId:
+          type: string
+          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+        applicationId:
+          type: string
+          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
+        active:
+          type: boolean
+          default: false
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                example: 319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1
+              resourceTypeId:
+                type: string
+                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+    VEUpdateReq:
+      type: object
+      properties:
+        name:
+          type: string
+          example: A new name
+        description:
+          type: string
+          example: This virtual entity represents my home.
+    VEReq:
+      type: object
+      properties:
+        veTypeId:
+          type: string
+          example: cc90b599-2705-4b13-98d4-3306f81169cf
+        name:
+          type: string
+          example: My special name
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                example: 319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1
+    Resource:
+      type: object
+      properties:
+        resourceId:
+          type: string
+          example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+        resourceTypeId:
+          type: string
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        name:
+          type: string
+          example: solar updated access test
+        description:
+          type: string
+          example: solar generation of hid
+        dataSourceUnitInfo:
+          type: object
+          properties:
+            shid:
+              type: string
+              example: f3204e8e5b1a40a39396a15f919f88a5
+        ownerId:
+          type: string
+          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+        label:
+          type: string
+          example: solar resourceType test
+        dataSourceResourceTypeInfo:
+          type: object
+          properties:
+            type:
+              type: string
+              example: PWER_GAC
+        dataSourceType:
+          type: string
+          example: EHSOLAPI
+        active:
+          type: boolean
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    VeWithFullResources:
+      type: object
+      properties:
+        veId:
+          type: string
+          example: dc9069a7-7695-43fd-8f27-16b1c94213da
+        veTypeId:
+          type: string
+          example: cc90b599-2705-4b13-98d4-3306f81169cf
+        name:
+          type: string
+          example: veTry status
+        ownerId:
+          type: string
+          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+        applicationId:
+          type: string
+          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
+        active:
+          type: boolean
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        attribute:
+          type: object
+          description: Anything can be saved under this field
+          properties:
+            rooms:
+              type: array
+              items:
+                type: string
+                example: living room
+            area:
+              type: object
+              properties:
+                units:
+                  type: string
+                  example: sqm
+                measurement:
+                  type: string
+                  example: 100
+    ListOfVe:
+      type: array
+      items:
+        $ref: '#/components/schemas/Ve'
+    reqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    AddVeSucess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        veId:
+          type: string
+          example: e10591ec-4557-4ac7-90d4-a09654aeb5de
+  securitySchemes:
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: applicationId
+      in: header

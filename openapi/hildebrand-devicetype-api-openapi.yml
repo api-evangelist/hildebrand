@@ -1,0 +1,219 @@
+openapi: 3.2.0
+info:
+  description: 'API definition for CRUD operations on devices. A device is the physical hardware that can be either: <br></br> <ul>  <li>a gateway - makes information available to the Glow Platform. The IHD/CAD and GlowSticks are examples of our gateways.</li> <br></br> <li>a sensor - detects events or changes to its environment and sends information to other devices (smart electricity meter)</li><br></br> <li>an actuator - a controller, given specific predefined commands it can trigger events, change its environment or perform an operation (auxiliary load control switch in an electricity meter)</li><br></br> </ul>'
+  version: 1.1.0
+  title: Device Management System Device Type API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: DeviceType
+  description: ''
+paths:
+  /devicetype:
+    post:
+      tags:
+      - DeviceType
+      summary: Add a new Device Type
+      description: create a new Device Type
+      operationId: deviceType.addDeviceType
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddDeviceTypeSucess'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceTypeReq'
+        description: DeviceType Object
+        required: true
+    get:
+      tags:
+      - DeviceType
+      summary: Find all device types
+      description: returns a list of devicetypes
+      operationId: deviceType.findAll
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeviceType'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /devicetype/{id}:
+    get:
+      tags:
+      - DeviceType
+      summary: Find Device Type by ID
+      description: Returns a single Device Type
+      operationId: deviceType.findById
+      parameters:
+      - name: id
+        in: path
+        description: ID of Device Type to return
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceType'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ''
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+components:
+  schemas:
+    AddDeviceTypeSucess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        deviceTypeId:
+          type: string
+          example: a0872822-c10c-4a90-bf8a-17310ffe10af
+    ProtocolResourceTypeResource:
+      type: object
+      properties:
+        protocolId:
+          type: string
+        resourceTypeId:
+          type: string
+        resourceId:
+          type: string
+      required:
+      - protocolId
+      - resourceTypeId
+      - resourceId
+    ProtocolResourceType:
+      type: object
+      properties:
+        protocolId:
+          type: string
+        resourceTypeId:
+          type: string
+      required:
+      - protocolId
+      - resourceTypeId
+    DeviceTypeReq:
+      type: object
+      properties:
+        description:
+          type: string
+        protocol:
+          type: object
+          properties:
+            sensors:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProtocolResourceType'
+            protocol:
+              type: string
+          required:
+          - protocol
+          - sensors
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    DeviceType:
+      type: object
+      properties:
+        deviceTypeId:
+          type: string
+        description:
+          type: string
+        protocol:
+          type: object
+          properties:
+            sensors:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProtocolResourceTypeResource'
+            protocol:
+              type: string
+          required:
+          - protocol
+          - sensors
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+  securitySchemes:
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: userId
+      in: header

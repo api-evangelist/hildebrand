@@ -1,0 +1,385 @@
+openapi: 3.2.0
+info:
+  description: The Resource System API enables the information management (data retrieval/data storage/control) of resources within the Glow Platform. A Resource is a representation of data collected from a physical device, like sensor readings, or changes in an actuating device state etc.
+  version: 1.5.0
+  title: Resource System Resource Type API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Resource Type
+  description: A Resource Type defines the storage structure of the resources supported by the Glow Platform.
+paths:
+  /resourcetype:
+    post:
+      tags:
+      - Resource Type
+      summary: Add a new resource type.
+      description: create a new resourceType
+      operationId: resourcetype.addResourceType
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddResourceTypeSucess'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddResourceReqError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceTypeReq'
+        description: ResourceType Object to add to the resource system
+        required: true
+    get:
+      tags:
+      - Resource Type
+      summary: Find all resource types
+      description: returns a list of resource types
+      operationId: resourcetype.findAll
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOfResourceType'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /resourcetype/{id}:
+    get:
+      tags:
+      - Resource Type
+      summary: Find resourceType by ID
+      description: Returns a single resourceType
+      operationId: resourcetype.findById
+      parameters:
+      - name: id
+        in: path
+        description: ID of resourceType to return
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceType'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /resourcetype/{id}/resource:
+    get:
+      tags:
+      - Resource Type
+      summary: Find resources of a specific resource type that belong to a user
+      description: Returns a list of resources
+      operationId: resourcetype.findResourceByType
+      parameters:
+      - name: id
+        in: path
+        description: ID of resourceType of the resources that are to be returned
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+        userID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOfResource'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindResourceReqError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /resourcetype/{id}/appresource:
+    get:
+      tags:
+      - Resource Type
+      summary: Find resources of a specific resource type that an application has access to
+      description: Returns a list of resources
+      operationId: resourcetype.findAppResourceByType
+      parameters:
+      - name: id
+        in: path
+        description: ID of resourceType of the resources that are to be returned
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOfResource'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/missingAppIdError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+components:
+  schemas:
+    ResourceType:
+      allOf:
+      - $ref: '#/components/schemas/ResourceTypeReq'
+      - properties:
+          resourceTypeId:
+            type: string
+            example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+          active:
+            type: boolean
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    StorageType:
+      type: object
+      properties:
+        type:
+          type: string
+          example: timeseries
+        sampling:
+          type: string
+          example: regular
+        start:
+          type: string
+          example: '2014-01-06T00:00:00+00:00'
+        fields:
+          maxItems: 10
+          type: array
+          items:
+            type: object
+            properties:
+              fieldName:
+                type: string
+                example: GEN
+              unit:
+                type: string
+                example: kWh
+              datatype:
+                type: string
+                example: fixedpoint(2)
+              negative:
+                type: boolean
+                example: false
+      xml:
+        name: StorageType
+    FindResourceReqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -userId
+    AddResourceTypeSucess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        resourceTypeId:
+          type: string
+          example: 9e6d582f-e2e0-4af5-af7c-69b20aeeee20
+    AddResourceReqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -body
+    ListOfResourceType:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResourceType'
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    ListOfResource:
+      type: array
+      items:
+        $ref: '#/components/schemas/Resource'
+    missingAppIdError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -applicationId
+    Resource:
+      allOf:
+      - $ref: '#/components/schemas/ResourceType'
+      - properties:
+          resourceId:
+            type: string
+            example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+          name:
+            type: string
+            example: electricity consumption
+          description:
+            type: string
+            example: my household electricity
+          dataSourceUnitInfo:
+            type: object
+            properties:
+              shid:
+                type: string
+                example: f3204e8e5a1a40a39396a15f919f88a5
+          ownerId:
+            type: string
+            example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+    ResourceTypeReq:
+      type: object
+      properties:
+        name:
+          type: string
+          example: electricity energy
+        description:
+          type: string
+          example: The storage mechanism for saving electricity energy.
+        classifier:
+          type: string
+          example: electricity.consumption
+        storage:
+          maxItems: 10
+          type: array
+          items:
+            $ref: '#/components/schemas/StorageType'
+        dataSourceType:
+          type: string
+          example: DATA_SOURCE_IDENTIFIER
+        dataSourceResourceTypeInfo:
+          type: string
+          example: ELEC
+      required:
+      - name
+      - classifier
+      - storage
+  securitySchemes:
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userID:
+      type: apiKey
+      name: userId
+      in: header

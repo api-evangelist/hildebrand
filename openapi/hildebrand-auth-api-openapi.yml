@@ -1,0 +1,372 @@
+openapi: 3.2.0
+info:
+  description: The document enlists and describes the APIs for the User.
+  version: 1.0.5
+  title: Glowmarkt User System Auth API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Auth
+paths:
+  /auth:
+    get:
+      tags:
+      - Auth
+      summary: Checks whether a user token is valid.
+      description: Checks whether a user token is valid.
+      operationId: tokencheck
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accountId:
+                    type: string
+                    example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+                  applicationId:
+                    type: string
+                    example: 0537b17c-ab62-491c-8085-9ac2b6206346
+                  valid:
+                    type: boolean
+                  exp:
+                    type: integer
+                    description: Timestamp of token expiry date
+                    example: 1509010921
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+      - Auth
+      summary: authenticate an account
+      description: Autheticates the user and generates a JWT token.
+      operationId: usernamelogin
+      parameters:
+      - in: header
+        name: applicationId
+        description: The ID of the application
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accountId:
+                    type: string
+                    example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+                  applicationId:
+                    type: string
+                    example: 0537b17c-ab62-491c-8085-9ac2b6206346
+                  name:
+                    type: string
+                    example: Arthur Dent
+                  valid:
+                    type: boolean
+                  exp:
+                    type: integer
+                    description: Timestamp of token expiry date
+                    example: 1509010921
+                  token:
+                    type: string
+                    description: JWT token
+                    example: eyJhbGciO37iIsInR5cCI6IkpXVCJ9.eyJ0b2tlbkhhc2giOiI0Y2FmMGVlYmRjNDk2NjAxZDI3ZDk2NzdjM2MxN2JhMDBlZGRmOTNiZDk5MjlmYjgyMWZk6453NzliOWNlYmY0ODZiOTVjZWZhNDI3MjY3NjhiYzAxNWMiLCJpYXQiOjE1MDg0MDYxMjEsImV4cCI6MTUwOTAxMDkyMX0.3iOew-W5YJBd7DK0kFgvWItAkxKjruurkTupM
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserNameLoginReq'
+        description: The information that is required to authenticate an account.
+        required: true
+  /auth/token:
+    get:
+      tags:
+      - Auth
+      summary: Returns all the tokens that are active and valid for a specified user.
+      description: This call enables a customer to view all the tokens that have been generated and used for their accounts. This includes all the JWT and OAuth tokens. By enabling this a user can then manage and monitor the access to their accounts.
+      operationId: getTokenOfUser
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TokenDocument'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /auth/token/{tokenId}:
+    delete:
+      tags:
+      - Auth
+      summary: Deletes a token, specified by its tokenId.
+      description: This call enables an user to delete and token and revoke access. JWT as well as OAuth tokens can be deleted.
+      operationId: deleteTokenById
+      parameters:
+      - name: tokenId
+        in: path
+        description: GUID of token that is to be deleted
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IsValidRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /auth/newToken:
+    get:
+      tags:
+      - Auth
+      summary: Generate a new token for an account.
+      description: An account provides an old token and gets a new one generated.
+      operationId: newToken
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                  exp:
+                    type: integer
+                    description: Timestamp of token expiry date
+                    example: 1509010921
+                  token:
+                    type: string
+                    description: A new valid token for an account
+                    example: eyJhbGciO37iIsInR5cCI6IkpXVCJ9.eyJ0b2tlbkhhc2giOiI0Y2FmMGVlYmRjNDk2NjAxZDI3ZDk2NzdjM2MxN2JhMDBlZGRmOTNiZDk5MjlmYjgyMWZk6453NzliOWNlYmY0ODZiOTVjZWZhNDI3MjY3NjhiYzAxNWMiLCJpYXQiOjE1MDg0MDYxMjEsImV4cCI6MTUwOTAxMDkyMX0.3iOew-W5YJBd7DK0kFgvWItAkxKjruurkTupM
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /auth/deleteToken:
+    delete:
+      tags:
+      - Auth
+      summary: delete a token
+      description: Delete the token the account used to make this call.
+      operationId: deleteToken
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                    example: false
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    TokenDocument:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        tokenId:
+          type: string
+          example: 1aa61ab4-92a0-4f04-b883-e5abdf380523
+        createdAt:
+          type: string
+          format: date-time
+          example: '2019-06-06T12:02:09.865Z'
+        expiresAt:
+          type: string
+          format: date-time
+          example: '2019-06-13T12:02:09.865Z'
+        authenticationFramework:
+          type: string
+          example: oauth
+        grant_type:
+          type: string
+          example: refresh_token
+    IsValidRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+    UserNameLoginReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - password
+  securitySchemes:
+    oAccessAuthToken:
+      type: apiKey
+      name: token
+      in: header
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    internalUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: userId
+      in: header
+    organizationId:
+      type: apiKey
+      name: organizationId
+      in: header
+externalDocs:
+  description: Find out more about Glowmarkt
+  url: https://glowmarkt.com/

@@ -1,0 +1,697 @@
+openapi: 3.2.0
+info:
+  description: The document enlists and describes the APIs for the User.
+  version: 1.0.5
+  title: Glowmarkt System User API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: User
+paths:
+  /register:
+    post:
+      tags:
+      - User
+      summary: Create a user
+      description: Create a User a directory account for username and password login using this action. More specifically this is a registration process which creates a user and adds an account to the given application id. Self-Registration process should use this action. This call requires no authentication.
+      operationId: addUser
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddUserRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddUserReq'
+        description: The information that is used to create a user.
+  /user:
+    get:
+      tags:
+      - User
+      summary: Find specific user that has an account in an application from the username.
+      description: Returns a user.
+      operationId: getUserbyUsername
+      parameters:
+      - name: username
+        in: query
+        description: The username of user that is being queried (lowercase, trimmed etc). Please note that this API is prone to errors if the username contains characters that are affected by URL encoding.
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddUserRes'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+      - User
+      summary: Create a user
+      description: This call can be used by an application to create a user. No verification will be required
+      operationId: createUser
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserReq'
+        description: The information that is used to create a user.
+  /user/{userId}:
+    get:
+      tags:
+      - User
+      summary: Find specific user that has an account in an application.
+      description: Returns a user.
+      operationId: getUserbyId
+      parameters:
+      - name: userId
+        in: path
+        description: ID of user that is being queried
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddUserRes'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+      - User
+      summary: Delete specific user. This will delete all the accounts of a user. Please refer to delete account API. This API requires specific permissions.
+      description: Deletes a user.
+      operationId: deleteUserbyId
+      parameters:
+      - name: userId
+        in: path
+        description: ID of user that is being queried
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IsValidRes'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /user/verify:
+    post:
+      tags:
+      - User
+      summary: Generate a user verification token
+      description: This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email).
+      operationId: generateUserVerificationToken
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateVerificationTokenUserReq'
+        description: The information that is used to create to generate an email verification token.
+    put:
+      tags:
+      - User
+      summary: Verify a user verification token
+      description: This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email).
+      operationId: verifyUser
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                  userId:
+                    type: string
+                    example: 6ccb3612-4cdc-469e-8574-6007f3c54084
+                  status:
+                    type: string
+                    example: active
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyUserReq'
+        description: The information that is used to create a devuser.
+  /user/resetpassword:
+    post:
+      tags:
+      - User
+      summary: Generate a token that can be used by user to reset their password.
+      description: This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email). The user can then use this token to reset their password.
+      operationId: generateUserPasswordResetToken
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GeneratePasswordResetTokenUserReq'
+        description: The information that is needed to generate a password reset token.
+    put:
+      tags:
+      - User
+      summary: A user resets their password
+      description: This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email).
+      operationId: resetPasswordUser
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetUserReq'
+        description: The information that is used to reset a user's password.
+  /user/{userId}/username:
+    put:
+      tags:
+      - User
+      summary: Change a user's username
+      description: API to update a user's username
+      operationId: updateUsernameUserId
+      parameters:
+      - name: userId
+        in: path
+        description: ID of user that is being queried
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncorrectElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: scotty_eng@enterprise.st
+                status:
+                  type: string
+                  example: active
+              required:
+              - username
+              - status
+        description: The body contains the user's new email.
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    GenerateVerificationTokenUserReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+      required:
+      - username
+      - password
+      - applicationId
+    PasswordResetUserReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        token:
+          type: string
+          example: 8442
+        newPassword:
+          type: string
+          example: aV3ry$tr0ngp@$
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+      required:
+      - username
+      - applicationId
+      - token
+      - newPassword
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    CreateUserReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - directoryId
+    CreateUserRes:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        applications:
+          type: array
+          items:
+            type: object
+            properties:
+              active:
+                type: boolean
+              accountId:
+                type: string
+                example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+              applicationId:
+                type: string
+                example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        status:
+          type: string
+          example: active
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    IsValidRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+    AddUserReq:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Montgomery Christopher Jorgensen
+        username:
+          type: string
+          example: scotty
+        email:
+          type: string
+          example: scotty@enterprise.st
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - name
+      - username
+      - email
+      - password
+      - directoryId
+      - applicationId
+    VerifyUserReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        token:
+          type: string
+          example: 8442
+      required:
+      - token
+      - username
+      - password
+      - applicationId
+    AddUserRes:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        applications:
+          type: array
+          items:
+            type: object
+            properties:
+              active:
+                type: boolean
+              accountId:
+                type: string
+                example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+              applicationId:
+                type: string
+                example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        status:
+          type: string
+          example: unverified
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    GeneratePasswordResetTokenUserReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+      required:
+      - username
+      - applicationId
+  securitySchemes:
+    oAccessAuthToken:
+      type: apiKey
+      name: token
+      in: header
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    internalUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: userId
+      in: header
+    organizationId:
+      type: apiKey
+      name: organizationId
+      in: header
+externalDocs:
+  description: Find out more about Glowmarkt
+  url: https://glowmarkt.com/

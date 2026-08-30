@@ -1,0 +1,107 @@
+openapi: 3.2.0
+info:
+  description: The document enlists and describes the APIs for the User.
+  version: 1.0.5
+  title: Glowmarkt User System Account Session API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Account Session
+paths:
+  /accountsession:
+    get:
+      tags:
+      - Account Session
+      summary: get the session of an account
+      description: Returns the session of an account
+      operationId: getAccountSession
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/AccountSession'
+                - type: object
+                properties:
+                  valid:
+                    type: boolean
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    AccountSession:
+      type: object
+      properties:
+        sessionvalue1:
+          type: string
+          example: 192.168.1.1
+        sessionvalue2:
+          type: string
+          example: f2420615-a3e5-4346-9fb4-1cb33cf4844c
+  securitySchemes:
+    oAccessAuthToken:
+      type: apiKey
+      name: token
+      in: header
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    internalUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: userId
+      in: header
+    organizationId:
+      type: apiKey
+      name: organizationId
+      in: header
+externalDocs:
+  description: Find out more about Glowmarkt
+  url: https://glowmarkt.com/

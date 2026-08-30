@@ -1,0 +1,259 @@
+openapi: 3.2.0
+info:
+  description: API definition for CRUD operations on Virtual Entities. In the Glow Platform a Virtual Entity, is the virtual representation of a physical “thing” that is comprised of metadata and a collection of resources that define and describe it. An example of a Virtual Entity is a home with electricity energy readings sourced from a smart meter.
+  version: 1.3.0
+  title: Virtual Entity System Virtual Entity's Metadata API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Virtual Entity's Metadata
+  description: A Virtual Entity's metadata can be used to save information that will facilitate the virtual representation of the entity. This is typically attribute data that does not change in time.
+paths:
+  /virtualentity/{id}/attribute:
+    get:
+      tags:
+      - Virtual Entity's Metadata
+      summary: Find a Virtual Entity's metadata by ID
+      description: Returns all the metadata of a Virtual Entity
+      operationId: virtualentity.getAttributes
+      parameters:
+      - name: id
+        in: path
+        description: Virtual Entity ID
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAtrributesRes'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    post:
+      tags:
+      - Virtual Entity's Metadata
+      summary: Add/Update a Virtual Entity's metadata
+      description: Add/Update a Virtual Entity's metadata. Whichever fields are included in body of call, will be updated
+      operationId: virtualentity.add-updateAttributes
+      parameters:
+      - name: id
+        in: path
+        description: Virtual Entity ID
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+        userId: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAtrributesRes'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reqError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VEReqUpdateAttributes'
+        description: Virtual Entity metadata to be added or modified,
+        required: true
+    delete:
+      tags:
+      - Virtual Entity's Metadata
+      summary: delete metadata from the Virtual Entity
+      description: Pieces of metadata provided in the body will be deleted from the Virtual Entityl
+      operationId: virtualentity.deleteAttributes
+      parameters:
+      - name: id
+        in: path
+        description: Virtual Entity ID
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VEResDeletedAttributes'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VEReqDeleteAttributes'
+        description: Virtual Entity metadata to be deleted
+        required: true
+components:
+  schemas:
+    VEReqUpdateAttributes:
+      type: object
+      description: Anything can be added in a ve's metadata
+      properties:
+        rooms:
+          type: array
+          items:
+            type: string
+            example: living room
+        area:
+          type: object
+          properties:
+            units:
+              type: string
+              example: sqm
+            measurement:
+              type: string
+              example: 100
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    VEReqDeleteAttributes:
+      type: object
+      description: Insert the attributes you would like to delete under the field removeAttributes
+      properties:
+        removeAttributes:
+          type: object
+          properties:
+            area:
+              type: object
+              properties:
+                units:
+                  type: string
+                  example: sqm
+                measurement:
+                  type: string
+                  example: 100
+      required:
+      - removeAttributes
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    GetAtrributesRes:
+      type: object
+      properties:
+        veId:
+          type: string
+        attribute:
+          type: object
+          description: Anything can be saved under this field
+          properties:
+            rooms:
+              type: array
+              items:
+                type: string
+                example: living room
+            area:
+              type: object
+              properties:
+                units:
+                  type: string
+                  example: sqm
+                measurement:
+                  type: string
+                  example: 100
+    VEResDeletedAttributes:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        veId:
+          type: string
+          example: dc9069a7-7695-43fd-8f27-16b1c94213da
+        rooms:
+          type: array
+          items:
+            type: string
+            example: living room
+      required:
+      - veId
+      - status
+    reqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+  securitySchemes:
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: applicationId
+      in: header

@@ -1,0 +1,222 @@
+openapi: 3.2.0
+info:
+  description: 'API definition for CRUD operations on devices. A device is the physical hardware that can be either: <br></br> <ul>  <li>a gateway - makes information available to the Glow Platform. The IHD/CAD and GlowSticks are examples of our gateways.</li> <br></br> <li>a sensor - detects events or changes to its environment and sends information to other devices (smart electricity meter)</li><br></br> <li>an actuator - a controller, given specific predefined commands it can trigger events, change its environment or perform an operation (auxiliary load control switch in an electricity meter)</li><br></br> </ul>'
+  version: 1.1.0
+  title: Device Management System Device Meter Point DCC inventory API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Device Meter Point DCC inventory
+paths:
+  /device/meter-point/{meterPointNumber}/inventory:
+    get:
+      tags:
+      - Device Meter Point DCC inventory
+      summary: Get the DCC inventory of a meter point
+      description: Returns the DCC inventory
+      operationId: device.getMeterPointInventory
+      parameters:
+      - name: meterPointNumber
+        in: path
+        description: Meter Point Number
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterPointInventoryResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ''
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /device/smart-meter/{eui}/inventory:
+    get:
+      tags:
+      - Device Meter Point DCC inventory
+      summary: Get the DCC inventory of a meter point by providing an EUI.
+      description: Returns the DCC inventory
+      operationId: device.getMeterPointInventoryByEUI
+      parameters:
+      - name: eui
+        in: path
+        description: EUI
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterPointInventoryResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ''
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /device/meter-point/{meterPointNumber}/resources:
+    get:
+      tags:
+      - Device Meter Point DCC inventory
+      summary: Get the resources associated to a meter point
+      description: Returns the resources that are associated to a meter point
+      operationId: device.getMeterPointResources
+      parameters:
+      - name: meterPointNumber
+        in: path
+        description: Meter Point Number
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      - appKeys: []
+        userId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterPointResourceResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ''
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+components:
+  schemas:
+    MeterPointInventory:
+      type: object
+      properties:
+        DateCommissioned:
+          type: string
+          example: '2022-02-02T00:00:00.000Z'
+        DeviceFirmwareVersion:
+          type: string
+          example: '111'
+        DeviceManufacturer:
+          type: string
+          example: METER_MANUFACTURER
+        DeviceModel:
+          type: string
+          example: 333333
+        DeviceType:
+          type: string
+          example: CHF
+        DeviceStatus:
+          type: string
+          example: Commissioned
+        EUI:
+          type: string
+          example: AB123456789012
+        ImportMPxN:
+          type: string
+          example: 123456789012
+        SmetsVersion:
+          type: string
+          example: 2
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    MeterPointInventoryResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        inventory:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointInventory'
+    MeterPointResourceResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+        mpxn:
+          type: string
+          example: 123456789012
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceListingWithClassifier'
+    ResourceListingWithClassifier:
+      type: object
+      properties:
+        resourceId:
+          type: string
+          example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+        resourceTypeId:
+          type: string
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        classifier:
+          type: string
+          example: electricity.consumption
+      xml:
+        name: ResourceListingWithClassifier
+  securitySchemes:
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: userId
+      in: header

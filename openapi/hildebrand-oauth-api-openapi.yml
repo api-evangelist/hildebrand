@@ -1,0 +1,294 @@
+openapi: 3.2.0
+info:
+  description: The document enlists and describes the APIs for the User.
+  version: 1.0.5
+  title: Glowmarkt User System O Auth API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: OAuth
+paths:
+  /auth/oauth:
+    get:
+      tags:
+      - OAuth
+      summary: Check and validate an Oauth Access token.
+      description: The user system supports an OAuth 2.0 Authorization Code Grant. This call validates that a generated access key is valid.
+      operationId: validateOAuthAccessToken
+      security:
+      - oAccessAuthToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthValidAccessToken'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncorrectElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+      - OAuth
+      summary: Authenticate a user and generate an OAuth 2.0 Authorization Code Grant.
+      description: The user system supports an OAuth 2.0 Authorization Code Grant. This call authenticates a user and generates an OAuth 2.0 Authorization Code Grant.
+      operationId: generateOAuthorizationCode
+      parameters:
+      - in: header
+        name: applicationId
+        description: The ID of the application
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthCodeRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncorrectElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserNameLoginReq'
+        description: The information that is required to authenticate an account.
+        required: true
+  /auth/oauth/access:
+    post:
+      tags:
+      - OAuth
+      summary: Exchange the Authorization Code for an Access Token.
+      description: The user system supports an OAuth 2.0 Authorization Code Grant. This call generates an access and refresh token from an OAuth 2.0 Authorization Code Grant. This API can also be used to generate a new access token with a given refresh token. Instead of using the authorization code in the body of the request (code), use the refresh token (refresh_token).
+      operationId: exchangeAuthorizationCodeWithAccess
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeAuthorizationCodeWithAccessRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncorrectElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OAuthAccessRefreshToken'
+        description: The information that is required to authenticate an account.
+        required: true
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
+    OAuthCodeRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+        code:
+          type: string
+          example: 2b9d75b3ae36bdf3b66724b89996094ba724278784
+        exp:
+          type: number
+          example: 1559824668
+        accountId:
+          type: string
+          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+        name:
+          type: string
+          example: Montgomery Christopher Jorgensen
+      xml:
+        name: OAuthCodeRes
+    OAuthAccessRefreshToken:
+      type: object
+      properties:
+        client_id:
+          type: boolean
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        client_secret:
+          type: string
+          example: 2b9d75b3ae36bOQHe28202
+        grant_type:
+          type: string
+          example: authorization_code
+        code:
+          type: string
+          example: 2b9d75b3ae36bdf3b66724b89996094ba724278784
+    UserNameLoginReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - password
+    ExchangeAuthorizationCodeWithAccessRes:
+      type: object
+      properties:
+        token_type:
+          type: string
+          example: bearer
+        access_token:
+          type: string
+          example: 9defd68267e8de48a65bb5a9faaef8b81391c7ae69c60ccb826d8060cf500afac1f1441b3067a445af7bbd91ec
+        refresh_type:
+          type: string
+          example: 0d3c5b212c6e0d6a09a10d8d613353a32267c009856779a49c258bae52eb7511705ae4916b98441b3067ad445a
+        expires_in:
+          type: number
+          example: 604800
+    AddUserRes:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        applications:
+          type: array
+          items:
+            type: object
+            properties:
+              active:
+                type: boolean
+              accountId:
+                type: string
+                example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+              applicationId:
+                type: string
+                example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        status:
+          type: string
+          example: unverified
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    OAuthValidAccessToken:
+      allOf:
+      - $ref: '#/components/schemas/AddUserRes'
+      type: object
+      properties:
+        authenticationFramework:
+          type: string
+          example: oauth
+        status:
+          type: string
+          example: active
+  securitySchemes:
+    oAccessAuthToken:
+      type: apiKey
+      name: token
+      in: header
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    internalUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: userId
+      in: header
+    organizationId:
+      type: apiKey
+      name: organizationId
+      in: header
+externalDocs:
+  description: Find out more about Glowmarkt
+  url: https://glowmarkt.com/

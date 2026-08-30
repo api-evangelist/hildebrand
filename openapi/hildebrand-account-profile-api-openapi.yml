@@ -1,0 +1,218 @@
+openapi: 3.2.0
+info:
+  description: The document enlists and describes the APIs for the User.
+  version: 1.0.5
+  title: Glowmarkt User System Account Profile API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Account Profile
+paths:
+  /accountprofile:
+    get:
+      tags:
+      - Account Profile
+      summary: Find all the profiles of an account
+      description: Returns all the profileNames of profiles an account has saved.
+      operationId: getAccountProfile
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accountId:
+                    type: string
+                    example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+                  profileNames:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                    - DashBoard
+                    - Settings
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+      - Account Profile
+      summary: Create an account profile under a given profileName.
+      description: Create an account profile under a given profileName. profileName is a required field. Please note that anything under the profileName will be overwritten.
+      operationId: addAccountProfile
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: OK
+                  devUserId:
+                    type: string
+                    example: 6ccb3612-4cdc-469e-8574-6007f3c54084
+                  profileName:
+                    type: string
+                    example: DashBoard
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountProfile'
+        description: The information that is used to create a devuser.
+  /accountprofile/{profileName}:
+    get:
+      tags:
+      - Account Profile
+      summary: Find specific group of application
+      description: Returns an application's group.
+      operationId: getAccountProfilebyProfileName
+      parameters:
+      - name: profileName
+        in: path
+        description: profileName of the system to be retrieved
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountProfile'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    AccountProfile:
+      type: object
+      required:
+      - profileName
+      properties:
+        profileName:
+          type: string
+          example: DashBoard
+        InformationAboutDashboard:
+          type: object
+          example:
+            displayInfo:
+              funct: max
+              agg: daily
+              metric: consumption
+              timeframe: lastMonth
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+  securitySchemes:
+    oAccessAuthToken:
+      type: apiKey
+      name: token
+      in: header
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    internalUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: userId
+      in: header
+    organizationId:
+      type: apiKey
+      name: organizationId
+      in: header
+externalDocs:
+  description: Find out more about Glowmarkt
+  url: https://glowmarkt.com/

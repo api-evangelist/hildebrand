@@ -1,0 +1,785 @@
+openapi: 3.2.0
+info:
+  description: The document enlists and describes the APIs for the User.
+  version: 1.0.5
+  title: Glowmarkt User System Account API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Account
+paths:
+  /account:
+    get:
+      tags:
+      - Account
+      summary: Find all accounts of an application
+      description: Returns all accounts that belong to an application.
+      operationId: getAccounts
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountRes'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+      - Account
+      summary: Add an account to an existing user
+      description: This call should be used when a user is registered via  on the Glow ecosystem. By providing the username of the user a directory account may be added to the application.
+      operationId: addAccount
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: OK
+                  accountId:
+                    type: string
+                    example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+                  applicationId:
+                    type: string
+                    example: 0537b17c-ab62-491c-8085-9ac2b6206346
+                  userId:
+                    type: string
+                    example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAccountReq'
+        description: The information that is used to add an account to an existing user.
+  /account/{accountId}:
+    get:
+      tags:
+      - Account
+      summary: Find specific account of an application.
+      description: Returns an account.
+      operationId: getAccountbyId
+      parameters:
+      - name: accountId
+        in: path
+        description: ID of account that is being queried
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountRes'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+      - Account
+      summary: Updates the account's metadata.
+      description: Updates the account s metadata. Elements that can be updated include name. This can be used in on an administrative level.
+      operationId: updateAccount
+      parameters:
+      - name: accountId
+        in: path
+        description: ID of user that needs to be updated
+        required: true
+        schema:
+          type: string
+      security:
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAccountRes'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Montgomery Jorgensen
+        description: The elements of user that can be updated.
+    delete:
+      tags:
+      - Account
+      summary: Delete account
+      description: Delete account
+      operationId: deleteAccount
+      parameters:
+      - name: accountId
+        in: path
+        description: ID of account that is to be deleted
+        required: true
+        schema:
+          type: string
+      security:
+      - orgAppKeys: []
+      - devUserToken: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                  accountId:
+                    type: string
+                    example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+                  userId:
+                    example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+                  status:
+                    type: string
+                    example: inactive
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncorrectElementsError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /account/{accountId}/status:
+    get:
+      tags:
+      - Account
+      summary: Find the status of a specified account. If the account is using an external directory service, this call will confirm whether the user is authenticated against it. This call requires administrative application level credentials.
+      description: Returns the status an account.
+      operationId: getAccountStatusbyId
+      parameters:
+      - name: accountId
+        in: path
+        description: ID of account that is being queried
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountStatus'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /account/status:
+    get:
+      tags:
+      - Account
+      summary: With a given JWT token a user can have their account status verfied. If their account is created under an external directory service, this call will establish whether a user's token to the external service is still valid.
+      description: Returns the status an account.
+      operationId: getAccountStatusbyUserToken
+      security:
+      - userToken: []
+      - applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountStatus'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /account/email:
+    post:
+      tags:
+      - Account
+      summary: Change a user's email
+      description: A user can update their email
+      operationId: userChangeEmail
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncorrectElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: scotty_eng@enterprise.st
+              required:
+              - email
+        description: The body contains the user's new email.
+  /account/name:
+    post:
+      tags:
+      - Account
+      summary: Change a user's name
+      description: A user can update their name
+      operationId: userChangeName
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncorrectElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Montgomery Jorgensen
+              required:
+              - name
+        description: The body contains the user's new email.
+  /account/changepassword:
+    post:
+      tags:
+      - Account
+      summary: Change a user's password
+      description: A user can change their passwrod. They would neeed to have knowledge of their previous password and provide it in the body.
+      operationId: userChangePassWord
+      security:
+      - userToken: []
+      - applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: weak new password
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                  example: '@$tr0ngP@$'
+                newPassword:
+                  type: string
+                  example: aV3ry$tr0ngp@$
+        description: The information that is needed to change a user's password.
+  /account/{accountId}/mobileapptoken:
+    post:
+      tags:
+      - Account
+      summary: Add mobile app token to a user
+      description: Mobile app token can be added to the user, who will then be able to receive push notifications.
+      parameters:
+      - name: accountId
+        in: path
+        description: ID of account that is being queried
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddMobileTokenToAccountReq'
+        description: The information that is needed to assign a mobile token to an account.
+    put:
+      tags:
+      - Account
+      summary: Remove a mobile app token to a user
+      description: Mobile app tokens can be removed from a user.
+      parameters:
+      - name: accountId
+        in: path
+        description: ID of account that is being queried
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveMobileTokenToAccountReq'
+        description: The information that is needed to remove a mobile token to an account.
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    AddMobileTokenToAccountReq:
+      type: object
+      properties:
+        newToken:
+          type: string
+          example: ExampleToKEN
+      required:
+      - newToken
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
+    AddAccountReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - directoryId
+    AccountRes:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        accountId:
+          type: string
+          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+        name:
+          type: string
+          example: Montgomery Christopher Jorgensen
+        username:
+          type: string
+          example: scotty
+        email:
+          type: string
+          example: scotty@enterprise.st
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        active:
+          type: boolean
+    UpdateAccountRes:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          example: '2017-10-18T17:06:48.549Z'
+        updatedAt:
+          type: string
+          format: date-time
+        accountId:
+          type: string
+          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+        name:
+          type: string
+          example: Montgomery Jorgensen
+        username:
+          type: string
+          example: scotty
+        email:
+          type: string
+          example: scotty@enterprise.st
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        active:
+          type: boolean
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    RemoveMobileTokenToAccountReq:
+      type: object
+      properties:
+        removeToken:
+          type: string
+          example: ExampleToKEN
+      required:
+      - removeToken
+    AccountStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        active:
+          type: boolean
+        accountId:
+          type: string
+          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        directory:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                tokenIssueDate:
+                  type: string
+                  format: date-time
+                  example: '2019-03-22T09:24:28.000Z'
+                tokenExpiryDate:
+                  type: string
+                  format: date-time
+                  example: '2019-03-29T09:24:28.000Z'
+  securitySchemes:
+    oAccessAuthToken:
+      type: apiKey
+      name: token
+      in: header
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    internalUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: userId
+      in: header
+    organizationId:
+      type: apiKey
+      name: organizationId
+      in: header
+externalDocs:
+  description: Find out more about Glowmarkt
+  url: https://glowmarkt.com/

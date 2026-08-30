@@ -1,0 +1,279 @@
+openapi: 3.2.0
+info:
+  description: This is the documentation of the Notification System. Add text explaining each object.
+  version: 1.0.0
+  title: System Notification API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/ns
+tags:
+- name: notification
+  description: When an application triggeers an alert, for each channel of communication a notification is created. This enables the system to monitor seperately whant happens in each channel.
+paths:
+  /notification/{notificationId}:
+    get:
+      tags:
+      - notification
+      summary: Get a notification by Id
+      description: Get a notification by Id
+      operationId: findNotificationById
+      parameters:
+      - name: notificationId
+        in: path
+        description: ID of notification that is being queried
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /notification/{notificationId}/log:
+    get:
+      tags:
+      - notification
+      summary: Get the logs of a particular notification
+      description: Get the logs of a particular notification
+      operationId: getNotificationLogs
+      parameters:
+      - name: notificationId
+        in: path
+        description: ID of notification that is being queried
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationLog'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    NotificationLog:
+      type: object
+      properties:
+        notificationid:
+          type: string
+          example: 084c7aef-a94f-4b8b-b053-afc35257f91b
+        Pipeline:
+          type: string
+          example: null
+        ns_alert_id:
+          type: string
+          example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
+        channel:
+          type: string
+          example: push
+          enum:
+          - push
+          - email
+          - inbox
+        userid:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        Stage:
+          type: string
+          example: Added Notification Record
+        workflowStepNum:
+          type: number
+          example: 1
+        Status:
+          type: string
+          example: OK
+        status_at:
+          type: string
+          example: '2021-09-15T13:43:15.890Z'
+      xml:
+        name: NotificationLog
+    Alert:
+      allOf:
+      - $ref: '#/components/schemas/AlertReq'
+      - properties:
+          ns_alert_id:
+            type: string
+            example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    Notification:
+      type: object
+      properties:
+        notificationid:
+          type: string
+          example: 084c7aef-a94f-4b8b-b053-afc35257f91b
+        ns_alert_id:
+          type: string
+          example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
+        received_dtm:
+          type: string
+          example: '2021-09-15T13:43:15.890Z'
+        Status:
+          type: string
+          example: OK
+        status_at:
+          type: string
+          example: '2021-09-15T13:43:15.890Z'
+        channel:
+          type: string
+          example: push
+          enum:
+          - push
+          - email
+          - inbox
+        userid:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        alertData:
+          allOf:
+          - $ref: '#/components/schemas/Alert'
+      xml:
+        name: Notification
+    AlertReq:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        alertTypeId:
+          type: string
+          example: CM01
+        send2Inbox:
+          type: string
+          example: 'yes'
+          enum:
+          - 'yes'
+          - 'no'
+        send2Push:
+          type: string
+          example: 'yes'
+          enum:
+          - 'yes'
+          - 'no'
+        email:
+          type: string
+          example: 'yes'
+          enum:
+          - 'yes'
+          - 'no'
+        inbox:
+          type: string
+          example: 'yes'
+          enum:
+          - 'yes'
+          - 'no'
+        push:
+          type: string
+          example: 'yes'
+          enum:
+          - 'yes'
+          - 'no'
+        Priority:
+          type: string
+          example: High
+          enum:
+          - High
+          - Low
+        callbackUrl:
+          type: string
+          example: https://api.glowmarkt.com/api/v0-1/test
+        dataToFill:
+          type: object
+      xml:
+        name: AlertReq
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+  securitySchemes:
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    organizationId:
+      type: apiKey
+      name: organizationId
+      in: header
+externalDocs:
+  description: Find out more about Glowmarkt
+  url: https://glowmarkt.com/

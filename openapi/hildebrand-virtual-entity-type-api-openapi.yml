@@ -1,0 +1,377 @@
+openapi: 3.2.0
+info:
+  description: API definition for CRUD operations on Virtual Entities. In the Glow Platform a Virtual Entity, is the virtual representation of a physical “thing” that is comprised of metadata and a collection of resources that define and describe it. An example of a Virtual Entity is a home with electricity energy readings sourced from a smart meter.
+  version: 1.3.0
+  title: Virtual Entity System Virtual Entity Type API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Virtual Entity Type
+  description: Entity that belongs and is managed by an application and contains the definition and combination of the Resource Types that are required to create a Virtual Entity.
+paths:
+  /vetype:
+    post:
+      tags:
+      - Virtual Entity Type
+      summary: Add a new Virtual Entity Type
+      description: Create a new Virtual Entity Type
+      operationId: veType.addVeType
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/newVeTypeRes'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reqError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newVeTypeReq'
+        description: Virtual Entity Type payload
+        required: true
+    get:
+      tags:
+      - Virtual Entity Type
+      summary: Find all Virtual Entity Types
+      description: Returns a list of the application's Virtual Entity Types.
+      operationId: veType.findAll
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOfVeType'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reqError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /vetype/{id}:
+    get:
+      tags:
+      - Virtual Entity Type
+      summary: Find Virtual Entity Type by ID
+      description: Returns a single Virtual Entity Type
+      operationId: veType.findById
+      parameters:
+      - name: id
+        in: path
+        description: Virtual Entity Type ID
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VeType'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reqError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    put:
+      tags:
+      - Virtual Entity Type
+      summary: Update a  Virtual Entity Type
+      description: Update Virtual Entity Type. Please note that only specific properties of the Virtual Entity Type can be updated, such as the name and the description.
+      operationId: veType.updateVeType
+      parameters:
+      - name: id
+        in: path
+        description: Virtual Entity Type ID
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/newVeTypeRes'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reqError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateVeTypeReq'
+        description: Virtual Entity Type to be updated.
+        required: true
+  /vetype/{id}/resources:
+    get:
+      tags:
+      - Virtual Entity Type
+      summary: Find all resources that belong to a user that satisfy the Resource Types in the Virtual Entity Type definition.
+      description: Returns the resources of a user that could potentially be used to create a Virtual Entity of the specified Virtual Entity Type
+      operationId: veType.findResourcesOfVeType
+      parameters:
+      - name: id
+        in: path
+        description: Virtual Entity Type ID
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+        userId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VeTypeResources'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reqError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+components:
+  schemas:
+    ListOfVeType:
+      type: array
+      items:
+        $ref: '#/components/schemas/VeType'
+    updateVeTypeReq:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Smart Home
+        description:
+          type: string
+          example: Smart home, with electricity and gas utilities
+    VeType:
+      type: object
+      properties:
+        veTypeId:
+          type: string
+          example: cc90b599-2705-4b13-98d4-3306f81169cf
+        name:
+          type: string
+          example: home Virtual Entity
+        description:
+          type: string
+          description: home with two types of resources
+        applicationId:
+          type: string
+          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
+        active:
+          type: boolean
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceTypeId:
+                type: string
+                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+              required:
+                type: boolean
+    newVeTypeRes:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        veTypeId:
+          type: string
+          example: b82d4f8b-a097-4b96-acbb-81d891489441
+    newVeTypeReq:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Smart Home
+        description:
+          type: string
+          example: Smart home, with electricity and gas utilities
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceTypeId:
+                type: string
+                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+              required:
+                type: boolean
+    VeTypeResources:
+      type: object
+      properties:
+        veTypeId:
+          type: string
+          example: cc90b599-2705-4b13-98d4-3306f81169cf
+        ownerId:
+          type: string
+          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+        applicationId:
+          type: string
+          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceTypeAvailableResources'
+        selectionNeeded:
+          type: boolean
+    ResourceTypeAvailableResources:
+      type: object
+      properties:
+        resourceTypeId:
+          type: string
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        required:
+          type: boolean
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    Resource:
+      type: object
+      properties:
+        resourceId:
+          type: string
+          example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+        resourceTypeId:
+          type: string
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        name:
+          type: string
+          example: solar updated access test
+        description:
+          type: string
+          example: solar generation of hid
+        dataSourceUnitInfo:
+          type: object
+          properties:
+            shid:
+              type: string
+              example: f3204e8e5b1a40a39396a15f919f88a5
+        ownerId:
+          type: string
+          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+        label:
+          type: string
+          example: solar resourceType test
+        dataSourceResourceTypeInfo:
+          type: object
+          properties:
+            type:
+              type: string
+              example: PWER_GAC
+        dataSourceType:
+          type: string
+          example: EHSOLAPI
+        active:
+          type: boolean
+    reqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+  securitySchemes:
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: applicationId
+      in: header

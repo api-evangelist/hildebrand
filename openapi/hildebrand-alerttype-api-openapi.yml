@@ -1,0 +1,289 @@
+openapi: 3.2.0
+info:
+  description: This is the documentation of the Notification System. Add text explaining each object.
+  version: 1.0.0
+  title: Notification System Alerttype API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/ns
+tags:
+- name: alerttype
+  description: The definition of an alert, what functionality the alert represents. It is an identifier which amongst other elements will point us to the correct template. An alert type belongs to an application.
+paths:
+  /alerttype:
+    get:
+      tags:
+      - alerttype
+      summary: Find all alert types of an application
+      description: Returns all alert types, created by an application
+      operationId: getAlertTypes
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlertType'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+      - alerttype
+      summary: Create an alert type
+      description: Create an alert type
+      operationId: addAlertType
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertType'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertTypeReq'
+        description: The information of an application.
+  /alerttype/{alertTypeId}:
+    get:
+      tags:
+      - alerttype
+      summary: Find alert type by ID
+      description: Returns a single alert type
+      operationId: getAlertTypebyId
+      parameters:
+      - name: alertTypeId
+        in: path
+        description: ID of alert type that is being queried
+        required: true
+        schema:
+          type: string
+      security:
+      - orgAppKeys: []
+      - devUserToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertType'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+      - alerttype
+      summary: Updates the alert type's metadata.
+      operationId: updateAlertType
+      parameters:
+      - name: alertTypeId
+        in: path
+        description: ID of the alert type that needs to be updated
+        required: true
+        schema:
+          type: string
+      security:
+      - orgAppKeys: []
+      - devUserToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertTypeUpdate'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: UpdatedExampleNameOfAlert
+              required:
+              - name
+        description: The elements of an  alert type that can be updated.
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    AlertTypeReq:
+      type: object
+      properties:
+        systemAlertTypeId:
+          type: string
+          example: CM01
+        description:
+          type: string
+          example: HighPowerUse
+        name:
+          type: string
+          example: AlertExample
+    AlertTypeUpdate:
+      type: object
+      properties:
+        alertTypeId:
+          type: string
+          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        systemAlertTypeId:
+          type: string
+          example: CM01
+        name:
+          type: string
+          example: UpdatedExampleNameOfAlert
+        description:
+          type: string
+          example: Description of Alert Type
+        active:
+          type: boolean
+    AlertType:
+      type: object
+      properties:
+        alertTypeId:
+          type: string
+          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        systemAlertTypeId:
+          type: string
+          example: CM01
+        name:
+          type: string
+          example: ExampleNameOfAlert
+        description:
+          type: string
+          example: Description of Alert Type
+        active:
+          type: boolean
+      required:
+      - alertTypeId
+      - applicationId
+      - name
+      xml:
+        name: AlertType
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+  securitySchemes:
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    organizationId:
+      type: apiKey
+      name: organizationId
+      in: header
+externalDocs:
+  description: Find out more about Glowmarkt
+  url: https://glowmarkt.com/

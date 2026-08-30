@@ -1,0 +1,391 @@
+openapi: 3.2.0
+info:
+  description: 'API definition for CRUD operations on devices. A device is the physical hardware that can be either: <br></br> <ul>  <li>a gateway - makes information available to the Glow Platform. The IHD/CAD and GlowSticks are examples of our gateways.</li> <br></br> <li>a sensor - detects events or changes to its environment and sends information to other devices (smart electricity meter)</li><br></br> <li>an actuator - a controller, given specific predefined commands it can trigger events, change its environment or perform an operation (auxiliary load control switch in an electricity meter)</li><br></br> </ul>'
+  version: 1.1.0
+  title: Management System Device API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/
+tags:
+- name: Device
+  description: ''
+paths:
+  /device:
+    get:
+      tags:
+      - Device
+      summary: Get a user's devices
+      description: Returns an array of the devices that belong to a user.
+      operationId: device.findAll
+      parameters:
+      - name: tags
+        in: query
+        required: false
+        description: hardwareId of a device
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+        userId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/missingUserIdError'
+        '404':
+          description: Not Acceptable
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    post:
+      tags:
+      - Device
+      summary: Add a new device
+      description: create a new device
+      operationId: device.addDevice
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+        userId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddDeviceSuccess'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncorrectElementsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceReq'
+        description: Device Object to add to the device system
+        required: true
+  /device/{id}:
+    get:
+      tags:
+      - Device
+      summary: Find device by ID
+      description: Returns a single device
+      operationId: device.findById
+      parameters:
+      - name: id
+        in: path
+        description: ID of device to return
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+        userId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ''
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /device/resource/{resourceId}:
+    get:
+      tags:
+      - Device
+      summary: Find the device that sources a specified resource.
+      description: Returns a Device, that sources a specified resource.
+      operationId: device.findByResourceId
+      parameters:
+      - name: resourceId
+        in: path
+        description: Resource ID
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+        userId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ''
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /device/{id}/status:
+    get:
+      tags:
+      - Device
+      summary: This call can be used to see whether a gateway device is sending packets to the Glow Platform (i.e. via WiFi).
+      operationId: device.getStatusbyDeviceId
+      parameters:
+      - name: id
+        in: path
+        description: ID of device to return
+        required: true
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+        userId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  found:
+                    type: boolean
+                    example: true
+                  deviceId:
+                    type: string
+                    example: 55c883e0-701e-4810-acf1-e827dbd83fb0
+                  hardwareId:
+                    type: string
+                    example: 968YHFEKLQ
+                  value:
+                    type: number
+                    example: 1517317927
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncorrectElementsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /device/status:
+    get:
+      tags:
+      - Device
+      summary: This call can be used to see whether a gateway device is sending packets to the Glow Platform (i.e. via WiFi).
+      operationId: device.getStatusbyHardwareId
+      parameters:
+      - name: tags
+        in: query
+        required: true
+        description: the HardwareId of the device
+        schema:
+          type: string
+      security:
+      - userToken: []
+        applicationId: []
+      - appKeys: []
+        userId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  found:
+                    type: boolean
+                    example: true
+                  deviceId:
+                    type: string
+                    example: 55c883e0-701e-4810-acf1-e827dbd83fb0
+                  hardwareId:
+                    type: string
+                    example: 968YHFEKLQ
+                  value:
+                    type: number
+                    example: 1517317927
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncorrectElementsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+components:
+  schemas:
+    ProtocolResourceTypeResource:
+      type: object
+      properties:
+        protocolId:
+          type: string
+        resourceTypeId:
+          type: string
+        resourceId:
+          type: string
+      required:
+      - protocolId
+      - resourceTypeId
+      - resourceId
+    ParentHardwareIds:
+      type: string
+      example: KO17321203
+    DeviceReq:
+      type: object
+      properties:
+        deviceTypeId:
+          type: string
+        hardwareId:
+          type: string
+        hardwareIds:
+          type: object
+      required:
+      - deviceTypeId
+      - hardwareId
+      - hardwareIds
+    Device:
+      type: object
+      properties:
+        deviceId:
+          type: string
+          example: 55c883e0-701e-4810-acf1-e827dbd83fb0
+        deviceTypeId:
+          type: string
+        ownerId:
+          type: string
+        description:
+          type: string
+        hardwareId:
+          type: string
+          example: '60001'
+        hardwareIds:
+          type: object
+          example:
+            sid: '60001'
+        parentHardwareId:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParentHardwareIds'
+        protocol:
+          type: object
+          properties:
+            sensors:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProtocolResourceTypeResource'
+            protocol:
+              type: string
+          required:
+          - protocol
+          - sensors
+      required:
+      - ownerId
+      - hardwareId
+    missingUserIdError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -userId
+    AddDeviceSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        valid:
+          type: boolean
+        deviceId:
+          type: string
+          example: d3vb0129-8c95-43f3-bde2-744007221oli
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
+  securitySchemes:
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    userId:
+      type: apiKey
+      name: userId
+      in: header

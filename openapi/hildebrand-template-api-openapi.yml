@@ -1,0 +1,454 @@
+openapi: 3.2.0
+info:
+  description: This is the documentation of the Notification System. Add text explaining each object.
+  version: 1.0.0
+  title: Notification System Template API
+  license:
+    name: Copyright © 2012-26 by Hildebrand Technology Limited
+servers:
+- url: https://api.glowmarkt.com/api/v0-1/ns
+tags:
+- name: template
+  description: The template of the message that is being sent; it can be passed through as HTML or JSON. Each template has an alert type, is specific to a single channel of communication and a culrture code.
+paths:
+  /template:
+    get:
+      tags:
+      - template
+      summary: Find all templates of an application
+      description: Returns all templates that belong to an application.
+      operationId: getTemplates
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Template'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+      - template
+      summary: Create a template
+      description: Create a template
+      operationId: addTemplate
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateReq'
+        description: The information of a template.
+  /template/{templateId}:
+    get:
+      tags:
+      - template
+      summary: Find template type by ID
+      description: Returns a single template of an application
+      operationId: getTemplatebyId
+      parameters:
+      - name: templateId
+        in: path
+        description: ID of the template that is being queried
+        required: true
+        schema:
+          type: string
+      security:
+      - orgAppKeys: []
+      - devUserToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+      - template
+      summary: Updates the teplate's metadata.
+      operationId: updateTemplate
+      parameters:
+      - name: templateId
+        in: path
+        description: ID of the alert type that needs to be updated
+        required: true
+        schema:
+          type: string
+      security:
+      - orgAppKeys: []
+      - devUserToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertTypeUpdate'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: UpdatedExampleNameOfAlert
+              required:
+              - name
+        description: The elements of an  alert type that can be updated.
+  /template/{alertTypeId}/{channelType}/{cultureCode}:
+    get:
+      tags:
+      - template
+      summary: Find template by alertTypeId, channeType and cultureCode
+      description: Returns a single template of an application.
+      operationId: getTemplatebyCharacteristics
+      parameters:
+      - name: alertTypeId
+        in: path
+        description: ID of alert type that is being queried
+        required: true
+        schema:
+          type: string
+      - name: channelType
+        in: path
+        description: the channel type of the template (push, email, inbox)
+        required: true
+        schema:
+          type: string
+      - name: cultureCode
+        in: path
+        description: language specific information en-GB, en_US
+        required: true
+        schema:
+          type: string
+      security:
+      - orgAppKeys: []
+      - devUserToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+      - template
+      summary: Create template by alertTypeId, channeType and cultureCode
+      description: Create template by alertTypeId, channeType and cultureCode
+      operationId: addTemplatebyCode
+      parameters:
+      - name: alertTypeId
+        in: path
+        description: ID of alert type that is being queried
+        required: true
+        schema:
+          type: string
+      - name: channelType
+        in: path
+        description: the channel type of the template (push, email, inbox)
+        required: true
+        schema:
+          type: string
+      - name: cultureCode
+        in: path
+        description: language specific information en-GB, en_US
+        required: true
+        schema:
+          type: string
+      security:
+      - appKeys: []
+      - orgAppKeys: []
+        applicationId: []
+      - devUserToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateReq'
+        description: The information of a template.
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    TemplateReq:
+      type: object
+      properties:
+        alertTypeId:
+          type: string
+          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        systemAlertTypeId:
+          type: string
+          example: CM01a
+        name:
+          type: string
+          example: ExampleNameOfAlert
+        description:
+          type: string
+          example: Description of Alert Type
+        channelType:
+          type: string
+          enum:
+          - push
+          - email
+          - inbox
+          example: email
+        cultureCode:
+          type: string
+          enum:
+          - en-GB
+          - en-US
+        active:
+          type: boolean
+        htmlTemplate:
+          type: string
+          example: Hello {{name}}, <br /><br/> You recently register to the Glow platform. <br /><br/> Please use the following 4-digit token to complete the registration process.<br /><br/> {{token}} <br /><br/> This token is only valid for the next hour.
+      required:
+      - alertTypeId
+      - cultureCode
+      - applicationId
+      - name
+      xml:
+        name: Template
+    AlertTypeUpdate:
+      type: object
+      properties:
+        alertTypeId:
+          type: string
+          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        systemAlertTypeId:
+          type: string
+          example: CM01
+        name:
+          type: string
+          example: UpdatedExampleNameOfAlert
+        description:
+          type: string
+          example: Description of Alert Type
+        active:
+          type: boolean
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    Template:
+      type: object
+      properties:
+        templateId:
+          type: string
+          example: 65f214bb-cbcc-48dc-a55a-2a01c88f7079
+        alertTypeId:
+          type: string
+          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        systemAlertTypeId:
+          type: string
+          example: CM01
+        name:
+          type: string
+          example: ExampleNameOfAlert
+        description:
+          type: string
+          example: Description of Alert Type
+        channelType:
+          type: string
+          enum:
+          - push
+          - email
+          - inbox
+          example: email
+        cultureCode:
+          type: string
+          enum:
+          - en-GB
+          - en-US
+        htmlTemplate:
+          type: string
+          example: Hello {{name}}, <br /><br/> You recently register to the Glow platform. <br /><br/> Please use the following 4-digit token to complete the registration process.<br /><br/> {{token}} <br /><br/> This token is only valid for the next hour.
+        active:
+          type: boolean
+      required:
+      - alertTypeId
+      - applicationId
+      - name
+      xml:
+        name: AlertType
+  securitySchemes:
+    orgAppKeys:
+      type: http
+      scheme: basic
+    appKeys:
+      type: http
+      scheme: basic
+    devUserToken:
+      type: apiKey
+      name: token
+      in: header
+    userToken:
+      type: apiKey
+      name: token
+      in: header
+    applicationId:
+      type: apiKey
+      name: applicationId
+      in: header
+    organizationId:
+      type: apiKey
+      name: organizationId
+      in: header
+externalDocs:
+  description: Find out more about Glowmarkt
+  url: https://glowmarkt.com/

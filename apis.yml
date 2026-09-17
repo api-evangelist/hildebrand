@@ -130,31 +130,6 @@ apis:
     url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
-- aid: hildebrand:hildebrand-accountsession-api
-  name: Hildebrand Accountsession API
-  description: The accountsession API from Hildebrand — 1 operation(s) for accountsession.
-  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
-  baseURL: https://api.glowmarkt.com/api/v0-1
-  tags:
-  - Account Session
-  tags_raw:
-  - accountsession
-  properties:
-  - type: OpenAPI
-    url: openapi/hildebrand-accountsession-api-openapi.yml
-  - type: APIReference
-    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
-  - type: Documentation
-    url: >-
-      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
-  - type: APIReference
-    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
-  - type: APIReference
-    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
-  - type: APIReference
-    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
-  - type: APIReference
-    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
 - aid: hildebrand:hildebrand-alert-api
   name: Hildebrand Alert API
   description: >-
@@ -380,31 +355,6 @@ apis:
     url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
-- aid: hildebrand:hildebrand-oauth-api
-  name: Hildebrand O Auth API
-  description: The OAuth API from Hildebrand — 2 operation(s) for oauth.
-  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
-  baseURL: https://api.glowmarkt.com/api/v0-1
-  tags:
-  - Authentication
-  tags_raw:
-  - OAuth
-  properties:
-  - type: OpenAPI
-    url: openapi/hildebrand-oauth-api-openapi.yml
-  - type: APIReference
-    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
-  - type: Documentation
-    url: >-
-      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
-  - type: APIReference
-    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
-  - type: APIReference
-    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
-  - type: APIReference
-    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
-  - type: APIReference
-    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
 - aid: hildebrand:hildebrand-resource-api
   name: Hildebrand Resource API
   description: >-
@@ -592,6 +542,29 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/hildebrand-virtual-entity-type-api-openapi.yml
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  - type: Documentation
+    url: >-
+      https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/resourcesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/vesys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/dmssys/
+  - type: APIReference
+    url: https://api.glowmarkt.com/api-docs/v0-1/notificationsys/
+- aid: hildebrand:hildebrand-oauth-api
+  name: Hildebrand O Auth API
+  description: The OAuth API from Hildebrand — 2 operation(s) for oauth.
+  humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
+  baseURL: https://api.glowmarkt.com/api/v0-1
+  tags:
+  - OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/hildebrand-oauth-api-openapi.yml
   - type: APIReference
     url: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   - type: Documentation

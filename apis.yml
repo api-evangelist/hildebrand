@@ -414,7 +414,7 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
-  - Template
+  - Templates
   tags_raw:
   - template
   properties:
@@ -561,6 +561,8 @@ apis:
   humanURL: https://api.glowmarkt.com/api-docs/v0-1/usersys/usertypes/
   baseURL: https://api.glowmarkt.com/api/v0-1
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI

@@ -1,33 +1,31 @@
-# Kin Score artifact — hildebrand — 2026-08-20T165047
+# Kin Score artifact — hildebrand — 2026-09-21T233935
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: hildebrand
-  schema_version: 0.12.0
-  scored_at: '2026-08-20'
-  run_ts: 2026-08-20T165047
-  composite: 58.8
-  band: strong
+  schema_version: 0.22.0
+  scored_at: '2026-09-21'
+  run_ts: 2026-09-21T233935
+  composite: 53.9
+  band: developing
   facets:
-    discoverability: 81.5
-    contract_quality: 64.0
-    governance: 30.3
+    discoverability: 74.1
+    contract_quality: 60.5
+    contract_governance: 18.2
     operational_transparency: 10.5
     developer_ergonomics: 49.4
-    commercial_clarity: 73.7
-    contract_governance: 30.3
-    access_clarity: 73.7
+    access_clarity: 68.4
   agent_readiness:
-    score: 38.7
+    score: 30.8
     band: agent-ready
     dimensions:
       spec_presence: true
       agentic_access: derived
       reversibility_documented: false
       mcp_server: false
-      auth_clarity: true
+      auth_clarity: bearer
       idempotency: false
-      error_semantics: documented
+      error_semantics: verified
       openapi_examples: partial
       rate_limit_signal: false
       event_surface_described: true
@@ -36,6 +34,10 @@ kin_score:
       consent_identity: false
       agent_card: false
       dry_run_mode: false
+      delegated_identity: false
+      protected_resource_metadata: false
+      dynamic_client_registration: false
+      agentic_commerce: false
   regulatory:
     applies: true
     regime: Energy & Utilities
@@ -48,7 +50,7 @@ kin_score:
     agentic_access: derived
     conformance: first-party
     contracts:
-      total: 5
+      total: 21
       derived: 0
       coverage: 0.0
       callable: 100.0

@@ -8,13 +8,13 @@ info:
 servers:
 - url: https://api.glowmarkt.com/api/v0-1/ns
 tags:
-- name: template
+- name: Template
   description: The template of the message that is being sent; it can be passed through as HTML or JSON. Each template has an alert type, is specific to a single channel of communication and a culrture code.
 paths:
   /template:
     get:
       tags:
-      - template
+      - Template
       summary: Find all templates of an application
       description: Returns all templates that belong to an application.
       operationId: getTemplates
@@ -47,9 +47,8 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
     post:
       tags:
-      - template
+      - Template
       summary: Create a template
-      description: Create a template
       operationId: addTemplate
       security:
       - appKeys: []
@@ -91,7 +90,7 @@ paths:
   /template/{templateId}:
     get:
       tags:
-      - template
+      - Template
       summary: Find template type by ID
       description: Returns a single template of an application
       operationId: getTemplatebyId
@@ -133,8 +132,8 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
     put:
       tags:
-      - template
-      summary: Updates the teplate's metadata.
+      - Template
+      summary: Updates the teplate's metadata
       operationId: updateTemplate
       parameters:
       - name: templateId
@@ -186,7 +185,7 @@ paths:
   /template/{alertTypeId}/{channelType}/{cultureCode}:
     get:
       tags:
-      - template
+      - Template
       summary: Find template by alertTypeId, channeType and cultureCode
       description: Returns a single template of an application.
       operationId: getTemplatebyCharacteristics
@@ -240,9 +239,8 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
     post:
       tags:
-      - template
+      - Template
       summary: Create template by alertTypeId, channeType and cultureCode
-      description: Create template by alertTypeId, channeType and cultureCode
       operationId: addTemplatebyCode
       parameters:
       - name: alertTypeId
@@ -302,86 +300,6 @@ paths:
         description: The information of a template.
 components:
   schemas:
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    TemplateReq:
-      type: object
-      properties:
-        alertTypeId:
-          type: string
-          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
-        applicationId:
-          type: string
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        systemAlertTypeId:
-          type: string
-          example: CM01a
-        name:
-          type: string
-          example: ExampleNameOfAlert
-        description:
-          type: string
-          example: Description of Alert Type
-        channelType:
-          type: string
-          enum:
-          - push
-          - email
-          - inbox
-          example: email
-        cultureCode:
-          type: string
-          enum:
-          - en-GB
-          - en-US
-        active:
-          type: boolean
-        htmlTemplate:
-          type: string
-          example: Hello {{name}}, <br /><br/> You recently register to the Glow platform. <br /><br/> Please use the following 4-digit token to complete the registration process.<br /><br/> {{token}} <br /><br/> This token is only valid for the next hour.
-      required:
-      - alertTypeId
-      - cultureCode
-      - applicationId
-      - name
-      xml:
-        name: Template
-    AlertTypeUpdate:
-      type: object
-      properties:
-        alertTypeId:
-          type: string
-          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
-        applicationId:
-          type: string
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        systemAlertTypeId:
-          type: string
-          example: CM01
-        name:
-          type: string
-          example: UpdatedExampleNameOfAlert
-        description:
-          type: string
-          example: Description of Alert Type
-        active:
-          type: boolean
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
     Template:
       type: object
       properties:
@@ -426,6 +344,86 @@ components:
       - name
       xml:
         name: AlertType
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    TemplateReq:
+      type: object
+      properties:
+        alertTypeId:
+          type: string
+          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        systemAlertTypeId:
+          type: string
+          example: CM01a
+        name:
+          type: string
+          example: ExampleNameOfAlert
+        description:
+          type: string
+          example: Description of Alert Type
+        channelType:
+          type: string
+          enum:
+          - push
+          - email
+          - inbox
+          example: email
+        cultureCode:
+          type: string
+          enum:
+          - en-GB
+          - en-US
+        active:
+          type: boolean
+        htmlTemplate:
+          type: string
+          example: Hello {{name}}, <br /><br/> You recently register to the Glow platform. <br /><br/> Please use the following 4-digit token to complete the registration process.<br /><br/> {{token}} <br /><br/> This token is only valid for the next hour.
+      required:
+      - alertTypeId
+      - cultureCode
+      - applicationId
+      - name
+      xml:
+        name: Template
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    AlertTypeUpdate:
+      type: object
+      properties:
+        alertTypeId:
+          type: string
+          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        systemAlertTypeId:
+          type: string
+          example: CM01
+        name:
+          type: string
+          example: UpdatedExampleNameOfAlert
+        description:
+          type: string
+          example: Description of Alert Type
+        active:
+          type: boolean
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
   securitySchemes:
     orgAppKeys:
       type: http

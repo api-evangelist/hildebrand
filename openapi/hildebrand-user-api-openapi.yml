@@ -52,7 +52,7 @@ paths:
     get:
       tags:
       - User
-      summary: Find specific user that has an account in an application from the username.
+      summary: Find specific user that has an account in an application from the username
       description: Returns a user.
       operationId: getUserbyUsername
       parameters:
@@ -141,7 +141,7 @@ paths:
     get:
       tags:
       - User
-      summary: Find specific user that has an account in an application.
+      summary: Find specific user that has an account in an application
       description: Returns a user.
       operationId: getUserbyId
       parameters:
@@ -186,7 +186,7 @@ paths:
     delete:
       tags:
       - User
-      summary: Delete specific user. This will delete all the accounts of a user. Please refer to delete account API. This API requires specific permissions.
+      summary: Delete specific user.
       description: Deletes a user.
       operationId: deleteUserbyId
       parameters:
@@ -319,7 +319,7 @@ paths:
     post:
       tags:
       - User
-      summary: Generate a token that can be used by user to reset their password.
+      summary: Generate a token that can be used by user to reset their password
       description: This call generates a 4 digit token and sends it via second channel of communication over to the user (at the moment the only second channel of communication supported is email). The user can then use this token to reset their password.
       operationId: generateUserPasswordResetToken
       responses:
@@ -459,13 +459,7 @@ paths:
         description: The body contains the user's new email.
 components:
   schemas:
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-    GenerateVerificationTokenUserReq:
+    VerifyUserReq:
       type: object
       properties:
         username:
@@ -477,48 +471,60 @@ components:
         applicationId:
           type: string
           example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        token:
+          type: string
+          example: 8442
       required:
+      - token
       - username
       - password
       - applicationId
-    PasswordResetUserReq:
+    AddUserReq:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Montgomery Christopher Jorgensen
+        username:
+          type: string
+          example: scotty
+        email:
+          type: string
+          example: scotty@enterprise.st
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - name
+      - username
+      - email
+      - password
+      - directoryId
+      - applicationId
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    GeneratePasswordResetTokenUserReq:
       type: object
       properties:
         username:
           type: string
           example: scotty
-        token:
-          type: string
-          example: 8442
-        newPassword:
-          type: string
-          example: aV3ry$tr0ngp@$
         applicationId:
           type: string
           example: 0537b17c-ab62-491c-8085-9ac2b6206346
       required:
       - username
       - applicationId
-      - token
-      - newPassword
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    CreateUserReq:
-      type: object
-      properties:
-        username:
-          type: string
-          example: scotty
-        directoryId:
-          type: string
-          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
-      required:
-      - username
-      - directoryId
     CreateUserRes:
       type: object
       properties:
@@ -549,60 +555,6 @@ components:
         updatedAt:
           type: string
           format: date-time
-    IsValidRes:
-      type: object
-      properties:
-        valid:
-          type: boolean
-          example: true
-    AddUserReq:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Montgomery Christopher Jorgensen
-        username:
-          type: string
-          example: scotty
-        email:
-          type: string
-          example: scotty@enterprise.st
-        password:
-          type: string
-          example: '@$tr0ngP@$'
-        applicationId:
-          type: string
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        directoryId:
-          type: string
-          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
-      required:
-      - name
-      - username
-      - email
-      - password
-      - directoryId
-      - applicationId
-    VerifyUserReq:
-      type: object
-      properties:
-        username:
-          type: string
-          example: scotty
-        password:
-          type: string
-          example: '@$tr0ngP@$'
-        applicationId:
-          type: string
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        token:
-          type: string
-          example: 8442
-      required:
-      - token
-      - username
-      - password
-      - applicationId
     AddUserRes:
       type: object
       properties:
@@ -633,29 +585,77 @@ components:
         updatedAt:
           type: string
           format: date-time
+    CreateUserReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - directoryId
     IncorrectElementsError:
       type: object
       properties:
         error:
           type: string
           example: incorrect elements
-    MissingElementsError:
+    AccessDeniedError:
       type: object
       properties:
         error:
           type: string
-          example: missing elements
-    GeneratePasswordResetTokenUserReq:
+          example: Access denied
+    PasswordResetUserReq:
       type: object
       properties:
         username:
           type: string
           example: scotty
+        token:
+          type: string
+          example: 8442
+        newPassword:
+          type: string
+          example: aV3ry$tr0ngp@$
         applicationId:
           type: string
           example: 0537b17c-ab62-491c-8085-9ac2b6206346
       required:
       - username
+      - applicationId
+      - token
+      - newPassword
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    IsValidRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+    GenerateVerificationTokenUserReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+      required:
+      - username
+      - password
       - applicationId
   securitySchemes:
     oAccessAuthToken:

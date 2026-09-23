@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'API definition for CRUD operations on devices. A device is the physical hardware that can be either: <br></br> <ul>  <li>a gateway - makes information available to the Glow Platform. The IHD/CAD and GlowSticks are examples of our gateways.</li> <br></br> <li>a sensor - detects events or changes to its environment and sends information to other devices (smart electricity meter)</li><br></br> <li>an actuator - a controller, given specific predefined commands it can trigger events, change its environment or perform an operation (auxiliary load control switch in an electricity meter)</li><br></br> </ul>'
+  description: API definition for CRUD operations on devices.
   version: 1.1.0
   title: Device Management System Discover API
   license:
@@ -8,12 +8,12 @@ info:
 servers:
 - url: https://api.glowmarkt.com/api/v0-1/
 tags:
-- name: discover
+- name: Discover
 paths:
   /discover/{hardwareId}:
     get:
       tags:
-      - discover
+      - Discover
       summary: Find device by ID
       description: Returns the devices and if they do not exist the assets and product types
       operationId: discoverDevicesAssets

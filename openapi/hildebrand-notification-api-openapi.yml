@@ -8,15 +8,14 @@ info:
 servers:
 - url: https://api.glowmarkt.com/api/v0-1/ns
 tags:
-- name: notification
+- name: Notification
   description: When an application triggeers an alert, for each channel of communication a notification is created. This enables the system to monitor seperately whant happens in each channel.
 paths:
   /notification/{notificationId}:
     get:
       tags:
-      - notification
+      - Notification
       summary: Get a notification by Id
-      description: Get a notification by Id
       operationId: findNotificationById
       parameters:
       - name: notificationId
@@ -59,9 +58,8 @@ paths:
   /notification/{notificationId}/log:
     get:
       tags:
-      - notification
+      - Notification
       summary: Get the logs of a particular notification
-      description: Get the logs of a particular notification
       operationId: getNotificationLogs
       parameters:
       - name: notificationId
@@ -105,6 +103,19 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
+    Alert:
+      allOf:
+      - $ref: '#/components/schemas/AlertReq'
+      - properties:
+          ns_alert_id:
+            type: string
+            example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
     NotificationLog:
       type: object
       properties:
@@ -141,58 +152,12 @@ components:
           example: '2021-09-15T13:43:15.890Z'
       xml:
         name: NotificationLog
-    Alert:
-      allOf:
-      - $ref: '#/components/schemas/AlertReq'
-      - properties:
-          ns_alert_id:
-            type: string
-            example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
     AccessDeniedError:
       type: object
       properties:
         error:
           type: string
           example: Access denied
-    Notification:
-      type: object
-      properties:
-        notificationid:
-          type: string
-          example: 084c7aef-a94f-4b8b-b053-afc35257f91b
-        ns_alert_id:
-          type: string
-          example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
-        received_dtm:
-          type: string
-          example: '2021-09-15T13:43:15.890Z'
-        Status:
-          type: string
-          example: OK
-        status_at:
-          type: string
-          example: '2021-09-15T13:43:15.890Z'
-        channel:
-          type: string
-          example: push
-          enum:
-          - push
-          - email
-          - inbox
-        userid:
-          type: string
-          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
-        alertData:
-          allOf:
-          - $ref: '#/components/schemas/Alert'
-      xml:
-        name: Notification
     AlertReq:
       type: object
       properties:
@@ -245,12 +210,45 @@ components:
           type: object
       xml:
         name: AlertReq
-    MissingElementsError:
+    Notification:
+      type: object
+      properties:
+        notificationid:
+          type: string
+          example: 084c7aef-a94f-4b8b-b053-afc35257f91b
+        ns_alert_id:
+          type: string
+          example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
+        received_dtm:
+          type: string
+          example: '2021-09-15T13:43:15.890Z'
+        Status:
+          type: string
+          example: OK
+        status_at:
+          type: string
+          example: '2021-09-15T13:43:15.890Z'
+        channel:
+          type: string
+          example: push
+          enum:
+          - push
+          - email
+          - inbox
+        userid:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        alertData:
+          allOf:
+          - $ref: '#/components/schemas/Alert'
+      xml:
+        name: Notification
+    InternalServerError:
       type: object
       properties:
         error:
           type: string
-          example: missing elements
+          example: An error has occurred
   securitySchemes:
     orgAppKeys:
       type: http

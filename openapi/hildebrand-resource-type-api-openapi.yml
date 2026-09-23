@@ -15,7 +15,7 @@ paths:
     post:
       tags:
       - Resource Type
-      summary: Add a new resource type.
+      summary: Add a new resource type
       description: create a new resourceType
       operationId: resourcetype.addResourceType
       security:
@@ -221,21 +221,20 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    ResourceType:
-      allOf:
-      - $ref: '#/components/schemas/ResourceTypeReq'
-      - properties:
-          resourceTypeId:
-            type: string
-            example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-          active:
-            type: boolean
-    AccessDeniedError:
+    ServerError:
       type: object
       properties:
         error:
           type: string
-          example: Access denied
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    missingAppIdError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -applicationId
     StorageType:
       type: object
       properties:
@@ -268,12 +267,21 @@ components:
                 example: false
       xml:
         name: StorageType
-    FindResourceReqError:
+    ResourceType:
+      allOf:
+      - $ref: '#/components/schemas/ResourceTypeReq'
+      - properties:
+          resourceTypeId:
+            type: string
+            example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+          active:
+            type: boolean
+    AddResourceReqError:
       type: object
       properties:
         error:
           type: string
-          example: missing elements -userId
+          example: missing elements -body
     AddResourceTypeSucess:
       type: object
       properties:
@@ -283,56 +291,6 @@ components:
         resourceTypeId:
           type: string
           example: 9e6d582f-e2e0-4af5-af7c-69b20aeeee20
-    AddResourceReqError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -body
-    ListOfResourceType:
-      type: array
-      items:
-        $ref: '#/components/schemas/ResourceType'
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
-    ListOfResource:
-      type: array
-      items:
-        $ref: '#/components/schemas/Resource'
-    missingAppIdError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -applicationId
-    Resource:
-      allOf:
-      - $ref: '#/components/schemas/ResourceType'
-      - properties:
-          resourceId:
-            type: string
-            example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
-          name:
-            type: string
-            example: electricity consumption
-          description:
-            type: string
-            example: my household electricity
-          dataSourceUnitInfo:
-            type: object
-            properties:
-              shid:
-                type: string
-                example: f3204e8e5a1a40a39396a15f919f88a5
-          ownerId:
-            type: string
-            example: f78a3812-d4fc-4b00-99c5-20fd581721a6
     ResourceTypeReq:
       type: object
       properties:
@@ -360,6 +318,48 @@ components:
       - name
       - classifier
       - storage
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    FindResourceReqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -userId
+    ListOfResourceType:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResourceType'
+    Resource:
+      allOf:
+      - $ref: '#/components/schemas/ResourceType'
+      - properties:
+          resourceId:
+            type: string
+            example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+          name:
+            type: string
+            example: electricity consumption
+          description:
+            type: string
+            example: my household electricity
+          dataSourceUnitInfo:
+            type: object
+            properties:
+              shid:
+                type: string
+                example: f3204e8e5a1a40a39396a15f919f88a5
+          ownerId:
+            type: string
+            example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+    ListOfResource:
+      type: array
+      items:
+        $ref: '#/components/schemas/Resource'
   securitySchemes:
     orgAppKeys:
       type: http

@@ -48,7 +48,7 @@ paths:
       tags:
       - Account
       summary: Add an account to an existing user
-      description: This call should be used when a user is registered via  on the Glow ecosystem. By providing the username of the user a directory account may be added to the application.
+      description: This call should be used when a user is registered via on the Glow ecosystem. By providing the username of the user a directory account may be added to the application.
       operationId: addAccount
       security:
       - appKeys: []
@@ -104,7 +104,7 @@ paths:
     get:
       tags:
       - Account
-      summary: Find specific account of an application.
+      summary: Find specific account of an application
       description: Returns an account.
       operationId: getAccountbyId
       parameters:
@@ -149,7 +149,7 @@ paths:
     put:
       tags:
       - Account
-      summary: Updates the account's metadata.
+      summary: Updates the account's metadata
       description: Updates the account s metadata. Elements that can be updated include name. This can be used in on an administrative level.
       operationId: updateAccount
       parameters:
@@ -204,7 +204,6 @@ paths:
       tags:
       - Account
       summary: Delete account
-      description: Delete account
       operationId: deleteAccount
       parameters:
       - name: accountId
@@ -257,7 +256,7 @@ paths:
     get:
       tags:
       - Account
-      summary: Find the status of a specified account. If the account is using an external directory service, this call will confirm whether the user is authenticated against it. This call requires administrative application level credentials.
+      summary: Find the status of a specified account.
       description: Returns the status an account.
       operationId: getAccountStatusbyId
       parameters:
@@ -303,7 +302,7 @@ paths:
     get:
       tags:
       - Account
-      summary: With a given JWT token a user can have their account status verfied. If their account is created under an external directory service, this call will establish whether a user's token to the external service is still valid.
+      summary: With a given JWT token a user can have their account status verfied.
       description: Returns the status an account.
       operationId: getAccountStatusbyUserToken
       security:
@@ -534,6 +533,8 @@ paths:
             schema:
               $ref: '#/components/schemas/AddMobileTokenToAccountReq'
         description: The information that is needed to assign a mobile token to an account.
+      operationId: postAccountByAccountIdMobileapptoken
+      x-operation-id-source: derived
     put:
       tags:
       - Account
@@ -577,14 +578,10 @@ paths:
             schema:
               $ref: '#/components/schemas/RemoveMobileTokenToAccountReq'
         description: The information that is needed to remove a mobile token to an account.
+      operationId: putAccountByAccountIdMobileapptoken
+      x-operation-id-source: derived
 components:
   schemas:
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
     AddMobileTokenToAccountReq:
       type: object
       properties:
@@ -593,18 +590,12 @@ components:
           example: ExampleToKEN
       required:
       - newToken
-    AccessDeniedError:
+    MissingElementsError:
       type: object
       properties:
         error:
           type: string
-          example: Access denied
-    IncorrectElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: incorrect elements
+          example: missing elements
     AddAccountReq:
       type: object
       properties:
@@ -654,50 +645,6 @@ components:
           - inactive
         active:
           type: boolean
-    UpdateAccountRes:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          example: '2017-10-18T17:06:48.549Z'
-        updatedAt:
-          type: string
-          format: date-time
-        accountId:
-          type: string
-          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
-        applicationId:
-          type: string
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        userId:
-          type: string
-          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
-        directoryId:
-          type: string
-          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
-        name:
-          type: string
-          example: Montgomery Jorgensen
-        username:
-          type: string
-          example: scotty
-        email:
-          type: string
-          example: scotty@enterprise.st
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-        active:
-          type: boolean
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
     RemoveMobileTokenToAccountReq:
       type: object
       properties:
@@ -706,6 +653,18 @@ components:
           example: ExampleToKEN
       required:
       - removeToken
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
     AccountStatus:
       type: object
       properties:
@@ -745,6 +704,50 @@ components:
                   type: string
                   format: date-time
                   example: '2019-03-29T09:24:28.000Z'
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    UpdateAccountRes:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          example: '2017-10-18T17:06:48.549Z'
+        updatedAt:
+          type: string
+          format: date-time
+        accountId:
+          type: string
+          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+        name:
+          type: string
+          example: Montgomery Jorgensen
+        username:
+          type: string
+          example: scotty
+        email:
+          type: string
+          example: scotty@enterprise.st
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        active:
+          type: boolean
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

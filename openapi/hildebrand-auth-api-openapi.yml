@@ -14,7 +14,7 @@ paths:
     get:
       tags:
       - Auth
-      summary: Checks whether a user token is valid.
+      summary: Checks whether a user token is valid
       description: Checks whether a user token is valid.
       operationId: tokencheck
       security:
@@ -121,7 +121,7 @@ paths:
     get:
       tags:
       - Auth
-      summary: Returns all the tokens that are active and valid for a specified user.
+      summary: Returns all the tokens that are active and valid for a specified user
       description: This call enables a customer to view all the tokens that have been generated and used for their accounts. This includes all the JWT and OAuth tokens. By enabling this a user can then manage and monitor the access to their accounts.
       operationId: getTokenOfUser
       security:
@@ -152,7 +152,7 @@ paths:
     delete:
       tags:
       - Auth
-      summary: Deletes a token, specified by its tokenId.
+      summary: Deletes a token, specified by its tokenId
       description: This call enables an user to delete and token and revoke access. JWT as well as OAuth tokens can be deleted.
       operationId: deleteTokenById
       parameters:
@@ -190,7 +190,7 @@ paths:
     get:
       tags:
       - Auth
-      summary: Generate a new token for an account.
+      summary: Generate a new token for an account
       description: An account provides an old token and gets a new one generated.
       operationId: newToken
       security:
@@ -311,12 +311,6 @@ components:
         grant_type:
           type: string
           example: refresh_token
-    IsValidRes:
-      type: object
-      properties:
-        valid:
-          type: boolean
-          example: true
     UserNameLoginReq:
       type: object
       properties:
@@ -332,6 +326,12 @@ components:
       required:
       - username
       - password
+    IsValidRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

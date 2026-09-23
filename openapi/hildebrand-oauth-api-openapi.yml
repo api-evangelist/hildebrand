@@ -14,7 +14,7 @@ paths:
     get:
       tags:
       - OAuth
-      summary: Check and validate an Oauth Access token.
+      summary: Check and validate an Oauth Access token
       description: The user system supports an OAuth 2.0 Authorization Code Grant. This call validates that a generated access key is valid.
       operationId: validateOAuthAccessToken
       security:
@@ -47,7 +47,7 @@ paths:
     post:
       tags:
       - OAuth
-      summary: Authenticate a user and generate an OAuth 2.0 Authorization Code Grant.
+      summary: Authenticate a user and generate an OAuth 2.0 Authorization Code Grant
       description: The user system supports an OAuth 2.0 Authorization Code Grant. This call authenticates a user and generates an OAuth 2.0 Authorization Code Grant.
       operationId: generateOAuthorizationCode
       parameters:
@@ -93,7 +93,7 @@ paths:
     post:
       tags:
       - OAuth
-      summary: Exchange the Authorization Code for an Access Token.
+      summary: Exchange the Authorization Code for an Access Token
       description: The user system supports an OAuth 2.0 Authorization Code Grant. This call generates an access and refresh token from an OAuth 2.0 Authorization Code Grant. This API can also be used to generate a new access token with a given refresh token. Instead of using the authorization code in the body of the request (code), use the refresh token (refresh_token).
       operationId: exchangeAuthorizationCodeWithAccess
       responses:
@@ -130,44 +130,6 @@ paths:
         required: true
 components:
   schemas:
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    IncorrectElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: incorrect elements
-    OAuthCodeRes:
-      type: object
-      properties:
-        valid:
-          type: boolean
-          example: true
-        code:
-          type: string
-          example: 2b9d75b3ae36bdf3b66724b89996094ba724278784
-        exp:
-          type: number
-          example: 1559824668
-        accountId:
-          type: string
-          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
-        name:
-          type: string
-          example: Montgomery Christopher Jorgensen
-      xml:
-        name: OAuthCodeRes
     OAuthAccessRefreshToken:
       type: object
       properties:
@@ -183,21 +145,6 @@ components:
         code:
           type: string
           example: 2b9d75b3ae36bdf3b66724b89996094ba724278784
-    UserNameLoginReq:
-      type: object
-      properties:
-        username:
-          type: string
-          example: scotty
-        password:
-          type: string
-          example: '@$tr0ngP@$'
-        directoryId:
-          type: string
-          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
-      required:
-      - username
-      - password
     ExchangeAuthorizationCodeWithAccessRes:
       type: object
       properties:
@@ -243,6 +190,59 @@ components:
         updatedAt:
           type: string
           format: date-time
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    OAuthCodeRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+        code:
+          type: string
+          example: 2b9d75b3ae36bdf3b66724b89996094ba724278784
+        exp:
+          type: number
+          example: 1559824668
+        accountId:
+          type: string
+          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+        name:
+          type: string
+          example: Montgomery Christopher Jorgensen
+      xml:
+        name: OAuthCodeRes
+    UserNameLoginReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - password
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
     OAuthValidAccessToken:
       allOf:
       - $ref: '#/components/schemas/AddUserRes'

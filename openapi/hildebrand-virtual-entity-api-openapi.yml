@@ -224,55 +224,23 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    Ve:
+    ServerError:
       type: object
       properties:
-        veId:
+        error:
           type: string
-          example: dc9069a7-7695-43fd-8f27-16b1c94213da
-        veTypeId:
-          type: string
-          example: cc90b599-2705-4b13-98d4-3306f81169cf
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    VEUpdateReq:
+      type: object
+      properties:
         name:
           type: string
-          example: veTry status
-        ownerId:
+          example: A new name
+        description:
           type: string
-          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
-        applicationId:
-          type: string
-          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
-        active:
-          type: boolean
-        resources:
-          type: array
-          items:
-            type: object
-            properties:
-              resourceId:
-                type: string
-                example: 319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1
-              resourceTypeId:
-                type: string
-                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-        attribute:
-          type: object
-          description: Anything can be saved under this field
-          properties:
-            rooms:
-              type: array
-              items:
-                type: string
-                example: living room
-            area:
-              type: object
-              properties:
-                units:
-                  type: string
-                  example: sqm
-                measurement:
-                  type: string
-                  example: 100
+          example: This virtual entity represents my home.
     Vedeactive:
       type: object
       properties:
@@ -305,15 +273,67 @@ components:
               resourceTypeId:
                 type: string
                 example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-    VEUpdateReq:
+    VeWithFullResources:
       type: object
       properties:
+        veId:
+          type: string
+          example: dc9069a7-7695-43fd-8f27-16b1c94213da
+        veTypeId:
+          type: string
+          example: cc90b599-2705-4b13-98d4-3306f81169cf
         name:
           type: string
-          example: A new name
-        description:
+          example: veTry status
+        ownerId:
           type: string
-          example: This virtual entity represents my home.
+          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+        applicationId:
+          type: string
+          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
+        active:
+          type: boolean
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        attribute:
+          type: object
+          description: Anything can be saved under this field
+          properties:
+            rooms:
+              type: array
+              items:
+                type: string
+                example: living room
+            area:
+              type: object
+              properties:
+                units:
+                  type: string
+                  example: sqm
+                measurement:
+                  type: string
+                  example: 100
+    AddVeSucess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        veId:
+          type: string
+          example: e10591ec-4557-4ac7-90d4-a09654aeb5de
+    reqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    ListOfVe:
+      type: array
+      items:
+        $ref: '#/components/schemas/Ve'
     VEReq:
       type: object
       properties:
@@ -369,15 +389,7 @@ components:
           example: EHSOLAPI
         active:
           type: boolean
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
-    VeWithFullResources:
+    Ve:
       type: object
       properties:
         veId:
@@ -400,7 +412,14 @@ components:
         resources:
           type: array
           items:
-            $ref: '#/components/schemas/Resource'
+            type: object
+            properties:
+              resourceId:
+                type: string
+                example: 319aef2c-45fe-4027-9c2a-cf1cb8f8c0f1
+              resourceTypeId:
+                type: string
+                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
         attribute:
           type: object
           description: Anything can be saved under this field
@@ -419,25 +438,6 @@ components:
                 measurement:
                   type: string
                   example: 100
-    ListOfVe:
-      type: array
-      items:
-        $ref: '#/components/schemas/Ve'
-    reqError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
-    AddVeSucess:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        veId:
-          type: string
-          example: e10591ec-4557-4ac7-90d4-a09654aeb5de
   securitySchemes:
     orgAppKeys:
       type: http

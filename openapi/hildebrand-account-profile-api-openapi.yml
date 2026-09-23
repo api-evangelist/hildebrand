@@ -53,7 +53,7 @@ paths:
     post:
       tags:
       - Account Profile
-      summary: Create an account profile under a given profileName.
+      summary: Create an account profile under a given profileName
       description: Create an account profile under a given profileName. profileName is a required field. Please note that anything under the profileName will be overwritten.
       operationId: addAccountProfile
       security:
@@ -144,6 +144,12 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
     AccountProfile:
       type: object
       required:
@@ -160,12 +166,6 @@ components:
               agg: daily
               metric: consumption
               timeframe: lastMonth
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
     MissingElementsError:
       type: object
       properties:

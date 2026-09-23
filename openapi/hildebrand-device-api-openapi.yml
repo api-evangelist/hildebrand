@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'API definition for CRUD operations on devices. A device is the physical hardware that can be either: <br></br> <ul>  <li>a gateway - makes information available to the Glow Platform. The IHD/CAD and GlowSticks are examples of our gateways.</li> <br></br> <li>a sensor - detects events or changes to its environment and sends information to other devices (smart electricity meter)</li><br></br> <li>an actuator - a controller, given specific predefined commands it can trigger events, change its environment or perform an operation (auxiliary load control switch in an electricity meter)</li><br></br> </ul>'
+  description: API definition for CRUD operations on devices.
   version: 1.1.0
   title: Management System Device API
   license:
@@ -132,7 +132,7 @@ paths:
     get:
       tags:
       - Device
-      summary: Find the device that sources a specified resource.
+      summary: Find the device that sources a specified resource
       description: Returns a Device, that sources a specified resource.
       operationId: device.findByResourceId
       parameters:
@@ -170,7 +170,7 @@ paths:
     get:
       tags:
       - Device
-      summary: This call can be used to see whether a gateway device is sending packets to the Glow Platform (i.e. via WiFi).
+      summary: This call can be used to see whether a gateway device is sending packets to the…
       operationId: device.getStatusbyDeviceId
       parameters:
       - name: id
@@ -220,7 +220,7 @@ paths:
     get:
       tags:
       - Device
-      summary: This call can be used to see whether a gateway device is sending packets to the Glow Platform (i.e. via WiFi).
+      summary: This call can be used to see whether a gateway device is sending packets to the…
       operationId: device.getStatusbyHardwareId
       parameters:
       - name: tags
@@ -268,22 +268,14 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    ProtocolResourceTypeResource:
+    ServerError:
       type: object
       properties:
-        protocolId:
+        error:
           type: string
-        resourceTypeId:
-          type: string
-        resourceId:
-          type: string
-      required:
-      - protocolId
-      - resourceTypeId
-      - resourceId
-    ParentHardwareIds:
-      type: string
-      example: KO17321203
+          example: An error has occurred
+      xml:
+        name: AddResourceError
     DeviceReq:
       type: object
       properties:
@@ -297,6 +289,39 @@ components:
       - deviceTypeId
       - hardwareId
       - hardwareIds
+    AddDeviceSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        valid:
+          type: boolean
+        deviceId:
+          type: string
+          example: d3vb0129-8c95-43f3-bde2-744007221oli
+    ParentHardwareIds:
+      type: string
+      example: KO17321203
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
+    ProtocolResourceTypeResource:
+      type: object
+      properties:
+        protocolId:
+          type: string
+        resourceTypeId:
+          type: string
+        resourceId:
+          type: string
+      required:
+      - protocolId
+      - resourceTypeId
+      - resourceId
     Device:
       type: object
       properties:
@@ -341,31 +366,6 @@ components:
         error:
           type: string
           example: missing elements -userId
-    AddDeviceSuccess:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        valid:
-          type: boolean
-        deviceId:
-          type: string
-          example: d3vb0129-8c95-43f3-bde2-744007221oli
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
-    IncorrectElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: incorrect elements
   securitySchemes:
     orgAppKeys:
       type: http

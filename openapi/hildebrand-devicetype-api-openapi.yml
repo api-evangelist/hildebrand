@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'API definition for CRUD operations on devices. A device is the physical hardware that can be either: <br></br> <ul>  <li>a gateway - makes information available to the Glow Platform. The IHD/CAD and GlowSticks are examples of our gateways.</li> <br></br> <li>a sensor - detects events or changes to its environment and sends information to other devices (smart electricity meter)</li><br></br> <li>an actuator - a controller, given specific predefined commands it can trigger events, change its environment or perform an operation (auxiliary load control switch in an electricity meter)</li><br></br> </ul>'
+  description: API definition for CRUD operations on devices.
   version: 1.1.0
   title: Device Management System Device Type API
   license:
@@ -112,6 +112,20 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
     AddDeviceTypeSucess:
       type: object
       properties:
@@ -121,6 +135,42 @@ components:
         deviceTypeId:
           type: string
           example: a0872822-c10c-4a90-bf8a-17310ffe10af
+    DeviceTypeReq:
+      type: object
+      properties:
+        description:
+          type: string
+        protocol:
+          type: object
+          properties:
+            sensors:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProtocolResourceType'
+            protocol:
+              type: string
+          required:
+          - protocol
+          - sensors
+    DeviceType:
+      type: object
+      properties:
+        deviceTypeId:
+          type: string
+        description:
+          type: string
+        protocol:
+          type: object
+          properties:
+            sensors:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProtocolResourceTypeResource'
+            protocol:
+              type: string
+          required:
+          - protocol
+          - sensors
     ProtocolResourceTypeResource:
       type: object
       properties:
@@ -144,56 +194,6 @@ components:
       required:
       - protocolId
       - resourceTypeId
-    DeviceTypeReq:
-      type: object
-      properties:
-        description:
-          type: string
-        protocol:
-          type: object
-          properties:
-            sensors:
-              type: array
-              items:
-                $ref: '#/components/schemas/ProtocolResourceType'
-            protocol:
-              type: string
-          required:
-          - protocol
-          - sensors
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
-    DeviceType:
-      type: object
-      properties:
-        deviceTypeId:
-          type: string
-        description:
-          type: string
-        protocol:
-          type: object
-          properties:
-            sensors:
-              type: array
-              items:
-                $ref: '#/components/schemas/ProtocolResourceTypeResource'
-            protocol:
-              type: string
-          required:
-          - protocol
-          - sensors
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
   securitySchemes:
     orgAppKeys:
       type: http

@@ -44,6 +44,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+      - Account Session
+      summary: Update an account session
+      description: Update fields of an account session. The fields that are updated are completely overwritten if they exist.
+      operationId: updateAccountSession
+      security:
+      - userToken: []
+        applicationId: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/AccountSession'
+                - type: object
+                properties:
+                  valid:
+                    type: boolean
+                  status:
+                    type: string
+                    example: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingElementsError'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountSession'
+        description: The information that is used to create a devuser.
 components:
   schemas:
     InternalServerError:
@@ -52,12 +100,6 @@ components:
         error:
           type: string
           example: An error has occurred
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
     AccountSession:
       type: object
       properties:
@@ -67,6 +109,18 @@ components:
         sessionvalue2:
           type: string
           example: f2420615-a3e5-4346-9fb4-1cb33cf4844c
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

@@ -58,7 +58,7 @@ paths:
       tags:
       - Meter Point Consent & Verification
       summary: Renew consent for a number of meterpoints
-      description: A user can renew their consent for a number of meterpoints.  The consent can be extended to a maximum of 18 months (default).
+      description: A user can renew their consent for a number of meterpoints. The consent can be extended to a maximum of 18 months (default).
       operationId: renewMeterPointConsentBulk
       security:
       - appKeys: []
@@ -357,6 +357,16 @@ paths:
               $ref: '#/components/schemas/RenewMeterPointConsentReq'
 components:
   schemas:
+    MeterPointConsentAndVerificationRenewalRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+        meterPointRenewals:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointConsentAndVerificationRenewal'
     MeterPointConsentAndVerificationRenewal:
       type: object
       properties:
@@ -391,56 +401,6 @@ components:
         meterPointVerificationRenewalId:
           type: string
           example: aa2464fa-bca2-e22a-83b1-14e9819c54d2
-    UserMeterPointConsentAndVerification:
-      type: object
-      properties:
-        meterPointVerification:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeterPointConsentAndVerification'
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    MeterPointVerificationRenewalElem:
-      type: object
-      properties:
-        mpxn:
-          type: string
-          example: '123456789012'
-        valid:
-          type: boolean
-          example: true
-        meterPointVerificationRenewalId:
-          type: string
-          example: bfdf0b3d-42a6-46f0-8142-39c4d5413b58
-        isValidUntil:
-          type: string
-          example: '2026-03-05T23:59:59'
-    MpxnElem:
-      type: object
-      properties:
-        mpxn:
-          type: string
-          example: '123456789012'
-    MeterPointConsentAndVerificationRenewalRes:
-      type: object
-      properties:
-        valid:
-          type: boolean
-          example: true
-        meterPointRenewals:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeterPointConsentAndVerificationRenewal'
     MeterPointConsentAndVerification:
       type: object
       properties:
@@ -460,13 +420,27 @@ components:
         mpxn:
           type: string
           example: 123456789012
-    RenewMeterPointConsentReq:
+    MissingElementsError:
       type: object
       properties:
+        error:
+          type: string
+          example: missing elements
+    MeterPointVerificationRenewalElem:
+      type: object
+      properties:
+        mpxn:
+          type: string
+          example: '123456789012'
+        valid:
+          type: boolean
+          example: true
+        meterPointVerificationRenewalId:
+          type: string
+          example: bfdf0b3d-42a6-46f0-8142-39c4d5413b58
         isValidUntil:
           type: string
-          format: date-time
-          example: '2024-12-13T12:02:09.865Z'
+          example: '2026-03-05T23:59:59'
     AddUserRes:
       type: object
       properties:
@@ -497,6 +471,12 @@ components:
         updatedAt:
           type: string
           format: date-time
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
     MeterPointConsentManagementBulkRevocationRes:
       type: object
       properties:
@@ -506,12 +486,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MpxnElem'
-    MissingElementsError:
+    UserMeterPointConsentAndVerification:
       type: object
       properties:
-        error:
-          type: string
-          example: missing elements
+        meterPointVerification:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointConsentAndVerification'
     MeterPointConsentManagementBulkRenewalRes:
       type: object
       properties:
@@ -528,6 +509,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MpxnElem'
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    RenewMeterPointConsentReq:
+      type: object
+      properties:
+        isValidUntil:
+          type: string
+          format: date-time
+          example: '2024-12-13T12:02:09.865Z'
+    MpxnElem:
+      type: object
+      properties:
+        mpxn:
+          type: string
+          example: '123456789012'
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

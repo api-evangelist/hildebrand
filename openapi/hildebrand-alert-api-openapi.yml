@@ -8,13 +8,13 @@ info:
 servers:
 - url: https://api.glowmarkt.com/api/v0-1/ns
 tags:
-- name: alert
+- name: Alert
   description: An application can send an alert to a customer across multiple channels (email, push, inbox) which will convey some type of specific message (defined by the alert type).
 paths:
   /alert:
     post:
       tags:
-      - alert
+      - Alert
       summary: Send an alert
       description: Send an alert to a user
       operationId: sendAlert
@@ -58,9 +58,8 @@ paths:
   /alert/{alertId}:
     get:
       tags:
-      - alert
+      - Alert
       summary: Get an alert by Id
-      description: Get an alert by Id
       operationId: findAlertById
       parameters:
       - name: alertId
@@ -103,9 +102,8 @@ paths:
   /alert/user:
     get:
       tags:
-      - alert
+      - Alert
       summary: Get the alerts sent to a user
-      description: Get the alerts sent to a user
       operationId: findAlertsOfUser
       security:
       - appKeys: []
@@ -149,12 +147,12 @@ components:
           ns_alert_id:
             type: string
             example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
-    InternalServerError:
+    MissingElementsError:
       type: object
       properties:
         error:
           type: string
-          example: An error has occurred
+          example: missing elements
     AlertRes:
       type: object
       properties:
@@ -224,12 +222,12 @@ components:
           type: object
       xml:
         name: AlertReq
-    MissingElementsError:
+    InternalServerError:
       type: object
       properties:
         error:
           type: string
-          example: missing elements
+          example: An error has occurred
   securitySchemes:
     orgAppKeys:
       type: http

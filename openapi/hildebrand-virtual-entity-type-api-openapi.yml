@@ -124,7 +124,7 @@ paths:
     put:
       tags:
       - Virtual Entity Type
-      summary: Update a  Virtual Entity Type
+      summary: Update a Virtual Entity Type
       description: Update Virtual Entity Type. Please note that only specific properties of the Virtual Entity Type can be updated, such as the name and the description.
       operationId: veType.updateVeType
       parameters:
@@ -166,7 +166,7 @@ paths:
     get:
       tags:
       - Virtual Entity Type
-      summary: Find all resources that belong to a user that satisfy the Resource Types in the Virtual Entity Type definition.
+      summary: Find all resources that belong to a user that satisfy the Resource Types in the…
       description: Returns the resources of a user that could potentially be used to create a Virtual Entity of the specified Virtual Entity Type
       operationId: veType.findResourcesOfVeType
       parameters:
@@ -202,10 +202,14 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    ListOfVeType:
-      type: array
-      items:
-        $ref: '#/components/schemas/VeType'
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
     updateVeTypeReq:
       type: object
       properties:
@@ -215,6 +219,30 @@ components:
         description:
           type: string
           example: Smart home, with electricity and gas utilities
+    VeTypeResources:
+      type: object
+      properties:
+        veTypeId:
+          type: string
+          example: cc90b599-2705-4b13-98d4-3306f81169cf
+        ownerId:
+          type: string
+          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+        applicationId:
+          type: string
+          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceTypeAvailableResources'
+        selectionNeeded:
+          type: boolean
+    reqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
     VeType:
       type: object
       properties:
@@ -242,15 +270,6 @@ components:
                 example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
               required:
                 type: boolean
-    newVeTypeRes:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        veTypeId:
-          type: string
-          example: b82d4f8b-a097-4b96-acbb-81d891489441
     newVeTypeReq:
       type: object
       properties:
@@ -270,24 +289,6 @@ components:
                 example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
               required:
                 type: boolean
-    VeTypeResources:
-      type: object
-      properties:
-        veTypeId:
-          type: string
-          example: cc90b599-2705-4b13-98d4-3306f81169cf
-        ownerId:
-          type: string
-          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
-        applicationId:
-          type: string
-          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
-        resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceTypeAvailableResources'
-        selectionNeeded:
-          type: boolean
     ResourceTypeAvailableResources:
       type: object
       properties:
@@ -300,14 +301,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Resource'
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
     Resource:
       type: object
       properties:
@@ -346,12 +339,19 @@ components:
           example: EHSOLAPI
         active:
           type: boolean
-    reqError:
+    newVeTypeRes:
       type: object
       properties:
-        error:
+        status:
           type: string
-          example: missing elements
+          example: OK
+        veTypeId:
+          type: string
+          example: b82d4f8b-a097-4b96-acbb-81d891489441
+    ListOfVeType:
+      type: array
+      items:
+        $ref: '#/components/schemas/VeType'
   securitySchemes:
     orgAppKeys:
       type: http

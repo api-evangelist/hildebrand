@@ -221,6 +221,40 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
+    AddResourceReqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -body
+    Resource:
+      allOf:
+      - $ref: '#/components/schemas/ResourceType'
+      - properties:
+          resourceId:
+            type: string
+            example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+          name:
+            type: string
+            example: electricity consumption
+          description:
+            type: string
+            example: my household electricity
+          dataSourceUnitInfo:
+            type: object
+            properties:
+              shid:
+                type: string
+                example: f3204e8e5a1a40a39396a15f919f88a5
+          ownerId:
+            type: string
+            example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+    missingAppIdError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -applicationId
     ServerError:
       type: object
       properties:
@@ -229,12 +263,44 @@ components:
           example: An error has occurred
       xml:
         name: AddResourceError
-    missingAppIdError:
+    FindResourceReqError:
       type: object
       properties:
         error:
           type: string
-          example: missing elements -applicationId
+          example: missing elements -userId
+    AddResourceTypeSucess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        resourceTypeId:
+          type: string
+          example: 9e6d582f-e2e0-4af5-af7c-69b20aeeee20
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    ListOfResourceType:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResourceType'
+    ListOfResource:
+      type: array
+      items:
+        $ref: '#/components/schemas/Resource'
+    ResourceType:
+      allOf:
+      - $ref: '#/components/schemas/ResourceTypeReq'
+      - properties:
+          resourceTypeId:
+            type: string
+            example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+          active:
+            type: boolean
     StorageType:
       type: object
       properties:
@@ -267,30 +333,6 @@ components:
                 example: false
       xml:
         name: StorageType
-    ResourceType:
-      allOf:
-      - $ref: '#/components/schemas/ResourceTypeReq'
-      - properties:
-          resourceTypeId:
-            type: string
-            example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-          active:
-            type: boolean
-    AddResourceReqError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -body
-    AddResourceTypeSucess:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        resourceTypeId:
-          type: string
-          example: 9e6d582f-e2e0-4af5-af7c-69b20aeeee20
     ResourceTypeReq:
       type: object
       properties:
@@ -318,48 +360,6 @@ components:
       - name
       - classifier
       - storage
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    FindResourceReqError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -userId
-    ListOfResourceType:
-      type: array
-      items:
-        $ref: '#/components/schemas/ResourceType'
-    Resource:
-      allOf:
-      - $ref: '#/components/schemas/ResourceType'
-      - properties:
-          resourceId:
-            type: string
-            example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
-          name:
-            type: string
-            example: electricity consumption
-          description:
-            type: string
-            example: my household electricity
-          dataSourceUnitInfo:
-            type: object
-            properties:
-              shid:
-                type: string
-                example: f3204e8e5a1a40a39396a15f919f88a5
-          ownerId:
-            type: string
-            example: f78a3812-d4fc-4b00-99c5-20fd581721a6
-    ListOfResource:
-      type: array
-      items:
-        $ref: '#/components/schemas/Resource'
   securitySchemes:
     orgAppKeys:
       type: http

@@ -31,9 +31,7 @@
     "hildebrand-virtual-entity-type-api-openapi.yml",
     "hildebrand-virtual-entity-s-metadata-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -47,8 +45,7 @@
     "hildebrand-glowmarkt-user-system-swagger.json: declared missing tag: accountsession",
     "hildebrand-glowmarkt-user-system-swagger.json: declared missing tag: auth",
     "hildebrand-glowmarkt-virtual-entity-system-swagger.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "superseded outputs removed: hildebrand-o-auth-api-openapi.yml",
-    "apis.yml register: written (+2 apis, 22 total)"
+    "apis.yml register: written (+1 apis, 22 total)"
   ],
   "skipped": [
     "hildebrand-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -63,7 +60,7 @@
     "hildebrand-discover-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "hildebrand-meter-point-consent-verification-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "hildebrand-notification-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "hildebrand-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hildebrand-oauth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "hildebrand-resource-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "hildebrand-resource-type-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "hildebrand-template-api-openapi.yml: previously refined output, superseded by openapi/_original/",

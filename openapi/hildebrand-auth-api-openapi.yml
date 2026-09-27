@@ -270,24 +270,18 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
     MissingElementsError:
       type: object
       properties:
         error:
           type: string
           example: missing elements
-    AccessDeniedError:
+    InternalServerError:
       type: object
       properties:
         error:
           type: string
-          example: Access denied
+          example: An error has occurred
     TokenDocument:
       type: object
       properties:
@@ -332,6 +326,12 @@ components:
         valid:
           type: boolean
           example: true
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

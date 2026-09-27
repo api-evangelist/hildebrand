@@ -112,29 +112,19 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    ServerError:
+    ProtocolResourceTypeResource:
       type: object
       properties:
-        error:
+        protocolId:
           type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
-    MissingElementsError:
-      type: object
-      properties:
-        error:
+        resourceTypeId:
           type: string
-          example: missing elements
-    AddDeviceTypeSucess:
-      type: object
-      properties:
-        status:
+        resourceId:
           type: string
-          example: OK
-        deviceTypeId:
-          type: string
-          example: a0872822-c10c-4a90-bf8a-17310ffe10af
+      required:
+      - protocolId
+      - resourceTypeId
+      - resourceId
     DeviceTypeReq:
       type: object
       properties:
@@ -152,6 +142,33 @@ components:
           required:
           - protocol
           - sensors
+    ProtocolResourceType:
+      type: object
+      properties:
+        protocolId:
+          type: string
+        resourceTypeId:
+          type: string
+      required:
+      - protocolId
+      - resourceTypeId
+    AddDeviceTypeSucess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        deviceTypeId:
+          type: string
+          example: a0872822-c10c-4a90-bf8a-17310ffe10af
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
     DeviceType:
       type: object
       properties:
@@ -171,29 +188,12 @@ components:
           required:
           - protocol
           - sensors
-    ProtocolResourceTypeResource:
+    MissingElementsError:
       type: object
       properties:
-        protocolId:
+        error:
           type: string
-        resourceTypeId:
-          type: string
-        resourceId:
-          type: string
-      required:
-      - protocolId
-      - resourceTypeId
-      - resourceId
-    ProtocolResourceType:
-      type: object
-      properties:
-        protocolId:
-          type: string
-        resourceTypeId:
-          type: string
-      required:
-      - protocolId
-      - resourceTypeId
+          example: missing elements
   securitySchemes:
     orgAppKeys:
       type: http

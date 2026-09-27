@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   description: The document enlists and describes the APIs for the User.
   version: 1.0.5
-  title: Glowmarkt User System O Auth API
+  title: Glowmarkt User System OAuth API
   license:
     name: Copyright © 2012-26 by Hildebrand Technology Limited
 servers:
@@ -130,21 +130,21 @@ paths:
         required: true
 components:
   schemas:
-    OAuthAccessRefreshToken:
+    UserNameLoginReq:
       type: object
       properties:
-        client_id:
-          type: boolean
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        client_secret:
+        username:
           type: string
-          example: 2b9d75b3ae36bOQHe28202
-        grant_type:
+          example: scotty
+        password:
           type: string
-          example: authorization_code
-        code:
+          example: '@$tr0ngP@$'
+        directoryId:
           type: string
-          example: 2b9d75b3ae36bdf3b66724b89996094ba724278784
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - password
     ExchangeAuthorizationCodeWithAccessRes:
       type: object
       properties:
@@ -160,6 +160,55 @@ components:
         expires_in:
           type: number
           example: 604800
+    OAuthCodeRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+        code:
+          type: string
+          example: 2b9d75b3ae36bdf3b66724b89996094ba724278784
+        exp:
+          type: number
+          example: 1559824668
+        accountId:
+          type: string
+          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+        name:
+          type: string
+          example: Montgomery Christopher Jorgensen
+      xml:
+        name: OAuthCodeRes
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    OAuthValidAccessToken:
+      allOf:
+      - $ref: '#/components/schemas/AddUserRes'
+      type: object
+      properties:
+        authenticationFramework:
+          type: string
+          example: oauth
+        status:
+          type: string
+          example: active
     AddUserRes:
       type: object
       properties:
@@ -190,70 +239,21 @@ components:
         updatedAt:
           type: string
           format: date-time
-    IncorrectElementsError:
+    OAuthAccessRefreshToken:
       type: object
       properties:
-        error:
-          type: string
-          example: incorrect elements
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    OAuthCodeRes:
-      type: object
-      properties:
-        valid:
+        client_id:
           type: boolean
-          example: true
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        client_secret:
+          type: string
+          example: 2b9d75b3ae36bOQHe28202
+        grant_type:
+          type: string
+          example: authorization_code
         code:
           type: string
           example: 2b9d75b3ae36bdf3b66724b89996094ba724278784
-        exp:
-          type: number
-          example: 1559824668
-        accountId:
-          type: string
-          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
-        name:
-          type: string
-          example: Montgomery Christopher Jorgensen
-      xml:
-        name: OAuthCodeRes
-    UserNameLoginReq:
-      type: object
-      properties:
-        username:
-          type: string
-          example: scotty
-        password:
-          type: string
-          example: '@$tr0ngP@$'
-        directoryId:
-          type: string
-          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
-      required:
-      - username
-      - password
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-    OAuthValidAccessToken:
-      allOf:
-      - $ref: '#/components/schemas/AddUserRes'
-      type: object
-      properties:
-        authenticationFramework:
-          type: string
-          example: oauth
-        status:
-          type: string
-          example: active
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

@@ -123,6 +123,15 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
+    MeterPointInventoryResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        inventory:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointInventory'
     ServerError:
       type: object
       properties:
@@ -188,15 +197,6 @@ components:
         SmetsVersion:
           type: string
           example: 2
-    MeterPointInventoryResponse:
-      type: object
-      properties:
-        valid:
-          type: boolean
-        inventory:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeterPointInventory'
   securitySchemes:
     orgAppKeys:
       type: http

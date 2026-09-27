@@ -459,6 +459,108 @@ paths:
         description: The body contains the user's new email.
 components:
   schemas:
+    PasswordResetUserReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        token:
+          type: string
+          example: 8442
+        newPassword:
+          type: string
+          example: aV3ry$tr0ngp@$
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+      required:
+      - username
+      - applicationId
+      - token
+      - newPassword
+    GenerateVerificationTokenUserReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+      required:
+      - username
+      - password
+      - applicationId
+    CreateUserReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - directoryId
+    CreateUserRes:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        applications:
+          type: array
+          items:
+            type: object
+            properties:
+              active:
+                type: boolean
+              accountId:
+                type: string
+                example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+              applicationId:
+                type: string
+                example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        status:
+          type: string
+          example: active
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    GeneratePasswordResetTokenUserReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+      required:
+      - username
+      - applicationId
+    IsValidRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
     VerifyUserReq:
       type: object
       properties:
@@ -479,6 +581,12 @@ components:
       - username
       - password
       - applicationId
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
     AddUserReq:
       type: object
       properties:
@@ -513,48 +621,6 @@ components:
         error:
           type: string
           example: missing elements
-    GeneratePasswordResetTokenUserReq:
-      type: object
-      properties:
-        username:
-          type: string
-          example: scotty
-        applicationId:
-          type: string
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-      required:
-      - username
-      - applicationId
-    CreateUserRes:
-      type: object
-      properties:
-        userId:
-          type: string
-          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
-        applications:
-          type: array
-          items:
-            type: object
-            properties:
-              active:
-                type: boolean
-              accountId:
-                type: string
-                example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
-              applicationId:
-                type: string
-                example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        status:
-          type: string
-          example: active
-        active:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
     AddUserRes:
       type: object
       properties:
@@ -585,78 +651,12 @@ components:
         updatedAt:
           type: string
           format: date-time
-    CreateUserReq:
-      type: object
-      properties:
-        username:
-          type: string
-          example: scotty
-        directoryId:
-          type: string
-          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
-      required:
-      - username
-      - directoryId
-    IncorrectElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: incorrect elements
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    PasswordResetUserReq:
-      type: object
-      properties:
-        username:
-          type: string
-          example: scotty
-        token:
-          type: string
-          example: 8442
-        newPassword:
-          type: string
-          example: aV3ry$tr0ngp@$
-        applicationId:
-          type: string
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-      required:
-      - username
-      - applicationId
-      - token
-      - newPassword
     InternalServerError:
       type: object
       properties:
         error:
           type: string
           example: An error has occurred
-    IsValidRes:
-      type: object
-      properties:
-        valid:
-          type: boolean
-          example: true
-    GenerateVerificationTokenUserReq:
-      type: object
-      properties:
-        username:
-          type: string
-          example: scotty
-        password:
-          type: string
-          example: '@$tr0ngP@$'
-        applicationId:
-          type: string
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-      required:
-      - username
-      - password
-      - applicationId
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

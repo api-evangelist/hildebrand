@@ -202,14 +202,6 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
     updateVeTypeReq:
       type: object
       properties:
@@ -237,70 +229,6 @@ components:
             $ref: '#/components/schemas/ResourceTypeAvailableResources'
         selectionNeeded:
           type: boolean
-    reqError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
-    VeType:
-      type: object
-      properties:
-        veTypeId:
-          type: string
-          example: cc90b599-2705-4b13-98d4-3306f81169cf
-        name:
-          type: string
-          example: home Virtual Entity
-        description:
-          type: string
-          description: home with two types of resources
-        applicationId:
-          type: string
-          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
-        active:
-          type: boolean
-        resources:
-          type: array
-          items:
-            type: object
-            properties:
-              resourceTypeId:
-                type: string
-                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-              required:
-                type: boolean
-    newVeTypeReq:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Smart Home
-        description:
-          type: string
-          example: Smart home, with electricity and gas utilities
-        resources:
-          type: array
-          items:
-            type: object
-            properties:
-              resourceTypeId:
-                type: string
-                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-              required:
-                type: boolean
-    ResourceTypeAvailableResources:
-      type: object
-      properties:
-        resourceTypeId:
-          type: string
-          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-        required:
-          type: boolean
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/Resource'
     Resource:
       type: object
       properties:
@@ -348,10 +276,82 @@ components:
         veTypeId:
           type: string
           example: b82d4f8b-a097-4b96-acbb-81d891489441
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    newVeTypeReq:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Smart Home
+        description:
+          type: string
+          example: Smart home, with electricity and gas utilities
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceTypeId:
+                type: string
+                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+              required:
+                type: boolean
     ListOfVeType:
       type: array
       items:
         $ref: '#/components/schemas/VeType'
+    ResourceTypeAvailableResources:
+      type: object
+      properties:
+        resourceTypeId:
+          type: string
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        required:
+          type: boolean
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+    VeType:
+      type: object
+      properties:
+        veTypeId:
+          type: string
+          example: cc90b599-2705-4b13-98d4-3306f81169cf
+        name:
+          type: string
+          example: home Virtual Entity
+        description:
+          type: string
+          description: home with two types of resources
+        applicationId:
+          type: string
+          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
+        active:
+          type: boolean
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceTypeId:
+                type: string
+                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+              required:
+                type: boolean
+    reqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
   securitySchemes:
     orgAppKeys:
       type: http

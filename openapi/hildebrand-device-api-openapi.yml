@@ -268,47 +268,6 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
-    DeviceReq:
-      type: object
-      properties:
-        deviceTypeId:
-          type: string
-        hardwareId:
-          type: string
-        hardwareIds:
-          type: object
-      required:
-      - deviceTypeId
-      - hardwareId
-      - hardwareIds
-    AddDeviceSuccess:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        valid:
-          type: boolean
-        deviceId:
-          type: string
-          example: d3vb0129-8c95-43f3-bde2-744007221oli
-    ParentHardwareIds:
-      type: string
-      example: KO17321203
-    IncorrectElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: incorrect elements
     ProtocolResourceTypeResource:
       type: object
       properties:
@@ -366,6 +325,47 @@ components:
         error:
           type: string
           example: missing elements -userId
+    DeviceReq:
+      type: object
+      properties:
+        deviceTypeId:
+          type: string
+        hardwareId:
+          type: string
+        hardwareIds:
+          type: object
+      required:
+      - deviceTypeId
+      - hardwareId
+      - hardwareIds
+    ParentHardwareIds:
+      type: string
+      example: KO17321203
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
+    AddDeviceSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        valid:
+          type: boolean
+        deviceId:
+          type: string
+          example: d3vb0129-8c95-43f3-bde2-744007221oli
   securitySchemes:
     orgAppKeys:
       type: http

@@ -43,14 +43,6 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
     VeStats:
       type: object
       properties:
@@ -78,6 +70,14 @@ components:
         error:
           type: string
           example: missing elements
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
   securitySchemes:
     orgAppKeys:
       type: http

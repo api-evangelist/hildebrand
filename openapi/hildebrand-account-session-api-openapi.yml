@@ -94,12 +94,6 @@ paths:
         description: The information that is used to create a devuser.
 components:
   schemas:
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
     AccountSession:
       type: object
       properties:
@@ -115,6 +109,12 @@ components:
         error:
           type: string
           example: Access denied
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
     MissingElementsError:
       type: object
       properties:

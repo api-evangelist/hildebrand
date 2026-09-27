@@ -582,20 +582,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AddMobileTokenToAccountReq:
-      type: object
-      properties:
-        newToken:
-          type: string
-          example: ExampleToKEN
-      required:
-      - newToken
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
     AddAccountReq:
       type: object
       properties:
@@ -608,6 +594,12 @@ components:
       required:
       - username
       - directoryId
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
     AccountRes:
       type: object
       properties:
@@ -645,20 +637,14 @@ components:
           - inactive
         active:
           type: boolean
-    RemoveMobileTokenToAccountReq:
+    AddMobileTokenToAccountReq:
       type: object
       properties:
-        removeToken:
+        newToken:
           type: string
           example: ExampleToKEN
       required:
-      - removeToken
-    IncorrectElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: incorrect elements
+      - newToken
     AccessDeniedError:
       type: object
       properties:
@@ -704,12 +690,14 @@ components:
                   type: string
                   format: date-time
                   example: '2019-03-29T09:24:28.000Z'
-    InternalServerError:
+    RemoveMobileTokenToAccountReq:
       type: object
       properties:
-        error:
+        removeToken:
           type: string
-          example: An error has occurred
+          example: ExampleToKEN
+      required:
+      - removeToken
     UpdateAccountRes:
       type: object
       properties:
@@ -748,6 +736,18 @@ components:
           - inactive
         active:
           type: boolean
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

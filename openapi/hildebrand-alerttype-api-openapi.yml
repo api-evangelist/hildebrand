@@ -184,24 +184,6 @@ paths:
         description: The elements of an  alert type that can be updated.
 components:
   schemas:
-    AlertTypeReq:
-      type: object
-      properties:
-        systemAlertTypeId:
-          type: string
-          example: CM01
-        description:
-          type: string
-          example: HighPowerUse
-        name:
-          type: string
-          example: AlertExample
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
     AlertType:
       type: object
       properties:
@@ -228,12 +210,6 @@ components:
       - name
       xml:
         name: AlertType
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
     AlertTypeUpdate:
       type: object
       properties:
@@ -254,6 +230,30 @@ components:
           example: Description of Alert Type
         active:
           type: boolean
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    AlertTypeReq:
+      type: object
+      properties:
+        systemAlertTypeId:
+          type: string
+          example: CM01
+        description:
+          type: string
+          example: HighPowerUse
+        name:
+          type: string
+          example: AlertExample
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
     InternalServerError:
       type: object
       properties:

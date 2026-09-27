@@ -661,29 +661,151 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    AccessDeniedError:
+    missingUserIdError:
       type: object
       properties:
         error:
           type: string
-          example: Access denied
-    ResourceByResourceTypeCount:
+          example: missing elements -userId
+    ResourceLastTime:
+      allOf:
+      - $ref: '#/components/schemas/ResourceDataResult'
+      - properties:
+          data:
+            type: object
+            properties:
+              lastTs:
+                type: number
+                example: 1613124302
+    ListOfResource:
+      type: array
+      items:
+        $ref: '#/components/schemas/Resource'
+    TariffListResult:
+      allOf:
+      - $ref: '#/components/schemas/ResourceDataResult'
+      - properties:
+          classifier:
+            example: electricity.consumption.cost
+          name:
+            example: electricity cost
+          data:
+            maxItems: 100
+            type: array
+            items:
+              type: object
+            example:
+            - id: '12345'
+              plan:
+              - planDetail:
+                - rate: 11.88
+                - standing: 30.66
+              effectiveDate: '2018-12-12 00:00:00'
+              displayName: TariffFromMeter
+            - id: '12346'
+              plan:
+              - planDetail:
+                - standing: 25
+                - dynamic: DYNAMIC_TARIFF_CODE
+              from: '2019-12-12 00:00:00'
+              name: DYNAMIC_TARIFF_PRODUCT_NAME
+            - id: '12347'
+              plan:
+              - planDetail:
+                - standing: 25
+                - tier: 1
+                  rate: '16.26'
+                - tier: 2
+                  tourate: '5'
+                  time: 20:30-00:00
+                - tier: 3
+                  tourate: '5'
+                  time: 00:00-00:30
+              from: '2020-12-12 00:00:00'
+              name: My TOU Tariff
+    AddResourceReqNoResourceTypeError:
       type: object
       properties:
+        status:
+          type: string
+          example: ERROR
+        error:
+          type: string
+          example: incorrect elements -resourceTypeId
+        description:
+          type: string
+          example: resourceType does not exist
         resourceTypeId:
           type: string
           example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-        count:
-          type: number
-          example: 2
-        resourceIdList:
-          maxItems: 100
+    TariffResult:
+      allOf:
+      - $ref: '#/components/schemas/ResourceDataResult'
+      - properties:
+          data:
+            maxItems: 100
+            type: array
+            items:
+              type: object
+            example:
+            - plan:
+              - planDetail:
+                - rate: 11.88
+                - standing: 30.66
+              cid: PWER
+              commodity: ELEC
+              from: '2018-12-12 00:00:00'
+              name: TariffFromMeter
+    ResourceDataResult:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        name:
+          type: string
+          example: electicity consumption
+        resourceTypeId:
+          type: string
+          format: uuid
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        resourceId:
+          type: string
+          format: uuid
+          example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+        classifier:
+          type: string
+          example: electricity.consumption
+        data:
           type: array
           items:
-            type: string
-          example:
-          - 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
-          - 21ea0722-3b59-47a6-a115-d43fcc0c5d1c
+            maxItems: 100
+            type: array
+            items:
+              type: integer
+    ResourceFirstTime:
+      allOf:
+      - $ref: '#/components/schemas/ResourceDataResult'
+      - properties:
+          data:
+            type: object
+            properties:
+              firstTs:
+                type: number
+                example: 1308400980
+    AddResourceSucess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        valid:
+          type: boolean
+        resourceId:
+          type: string
+          example: c70b0829-7c91-43f3-bdee-744007221a50
+        resourceApplicationAccess:
+          type: boolean
     readingRes:
       allOf:
       - $ref: '#/components/schemas/CurrentReadingsResult'
@@ -718,38 +840,20 @@ components:
               - 1.502
               minItems: 2
               maxItems: 2
-    Resource:
-      allOf:
-      - $ref: '#/components/schemas/ResourceType'
-      - properties:
-          resourceId:
-            type: string
-            example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
-          name:
-            type: string
-            example: electricity consumption
-          description:
-            type: string
-            example: my household electricity
-          dataSourceUnitInfo:
-            type: object
-            properties:
-              shid:
-                type: string
-                example: f3204e8e5a1a40a39396a15f919f88a5
-          ownerId:
-            type: string
-            example: f78a3812-d4fc-4b00-99c5-20fd581721a6
-    ResourceFirstTime:
-      allOf:
-      - $ref: '#/components/schemas/ResourceDataResult'
-      - properties:
-          data:
-            type: object
-            properties:
-              firstTs:
-                type: number
-                example: 1308400980
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
     ResourceDailyConsumptionLog:
       allOf:
       - $ref: '#/components/schemas/ResourceDataResult'
@@ -798,6 +902,89 @@ components:
                 example: false
       xml:
         name: StorageType
+    ResourceReq:
+      type: object
+      properties:
+        resourceTypeId:
+          type: string
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        name:
+          type: string
+          example: electricity consumption
+        description:
+          type: string
+          example: my household electricity
+        dataSourceResourceTypeInfo:
+          type: object
+          properties:
+            shid:
+              type: string
+              example: f3204e8e5a1a40a39396a15f919f88a5
+    Resource:
+      allOf:
+      - $ref: '#/components/schemas/ResourceType'
+      - properties:
+          resourceId:
+            type: string
+            example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+          name:
+            type: string
+            example: electricity consumption
+          description:
+            type: string
+            example: my household electricity
+          dataSourceUnitInfo:
+            type: object
+            properties:
+              shid:
+                type: string
+                example: f3204e8e5a1a40a39396a15f919f88a5
+          ownerId:
+            type: string
+            example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+    meterReadingRes:
+      allOf:
+      - $ref: '#/components/schemas/CurrentReadingsResult'
+      - properties:
+          units:
+            type: string
+            example: kWh
+    catchupRes:
+      allOf:
+      - $ref: '#/components/schemas/ResourceDataResult'
+      - properties:
+          data:
+            type: object
+            properties:
+              valid:
+                type: boolean
+                example: true
+    ResourceType:
+      allOf:
+      - $ref: '#/components/schemas/ResourceTypeReq'
+      - properties:
+          resourceTypeId:
+            type: string
+            example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+          active:
+            type: boolean
+    ResourceByResourceTypeCount:
+      type: object
+      properties:
+        resourceTypeId:
+          type: string
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        count:
+          type: number
+          example: 2
+        resourceIdList:
+          maxItems: 100
+          type: array
+          items:
+            type: string
+          example:
+          - 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+          - 21ea0722-3b59-47a6-a115-d43fcc0c5d1c
     ResourceTypeReq:
       type: object
       properties:
@@ -825,172 +1012,6 @@ components:
       - name
       - classifier
       - storage
-    ResourceReq:
-      type: object
-      properties:
-        resourceTypeId:
-          type: string
-          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-        name:
-          type: string
-          example: electricity consumption
-        description:
-          type: string
-          example: my household electricity
-        dataSourceResourceTypeInfo:
-          type: object
-          properties:
-            shid:
-              type: string
-              example: f3204e8e5a1a40a39396a15f919f88a5
-    AddResourceSucess:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        valid:
-          type: boolean
-        resourceId:
-          type: string
-          example: c70b0829-7c91-43f3-bdee-744007221a50
-        resourceApplicationAccess:
-          type: boolean
-    TariffResult:
-      allOf:
-      - $ref: '#/components/schemas/ResourceDataResult'
-      - properties:
-          data:
-            maxItems: 100
-            type: array
-            items:
-              type: object
-            example:
-            - plan:
-              - planDetail:
-                - rate: 11.88
-                - standing: 30.66
-              cid: PWER
-              commodity: ELEC
-              from: '2018-12-12 00:00:00'
-              name: TariffFromMeter
-    ListOfResource:
-      type: array
-      items:
-        $ref: '#/components/schemas/Resource'
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
-    catchupRes:
-      allOf:
-      - $ref: '#/components/schemas/ResourceDataResult'
-      - properties:
-          data:
-            type: object
-            properties:
-              valid:
-                type: boolean
-                example: true
-    meterReadingRes:
-      allOf:
-      - $ref: '#/components/schemas/CurrentReadingsResult'
-      - properties:
-          units:
-            type: string
-            example: kWh
-    ResourceDataResult:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        name:
-          type: string
-          example: electicity consumption
-        resourceTypeId:
-          type: string
-          format: uuid
-          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-        resourceId:
-          type: string
-          format: uuid
-          example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
-        classifier:
-          type: string
-          example: electricity.consumption
-        data:
-          type: array
-          items:
-            maxItems: 100
-            type: array
-            items:
-              type: integer
-    TariffListResult:
-      allOf:
-      - $ref: '#/components/schemas/ResourceDataResult'
-      - properties:
-          classifier:
-            example: electricity.consumption.cost
-          name:
-            example: electricity cost
-          data:
-            maxItems: 100
-            type: array
-            items:
-              type: object
-            example:
-            - id: '12345'
-              plan:
-              - planDetail:
-                - rate: 11.88
-                - standing: 30.66
-              effectiveDate: '2018-12-12 00:00:00'
-              displayName: TariffFromMeter
-            - id: '12346'
-              plan:
-              - planDetail:
-                - standing: 25
-                - dynamic: DYNAMIC_TARIFF_CODE
-              from: '2019-12-12 00:00:00'
-              name: DYNAMIC_TARIFF_PRODUCT_NAME
-            - id: '12347'
-              plan:
-              - planDetail:
-                - standing: 25
-                - tier: 1
-                  rate: '16.26'
-                - tier: 2
-                  tourate: '5'
-                  time: 20:30-00:00
-                - tier: 3
-                  tourate: '5'
-                  time: 00:00-00:30
-              from: '2020-12-12 00:00:00'
-              name: My TOU Tariff
-    ResourceType:
-      allOf:
-      - $ref: '#/components/schemas/ResourceTypeReq'
-      - properties:
-          resourceTypeId:
-            type: string
-            example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-          active:
-            type: boolean
-    ResourceLastTime:
-      allOf:
-      - $ref: '#/components/schemas/ResourceDataResult'
-      - properties:
-          data:
-            type: object
-            properties:
-              lastTs:
-                type: number
-                example: 1613124302
     CurrentReadingsResult:
       allOf:
       - $ref: '#/components/schemas/ResourceDataResult'
@@ -1010,27 +1031,6 @@ components:
               - 1000
               minItems: 1
               maxItems: 1
-    AddResourceReqNoResourceTypeError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: ERROR
-        error:
-          type: string
-          example: incorrect elements -resourceTypeId
-        description:
-          type: string
-          example: resourceType does not exist
-        resourceTypeId:
-          type: string
-          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-    missingUserIdError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -userId
   securitySchemes:
     orgAppKeys:
       type: http

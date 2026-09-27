@@ -140,19 +140,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    Alert:
-      allOf:
-      - $ref: '#/components/schemas/AlertReq'
-      - properties:
-          ns_alert_id:
-            type: string
-            example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
     AlertRes:
       type: object
       properties:
@@ -222,6 +209,19 @@ components:
           type: object
       xml:
         name: AlertReq
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    Alert:
+      allOf:
+      - $ref: '#/components/schemas/AlertReq'
+      - properties:
+          ns_alert_id:
+            type: string
+            example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
     InternalServerError:
       type: object
       properties:

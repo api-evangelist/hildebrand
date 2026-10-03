@@ -103,39 +103,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    Notification:
-      type: object
-      properties:
-        notificationid:
-          type: string
-          example: 084c7aef-a94f-4b8b-b053-afc35257f91b
-        ns_alert_id:
-          type: string
-          example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
-        received_dtm:
-          type: string
-          example: '2021-09-15T13:43:15.890Z'
-        Status:
-          type: string
-          example: OK
-        status_at:
-          type: string
-          example: '2021-09-15T13:43:15.890Z'
-        channel:
-          type: string
-          example: push
-          enum:
-          - push
-          - email
-          - inbox
-        userid:
-          type: string
-          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
-        alertData:
-          allOf:
-          - $ref: '#/components/schemas/Alert'
-      xml:
-        name: Notification
     NotificationLog:
       type: object
       properties:
@@ -172,6 +139,39 @@ components:
           example: '2021-09-15T13:43:15.890Z'
       xml:
         name: NotificationLog
+    Notification:
+      type: object
+      properties:
+        notificationid:
+          type: string
+          example: 084c7aef-a94f-4b8b-b053-afc35257f91b
+        ns_alert_id:
+          type: string
+          example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
+        received_dtm:
+          type: string
+          example: '2021-09-15T13:43:15.890Z'
+        Status:
+          type: string
+          example: OK
+        status_at:
+          type: string
+          example: '2021-09-15T13:43:15.890Z'
+        channel:
+          type: string
+          example: push
+          enum:
+          - push
+          - email
+          - inbox
+        userid:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        alertData:
+          allOf:
+          - $ref: '#/components/schemas/Alert'
+      xml:
+        name: Notification
     AccessDeniedError:
       type: object
       properties:
@@ -230,12 +230,12 @@ components:
           type: object
       xml:
         name: AlertReq
-    MissingElementsError:
+    InternalServerError:
       type: object
       properties:
         error:
           type: string
-          example: missing elements
+          example: An error has occurred
     Alert:
       allOf:
       - $ref: '#/components/schemas/AlertReq'
@@ -243,12 +243,12 @@ components:
           ns_alert_id:
             type: string
             example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
-    InternalServerError:
+    MissingElementsError:
       type: object
       properties:
         error:
           type: string
-          example: An error has occurred
+          example: missing elements
   securitySchemes:
     orgAppKeys:
       type: http

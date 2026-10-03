@@ -221,12 +221,6 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    AddResourceReqError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -body
     Resource:
       allOf:
       - $ref: '#/components/schemas/ResourceType'
@@ -249,49 +243,53 @@ components:
           ownerId:
             type: string
             example: f78a3812-d4fc-4b00-99c5-20fd581721a6
-    missingAppIdError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -applicationId
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
-    FindResourceReqError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -userId
-    AddResourceTypeSucess:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        resourceTypeId:
-          type: string
-          example: 9e6d582f-e2e0-4af5-af7c-69b20aeeee20
+    ListOfResource:
+      type: array
+      items:
+        $ref: '#/components/schemas/Resource'
     AccessDeniedError:
       type: object
       properties:
         error:
           type: string
           example: Access denied
+    ResourceTypeReq:
+      type: object
+      properties:
+        name:
+          type: string
+          example: electricity energy
+        description:
+          type: string
+          example: The storage mechanism for saving electricity energy.
+        classifier:
+          type: string
+          example: electricity.consumption
+        storage:
+          maxItems: 10
+          type: array
+          items:
+            $ref: '#/components/schemas/StorageType'
+        dataSourceType:
+          type: string
+          example: DATA_SOURCE_IDENTIFIER
+        dataSourceResourceTypeInfo:
+          type: string
+          example: ELEC
+      required:
+      - name
+      - classifier
+      - storage
+    missingAppIdError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -applicationId
     ListOfResourceType:
       type: array
       items:
         $ref: '#/components/schemas/ResourceType'
-    ListOfResource:
-      type: array
-      items:
-        $ref: '#/components/schemas/Resource'
     ResourceType:
       allOf:
       - $ref: '#/components/schemas/ResourceTypeReq'
@@ -301,6 +299,12 @@ components:
             example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
           active:
             type: boolean
+    AddResourceReqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -body
     StorageType:
       type: object
       properties:
@@ -333,33 +337,29 @@ components:
                 example: false
       xml:
         name: StorageType
-    ResourceTypeReq:
+    FindResourceReqError:
       type: object
       properties:
-        name:
+        error:
           type: string
-          example: electricity energy
-        description:
+          example: missing elements -userId
+    AddResourceTypeSucess:
+      type: object
+      properties:
+        status:
           type: string
-          example: The storage mechanism for saving electricity energy.
-        classifier:
+          example: OK
+        resourceTypeId:
           type: string
-          example: electricity.consumption
-        storage:
-          maxItems: 10
-          type: array
-          items:
-            $ref: '#/components/schemas/StorageType'
-        dataSourceType:
+          example: 9e6d582f-e2e0-4af5-af7c-69b20aeeee20
+    ServerError:
+      type: object
+      properties:
+        error:
           type: string
-          example: DATA_SOURCE_IDENTIFIER
-        dataSourceResourceTypeInfo:
-          type: string
-          example: ELEC
-      required:
-      - name
-      - classifier
-      - storage
+          example: An error has occurred
+      xml:
+        name: AddResourceError
   securitySchemes:
     orgAppKeys:
       type: http

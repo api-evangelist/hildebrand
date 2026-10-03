@@ -270,18 +270,24 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
     InternalServerError:
       type: object
       properties:
         error:
           type: string
           example: An error has occurred
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    IsValidRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
     TokenDocument:
       type: object
       properties:
@@ -320,12 +326,6 @@ components:
       required:
       - username
       - password
-    IsValidRes:
-      type: object
-      properties:
-        valid:
-          type: boolean
-          example: true
     AccessDeniedError:
       type: object
       properties:

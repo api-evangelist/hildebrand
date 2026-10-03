@@ -342,38 +342,18 @@ components:
       - name
       xml:
         name: Template
-    AlertTypeUpdate:
-      type: object
-      properties:
-        alertTypeId:
-          type: string
-          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
-        applicationId:
-          type: string
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        systemAlertTypeId:
-          type: string
-          example: CM01
-        name:
-          type: string
-          example: UpdatedExampleNameOfAlert
-        description:
-          type: string
-          example: Description of Alert Type
-        active:
-          type: boolean
     AccessDeniedError:
       type: object
       properties:
         error:
           type: string
           example: Access denied
-    MissingElementsError:
+    InternalServerError:
       type: object
       properties:
         error:
           type: string
-          example: missing elements
+          example: An error has occurred
     Template:
       type: object
       properties:
@@ -418,12 +398,32 @@ components:
       - name
       xml:
         name: AlertType
-    InternalServerError:
+    AlertTypeUpdate:
+      type: object
+      properties:
+        alertTypeId:
+          type: string
+          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        systemAlertTypeId:
+          type: string
+          example: CM01
+        name:
+          type: string
+          example: UpdatedExampleNameOfAlert
+        description:
+          type: string
+          example: Description of Alert Type
+        active:
+          type: boolean
+    MissingElementsError:
       type: object
       properties:
         error:
           type: string
-          example: An error has occurred
+          example: missing elements
   securitySchemes:
     orgAppKeys:
       type: http

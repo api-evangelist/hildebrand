@@ -144,18 +144,18 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
     AccessDeniedError:
       type: object
       properties:
         error:
           type: string
           example: Access denied
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
     AccountProfile:
       type: object
       required:
@@ -172,12 +172,12 @@ components:
               agg: daily
               metric: consumption
               timeframe: lastMonth
-    InternalServerError:
+    MissingElementsError:
       type: object
       properties:
         error:
           type: string
-          example: An error has occurred
+          example: missing elements
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

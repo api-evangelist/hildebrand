@@ -138,24 +138,6 @@ paths:
         required: true
 components:
   schemas:
-    VEReqDeleteAttributes:
-      type: object
-      description: Insert the attributes you would like to delete under the field removeAttributes
-      properties:
-        removeAttributes:
-          type: object
-          properties:
-            area:
-              type: object
-              properties:
-                units:
-                  type: string
-                  example: sqm
-                measurement:
-                  type: string
-                  example: 100
-      required:
-      - removeAttributes
     GetAtrributesRes:
       type: object
       properties:
@@ -179,6 +161,53 @@ components:
                 measurement:
                   type: string
                   example: 100
+    VEResDeletedAttributes:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        veId:
+          type: string
+          example: dc9069a7-7695-43fd-8f27-16b1c94213da
+        rooms:
+          type: array
+          items:
+            type: string
+            example: living room
+      required:
+      - veId
+      - status
+    reqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    VEReqDeleteAttributes:
+      type: object
+      description: Insert the attributes you would like to delete under the field removeAttributes
+      properties:
+        removeAttributes:
+          type: object
+          properties:
+            area:
+              type: object
+              properties:
+                units:
+                  type: string
+                  example: sqm
+                measurement:
+                  type: string
+                  example: 100
+      required:
+      - removeAttributes
     VEReqUpdateAttributes:
       type: object
       description: Anything can be added in a ve's metadata
@@ -205,35 +234,6 @@ components:
           example: An error has occurred
       xml:
         name: AddResourceError
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    VEResDeletedAttributes:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        veId:
-          type: string
-          example: dc9069a7-7695-43fd-8f27-16b1c94213da
-        rooms:
-          type: array
-          items:
-            type: string
-            example: living room
-      required:
-      - veId
-      - status
-    reqError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
   securitySchemes:
     orgAppKeys:
       type: http

@@ -357,52 +357,6 @@ paths:
               $ref: '#/components/schemas/RenewMeterPointConsentReq'
 components:
   schemas:
-    RenewMeterPointConsentReq:
-      type: object
-      properties:
-        isValidUntil:
-          type: string
-          format: date-time
-          example: '2024-12-13T12:02:09.865Z'
-    MpxnElem:
-      type: object
-      properties:
-        mpxn:
-          type: string
-          example: '123456789012'
-    UserMeterPointConsentAndVerification:
-      type: object
-      properties:
-        meterPointVerification:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeterPointConsentAndVerification'
-    MeterPointConsentAndVerificationRenewalRes:
-      type: object
-      properties:
-        valid:
-          type: boolean
-          example: true
-        meterPointRenewals:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeterPointConsentAndVerificationRenewal'
-    MeterPointConsentManagementBulkReq:
-      type: object
-      properties:
-        meterPoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/MpxnElem'
-    MeterPointConsentManagementBulkRenewalRes:
-      type: object
-      properties:
-        valid:
-          type: boolean
-        meterPointVerificationRenewals:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeterPointVerificationRenewalElem'
     MeterPointConsentAndVerificationRenewal:
       type: object
       properties:
@@ -437,15 +391,6 @@ components:
         meterPointVerificationRenewalId:
           type: string
           example: aa2464fa-bca2-e22a-83b1-14e9819c54d2
-    MeterPointConsentManagementBulkRevocationRes:
-      type: object
-      properties:
-        valid:
-          type: boolean
-        meterPointRevocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/MpxnElem'
     MeterPointConsentAndVerification:
       type: object
       properties:
@@ -465,12 +410,73 @@ components:
         mpxn:
           type: string
           example: 123456789012
+    MeterPointConsentManagementBulkReq:
+      type: object
+      properties:
+        meterPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/MpxnElem'
+    RenewMeterPointConsentReq:
+      type: object
+      properties:
+        isValidUntil:
+          type: string
+          format: date-time
+          example: '2024-12-13T12:02:09.865Z'
+    MeterPointConsentManagementBulkRevocationRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        meterPointRevocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MpxnElem'
+    MeterPointConsentManagementBulkRenewalRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        meterPointVerificationRenewals:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointVerificationRenewalElem'
     AccessDeniedError:
       type: object
       properties:
         error:
           type: string
           example: Access denied
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    UserMeterPointConsentAndVerification:
+      type: object
+      properties:
+        meterPointVerification:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointConsentAndVerification'
+    MeterPointConsentAndVerificationRenewalRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+        meterPointRenewals:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointConsentAndVerificationRenewal'
+    MpxnElem:
+      type: object
+      properties:
+        mpxn:
+          type: string
+          example: '123456789012'
     MeterPointVerificationRenewalElem:
       type: object
       properties:
@@ -486,12 +492,6 @@ components:
         isValidUntil:
           type: string
           example: '2026-03-05T23:59:59'
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
     AddUserRes:
       type: object
       properties:
@@ -522,12 +522,12 @@ components:
         updatedAt:
           type: string
           format: date-time
-    InternalServerError:
+    MissingElementsError:
       type: object
       properties:
         error:
           type: string
-          example: An error has occurred
+          example: missing elements
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

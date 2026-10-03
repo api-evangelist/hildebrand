@@ -661,26 +661,165 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    missingUserIdError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -userId
-    ResourceLastTime:
+    ListOfResource:
+      type: array
+      items:
+        $ref: '#/components/schemas/Resource'
+    catchupRes:
       allOf:
       - $ref: '#/components/schemas/ResourceDataResult'
       - properties:
           data:
             type: object
             properties:
-              lastTs:
+              valid:
+                type: boolean
+                example: true
+    missingUserIdError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -userId
+    readingRes:
+      allOf:
+      - $ref: '#/components/schemas/CurrentReadingsResult'
+      - properties:
+          query:
+            type: object
+            properties:
+              from:
+                type: string
+                example: '2019-02-06T17:00:00'
+              to:
+                type: string
+                example: '2019-02-06T18:00:00'
+              period:
+                type: string
+                example: PT1H
+              function:
+                type: string
+                example: sum
+          units:
+            type: string
+            example: kWh
+          data:
+            maxItems: 10000
+            type: array
+            items:
+              type: array
+              items:
+                type: integer
+              example:
+              - 1549472400
+              - 1.502
+              minItems: 2
+              maxItems: 2
+    CurrentReadingsResult:
+      allOf:
+      - $ref: '#/components/schemas/ResourceDataResult'
+      - properties:
+          units:
+            type: string
+            example: W
+          data:
+            maxItems: 100
+            type: array
+            items:
+              type: array
+              items:
+                type: integer
+              example:
+              - 1549481709
+              - 1000
+              minItems: 1
+              maxItems: 1
+    ResourceByResourceTypeCount:
+      type: object
+      properties:
+        resourceTypeId:
+          type: string
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        count:
+          type: number
+          example: 2
+        resourceIdList:
+          maxItems: 100
+          type: array
+          items:
+            type: string
+          example:
+          - 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+          - 21ea0722-3b59-47a6-a115-d43fcc0c5d1c
+    Resource:
+      allOf:
+      - $ref: '#/components/schemas/ResourceType'
+      - properties:
+          resourceId:
+            type: string
+            example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+          name:
+            type: string
+            example: electricity consumption
+          description:
+            type: string
+            example: my household electricity
+          dataSourceUnitInfo:
+            type: object
+            properties:
+              shid:
+                type: string
+                example: f3204e8e5a1a40a39396a15f919f88a5
+          ownerId:
+            type: string
+            example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+    ResourceFirstTime:
+      allOf:
+      - $ref: '#/components/schemas/ResourceDataResult'
+      - properties:
+          data:
+            type: object
+            properties:
+              firstTs:
                 type: number
-                example: 1613124302
-    ListOfResource:
-      type: array
-      items:
-        $ref: '#/components/schemas/Resource'
+                example: 1308400980
+    TariffResult:
+      allOf:
+      - $ref: '#/components/schemas/ResourceDataResult'
+      - properties:
+          data:
+            maxItems: 100
+            type: array
+            items:
+              type: object
+            example:
+            - plan:
+              - planDetail:
+                - rate: 11.88
+                - standing: 30.66
+              cid: PWER
+              commodity: ELEC
+              from: '2018-12-12 00:00:00'
+              name: TariffFromMeter
+    AddResourceSucess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        valid:
+          type: boolean
+        resourceId:
+          type: string
+          example: c70b0829-7c91-43f3-bdee-744007221a50
+        resourceApplicationAccess:
+          type: boolean
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
     TariffListResult:
       allOf:
       - $ref: '#/components/schemas/ResourceDataResult'
@@ -723,137 +862,16 @@ components:
                   time: 00:00-00:30
               from: '2020-12-12 00:00:00'
               name: My TOU Tariff
-    AddResourceReqNoResourceTypeError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: ERROR
-        error:
-          type: string
-          example: incorrect elements -resourceTypeId
-        description:
-          type: string
-          example: resourceType does not exist
-        resourceTypeId:
-          type: string
-          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-    TariffResult:
-      allOf:
-      - $ref: '#/components/schemas/ResourceDataResult'
-      - properties:
-          data:
-            maxItems: 100
-            type: array
-            items:
-              type: object
-            example:
-            - plan:
-              - planDetail:
-                - rate: 11.88
-                - standing: 30.66
-              cid: PWER
-              commodity: ELEC
-              from: '2018-12-12 00:00:00'
-              name: TariffFromMeter
-    ResourceDataResult:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        name:
-          type: string
-          example: electicity consumption
-        resourceTypeId:
-          type: string
-          format: uuid
-          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-        resourceId:
-          type: string
-          format: uuid
-          example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
-        classifier:
-          type: string
-          example: electricity.consumption
-        data:
-          type: array
-          items:
-            maxItems: 100
-            type: array
-            items:
-              type: integer
-    ResourceFirstTime:
+    ResourceLastTime:
       allOf:
       - $ref: '#/components/schemas/ResourceDataResult'
       - properties:
           data:
             type: object
             properties:
-              firstTs:
+              lastTs:
                 type: number
-                example: 1308400980
-    AddResourceSucess:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        valid:
-          type: boolean
-        resourceId:
-          type: string
-          example: c70b0829-7c91-43f3-bdee-744007221a50
-        resourceApplicationAccess:
-          type: boolean
-    readingRes:
-      allOf:
-      - $ref: '#/components/schemas/CurrentReadingsResult'
-      - properties:
-          query:
-            type: object
-            properties:
-              from:
-                type: string
-                example: '2019-02-06T17:00:00'
-              to:
-                type: string
-                example: '2019-02-06T18:00:00'
-              period:
-                type: string
-                example: PT1H
-              function:
-                type: string
-                example: sum
-          units:
-            type: string
-            example: kWh
-          data:
-            maxItems: 10000
-            type: array
-            items:
-              type: array
-              items:
-                type: integer
-              example:
-              - 1549472400
-              - 1.502
-              minItems: 2
-              maxItems: 2
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
+                example: 1613124302
     ResourceDailyConsumptionLog:
       allOf:
       - $ref: '#/components/schemas/ResourceDataResult'
@@ -870,6 +888,33 @@ components:
               example:
               - '2025-01-01T00:00:00.00000Z'
               - '7777.0'
+    ResourceTypeReq:
+      type: object
+      properties:
+        name:
+          type: string
+          example: electricity energy
+        description:
+          type: string
+          example: The storage mechanism for saving electricity energy.
+        classifier:
+          type: string
+          example: electricity.consumption
+        storage:
+          maxItems: 10
+          type: array
+          items:
+            $ref: '#/components/schemas/StorageType'
+        dataSourceType:
+          type: string
+          example: DATA_SOURCE_IDENTIFIER
+        dataSourceResourceTypeInfo:
+          type: string
+          example: ELEC
+      required:
+      - name
+      - classifier
+      - storage
     StorageType:
       type: object
       properties:
@@ -920,45 +965,21 @@ components:
             shid:
               type: string
               example: f3204e8e5a1a40a39396a15f919f88a5
-    Resource:
-      allOf:
-      - $ref: '#/components/schemas/ResourceType'
-      - properties:
-          resourceId:
-            type: string
-            example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
-          name:
-            type: string
-            example: electricity consumption
-          description:
-            type: string
-            example: my household electricity
-          dataSourceUnitInfo:
-            type: object
-            properties:
-              shid:
-                type: string
-                example: f3204e8e5a1a40a39396a15f919f88a5
-          ownerId:
-            type: string
-            example: f78a3812-d4fc-4b00-99c5-20fd581721a6
-    meterReadingRes:
-      allOf:
-      - $ref: '#/components/schemas/CurrentReadingsResult'
-      - properties:
-          units:
-            type: string
-            example: kWh
-    catchupRes:
-      allOf:
-      - $ref: '#/components/schemas/ResourceDataResult'
-      - properties:
-          data:
-            type: object
-            properties:
-              valid:
-                type: boolean
-                example: true
+    AddResourceReqNoResourceTypeError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: ERROR
+        error:
+          type: string
+          example: incorrect elements -resourceTypeId
+        description:
+          type: string
+          example: resourceType does not exist
+        resourceTypeId:
+          type: string
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
     ResourceType:
       allOf:
       - $ref: '#/components/schemas/ResourceTypeReq'
@@ -968,69 +989,48 @@ components:
             example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
           active:
             type: boolean
-    ResourceByResourceTypeCount:
+    ResourceDataResult:
       type: object
       properties:
-        resourceTypeId:
+        status:
           type: string
-          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-        count:
-          type: number
-          example: 2
-        resourceIdList:
-          maxItems: 100
-          type: array
-          items:
-            type: string
-          example:
-          - 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
-          - 21ea0722-3b59-47a6-a115-d43fcc0c5d1c
-    ResourceTypeReq:
-      type: object
-      properties:
+          example: OK
         name:
           type: string
-          example: electricity energy
-        description:
+          example: electicity consumption
+        resourceTypeId:
           type: string
-          example: The storage mechanism for saving electricity energy.
+          format: uuid
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        resourceId:
+          type: string
+          format: uuid
+          example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
         classifier:
           type: string
           example: electricity.consumption
-        storage:
-          maxItems: 10
+        data:
           type: array
           items:
-            $ref: '#/components/schemas/StorageType'
-        dataSourceType:
-          type: string
-          example: DATA_SOURCE_IDENTIFIER
-        dataSourceResourceTypeInfo:
-          type: string
-          example: ELEC
-      required:
-      - name
-      - classifier
-      - storage
-    CurrentReadingsResult:
-      allOf:
-      - $ref: '#/components/schemas/ResourceDataResult'
-      - properties:
-          units:
-            type: string
-            example: W
-          data:
             maxItems: 100
             type: array
             items:
-              type: array
-              items:
-                type: integer
-              example:
-              - 1549481709
-              - 1000
-              minItems: 1
-              maxItems: 1
+              type: integer
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    meterReadingRes:
+      allOf:
+      - $ref: '#/components/schemas/CurrentReadingsResult'
+      - properties:
+          units:
+            type: string
+            example: kWh
   securitySchemes:
     orgAppKeys:
       type: http

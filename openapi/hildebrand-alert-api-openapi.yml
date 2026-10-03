@@ -140,23 +140,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    AlertRes:
-      type: object
-      properties:
-        ns_alert_id:
-          type: string
-          example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
-        status:
-          type: string
-          example: OK
-      xml:
-        name: AlertRes
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
     AlertReq:
       type: object
       properties:
@@ -209,12 +192,18 @@ components:
           type: object
       xml:
         name: AlertReq
-    MissingElementsError:
+    AccessDeniedError:
       type: object
       properties:
         error:
           type: string
-          example: missing elements
+          example: Access denied
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
     Alert:
       allOf:
       - $ref: '#/components/schemas/AlertReq'
@@ -222,12 +211,23 @@ components:
           ns_alert_id:
             type: string
             example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
-    InternalServerError:
+    AlertRes:
+      type: object
+      properties:
+        ns_alert_id:
+          type: string
+          example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
+        status:
+          type: string
+          example: OK
+      xml:
+        name: AlertRes
+    MissingElementsError:
       type: object
       properties:
         error:
           type: string
-          example: An error has occurred
+          example: missing elements
   securitySchemes:
     orgAppKeys:
       type: http

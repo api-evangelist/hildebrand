@@ -582,30 +582,39 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AddAccountReq:
+    RemoveMobileTokenToAccountReq:
       type: object
       properties:
-        username:
+        removeToken:
           type: string
-          example: scotty
-        directoryId:
-          type: string
-          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+          example: ExampleToKEN
       required:
-      - username
-      - directoryId
+      - removeToken
     IncorrectElementsError:
       type: object
       properties:
         error:
           type: string
           example: incorrect elements
-    AccountRes:
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    UpdateAccountRes:
       type: object
       properties:
         createdAt:
           type: string
           format: date-time
+          example: '2017-10-18T17:06:48.549Z'
         updatedAt:
           type: string
           format: date-time
@@ -623,7 +632,7 @@ components:
           example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
         name:
           type: string
-          example: Montgomery Christopher Jorgensen
+          example: Montgomery Jorgensen
         username:
           type: string
           example: scotty
@@ -645,12 +654,18 @@ components:
           example: ExampleToKEN
       required:
       - newToken
-    AccessDeniedError:
+    AddAccountReq:
       type: object
       properties:
-        error:
+        username:
           type: string
-          example: Access denied
+          example: scotty
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - directoryId
     AccountStatus:
       type: object
       properties:
@@ -690,21 +705,12 @@ components:
                   type: string
                   format: date-time
                   example: '2019-03-29T09:24:28.000Z'
-    RemoveMobileTokenToAccountReq:
-      type: object
-      properties:
-        removeToken:
-          type: string
-          example: ExampleToKEN
-      required:
-      - removeToken
-    UpdateAccountRes:
+    AccountRes:
       type: object
       properties:
         createdAt:
           type: string
           format: date-time
-          example: '2017-10-18T17:06:48.549Z'
         updatedAt:
           type: string
           format: date-time
@@ -722,7 +728,7 @@ components:
           example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
         name:
           type: string
-          example: Montgomery Jorgensen
+          example: Montgomery Christopher Jorgensen
         username:
           type: string
           example: scotty
@@ -742,12 +748,6 @@ components:
         error:
           type: string
           example: missing elements
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

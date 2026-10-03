@@ -64,12 +64,6 @@ components:
             P1M:
               type: integer
               example: 3
-    reqError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
     ServerError:
       type: object
       properties:
@@ -78,6 +72,12 @@ components:
           example: An error has occurred
       xml:
         name: AddResourceError
+    reqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
   securitySchemes:
     orgAppKeys:
       type: http

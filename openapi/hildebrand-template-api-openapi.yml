@@ -300,6 +300,56 @@ paths:
         description: The information of a template.
 components:
   schemas:
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    Template:
+      type: object
+      properties:
+        templateId:
+          type: string
+          example: 65f214bb-cbcc-48dc-a55a-2a01c88f7079
+        alertTypeId:
+          type: string
+          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        systemAlertTypeId:
+          type: string
+          example: CM01
+        name:
+          type: string
+          example: ExampleNameOfAlert
+        description:
+          type: string
+          example: Description of Alert Type
+        channelType:
+          type: string
+          enum:
+          - push
+          - email
+          - inbox
+          example: email
+        cultureCode:
+          type: string
+          enum:
+          - en-GB
+          - en-US
+        htmlTemplate:
+          type: string
+          example: Hello {{name}}, <br /><br/> You recently register to the Glow platform. <br /><br/> Please use the following 4-digit token to complete the registration process.<br /><br/> {{token}} <br /><br/> This token is only valid for the next hour.
+        active:
+          type: boolean
+      required:
+      - alertTypeId
+      - applicationId
+      - name
+      xml:
+        name: AlertType
     TemplateReq:
       type: object
       properties:
@@ -354,50 +404,6 @@ components:
         error:
           type: string
           example: An error has occurred
-    Template:
-      type: object
-      properties:
-        templateId:
-          type: string
-          example: 65f214bb-cbcc-48dc-a55a-2a01c88f7079
-        alertTypeId:
-          type: string
-          example: b7ba20b1-0ef6-4bda-a8b3-6e7e8e091c4c
-        applicationId:
-          type: string
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        systemAlertTypeId:
-          type: string
-          example: CM01
-        name:
-          type: string
-          example: ExampleNameOfAlert
-        description:
-          type: string
-          example: Description of Alert Type
-        channelType:
-          type: string
-          enum:
-          - push
-          - email
-          - inbox
-          example: email
-        cultureCode:
-          type: string
-          enum:
-          - en-GB
-          - en-US
-        htmlTemplate:
-          type: string
-          example: Hello {{name}}, <br /><br/> You recently register to the Glow platform. <br /><br/> Please use the following 4-digit token to complete the registration process.<br /><br/> {{token}} <br /><br/> This token is only valid for the next hour.
-        active:
-          type: boolean
-      required:
-      - alertTypeId
-      - applicationId
-      - name
-      xml:
-        name: AlertType
     AlertTypeUpdate:
       type: object
       properties:
@@ -418,12 +424,6 @@ components:
           example: Description of Alert Type
         active:
           type: boolean
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
   securitySchemes:
     orgAppKeys:
       type: http

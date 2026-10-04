@@ -94,12 +94,6 @@ paths:
         description: The information that is used to create a devuser.
 components:
   schemas:
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
     InternalServerError:
       type: object
       properties:
@@ -115,6 +109,12 @@ components:
         sessionvalue2:
           type: string
           example: f2420615-a3e5-4346-9fb4-1cb33cf4844c
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
     MissingElementsError:
       type: object
       properties:

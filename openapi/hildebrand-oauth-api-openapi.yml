@@ -130,80 +130,6 @@ paths:
         required: true
 components:
   schemas:
-    OAuthValidAccessToken:
-      allOf:
-      - $ref: '#/components/schemas/AddUserRes'
-      type: object
-      properties:
-        authenticationFramework:
-          type: string
-          example: oauth
-        status:
-          type: string
-          example: active
-    ExchangeAuthorizationCodeWithAccessRes:
-      type: object
-      properties:
-        token_type:
-          type: string
-          example: bearer
-        access_token:
-          type: string
-          example: 9defd68267e8de48a65bb5a9faaef8b81391c7ae69c60ccb826d8060cf500afac1f1441b3067a445af7bbd91ec
-        refresh_type:
-          type: string
-          example: 0d3c5b212c6e0d6a09a10d8d613353a32267c009856779a49c258bae52eb7511705ae4916b98441b3067ad445a
-        expires_in:
-          type: number
-          example: 604800
-    UserNameLoginReq:
-      type: object
-      properties:
-        username:
-          type: string
-          example: scotty
-        password:
-          type: string
-          example: '@$tr0ngP@$'
-        directoryId:
-          type: string
-          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
-      required:
-      - username
-      - password
-    IncorrectElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: incorrect elements
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-    OAuthAccessRefreshToken:
-      type: object
-      properties:
-        client_id:
-          type: boolean
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        client_secret:
-          type: string
-          example: 2b9d75b3ae36bOQHe28202
-        grant_type:
-          type: string
-          example: authorization_code
-        code:
-          type: string
-          example: 2b9d75b3ae36bdf3b66724b89996094ba724278784
     AddUserRes:
       type: object
       properties:
@@ -234,6 +160,36 @@ components:
         updatedAt:
           type: string
           format: date-time
+    OAuthAccessRefreshToken:
+      type: object
+      properties:
+        client_id:
+          type: boolean
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        client_secret:
+          type: string
+          example: 2b9d75b3ae36bOQHe28202
+        grant_type:
+          type: string
+          example: authorization_code
+        code:
+          type: string
+          example: 2b9d75b3ae36bdf3b66724b89996094ba724278784
+    UserNameLoginReq:
+      type: object
+      properties:
+        username:
+          type: string
+          example: scotty
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - password
     OAuthCodeRes:
       type: object
       properties:
@@ -254,6 +210,50 @@ components:
           example: Montgomery Christopher Jorgensen
       xml:
         name: OAuthCodeRes
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    OAuthValidAccessToken:
+      allOf:
+      - $ref: '#/components/schemas/AddUserRes'
+      type: object
+      properties:
+        authenticationFramework:
+          type: string
+          example: oauth
+        status:
+          type: string
+          example: active
+    IncorrectElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: incorrect elements
+    ExchangeAuthorizationCodeWithAccessRes:
+      type: object
+      properties:
+        token_type:
+          type: string
+          example: bearer
+        access_token:
+          type: string
+          example: 9defd68267e8de48a65bb5a9faaef8b81391c7ae69c60ccb826d8060cf500afac1f1441b3067a445af7bbd91ec
+        refresh_type:
+          type: string
+          example: 0d3c5b212c6e0d6a09a10d8d613353a32267c009856779a49c258bae52eb7511705ae4916b98441b3067ad445a
+        expires_in:
+          type: number
+          example: 604800
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

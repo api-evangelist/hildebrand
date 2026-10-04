@@ -243,16 +243,49 @@ components:
           ownerId:
             type: string
             example: f78a3812-d4fc-4b00-99c5-20fd581721a6
-    ListOfResource:
-      type: array
-      items:
-        $ref: '#/components/schemas/Resource'
-    AccessDeniedError:
+    ServerError:
       type: object
       properties:
         error:
           type: string
-          example: Access denied
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    ListOfResource:
+      type: array
+      items:
+        $ref: '#/components/schemas/Resource'
+    AddResourceReqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -body
+    FindResourceReqError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -userId
+    missingAppIdError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -applicationId
+    AddResourceTypeSucess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        resourceTypeId:
+          type: string
+          example: 9e6d582f-e2e0-4af5-af7c-69b20aeeee20
+    ListOfResourceType:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResourceType'
     ResourceTypeReq:
       type: object
       properties:
@@ -280,31 +313,12 @@ components:
       - name
       - classifier
       - storage
-    missingAppIdError:
+    AccessDeniedError:
       type: object
       properties:
         error:
           type: string
-          example: missing elements -applicationId
-    ListOfResourceType:
-      type: array
-      items:
-        $ref: '#/components/schemas/ResourceType'
-    ResourceType:
-      allOf:
-      - $ref: '#/components/schemas/ResourceTypeReq'
-      - properties:
-          resourceTypeId:
-            type: string
-            example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-          active:
-            type: boolean
-    AddResourceReqError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -body
+          example: Access denied
     StorageType:
       type: object
       properties:
@@ -337,29 +351,15 @@ components:
                 example: false
       xml:
         name: StorageType
-    FindResourceReqError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -userId
-    AddResourceTypeSucess:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        resourceTypeId:
-          type: string
-          example: 9e6d582f-e2e0-4af5-af7c-69b20aeeee20
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
+    ResourceType:
+      allOf:
+      - $ref: '#/components/schemas/ResourceTypeReq'
+      - properties:
+          resourceTypeId:
+            type: string
+            example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+          active:
+            type: boolean
   securitySchemes:
     orgAppKeys:
       type: http

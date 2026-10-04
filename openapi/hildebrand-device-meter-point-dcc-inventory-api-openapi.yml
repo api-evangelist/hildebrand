@@ -123,6 +123,23 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    MeterPointInventoryResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        inventory:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointInventory'
     ResourceListingWithClassifier:
       type: object
       properties:
@@ -150,23 +167,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceListingWithClassifier'
-    MeterPointInventoryResponse:
-      type: object
-      properties:
-        valid:
-          type: boolean
-        inventory:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeterPointInventory'
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
     MeterPointInventory:
       type: object
       properties:

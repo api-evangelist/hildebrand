@@ -138,29 +138,14 @@ paths:
         required: true
 components:
   schemas:
-    GetAtrributesRes:
+    ServerError:
       type: object
       properties:
-        veId:
+        error:
           type: string
-        attribute:
-          type: object
-          description: Anything can be saved under this field
-          properties:
-            rooms:
-              type: array
-              items:
-                type: string
-                example: living room
-            area:
-              type: object
-              properties:
-                units:
-                  type: string
-                  example: sqm
-                measurement:
-                  type: string
-                  example: 100
+          example: An error has occurred
+      xml:
+        name: AddResourceError
     VEResDeletedAttributes:
       type: object
       properties:
@@ -184,6 +169,47 @@ components:
         error:
           type: string
           example: missing elements
+    GetAtrributesRes:
+      type: object
+      properties:
+        veId:
+          type: string
+        attribute:
+          type: object
+          description: Anything can be saved under this field
+          properties:
+            rooms:
+              type: array
+              items:
+                type: string
+                example: living room
+            area:
+              type: object
+              properties:
+                units:
+                  type: string
+                  example: sqm
+                measurement:
+                  type: string
+                  example: 100
+    VEReqUpdateAttributes:
+      type: object
+      description: Anything can be added in a ve's metadata
+      properties:
+        rooms:
+          type: array
+          items:
+            type: string
+            example: living room
+        area:
+          type: object
+          properties:
+            units:
+              type: string
+              example: sqm
+            measurement:
+              type: string
+              example: 100
     AccessDeniedError:
       type: object
       properties:
@@ -208,32 +234,6 @@ components:
                   example: 100
       required:
       - removeAttributes
-    VEReqUpdateAttributes:
-      type: object
-      description: Anything can be added in a ve's metadata
-      properties:
-        rooms:
-          type: array
-          items:
-            type: string
-            example: living room
-        area:
-          type: object
-          properties:
-            units:
-              type: string
-              example: sqm
-            measurement:
-              type: string
-              example: 100
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
   securitySchemes:
     orgAppKeys:
       type: http

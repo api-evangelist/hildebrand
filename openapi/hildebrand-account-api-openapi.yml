@@ -582,78 +582,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    RemoveMobileTokenToAccountReq:
-      type: object
-      properties:
-        removeToken:
-          type: string
-          example: ExampleToKEN
-      required:
-      - removeToken
-    IncorrectElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: incorrect elements
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-    UpdateAccountRes:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          example: '2017-10-18T17:06:48.549Z'
-        updatedAt:
-          type: string
-          format: date-time
-        accountId:
-          type: string
-          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
-        applicationId:
-          type: string
-          example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        userId:
-          type: string
-          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
-        directoryId:
-          type: string
-          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
-        name:
-          type: string
-          example: Montgomery Jorgensen
-        username:
-          type: string
-          example: scotty
-        email:
-          type: string
-          example: scotty@enterprise.st
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-        active:
-          type: boolean
-    AddMobileTokenToAccountReq:
-      type: object
-      properties:
-        newToken:
-          type: string
-          example: ExampleToKEN
-      required:
-      - newToken
     AddAccountReq:
       type: object
       properties:
@@ -666,6 +594,28 @@ components:
       required:
       - username
       - directoryId
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    AddMobileTokenToAccountReq:
+      type: object
+      properties:
+        newToken:
+          type: string
+          example: ExampleToKEN
+      required:
+      - newToken
+    RemoveMobileTokenToAccountReq:
+      type: object
+      properties:
+        removeToken:
+          type: string
+          example: ExampleToKEN
+      required:
+      - removeToken
     AccountStatus:
       type: object
       properties:
@@ -705,6 +655,56 @@ components:
                   type: string
                   format: date-time
                   example: '2019-03-29T09:24:28.000Z'
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    UpdateAccountRes:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          example: '2017-10-18T17:06:48.549Z'
+        updatedAt:
+          type: string
+          format: date-time
+        accountId:
+          type: string
+          example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+        applicationId:
+          type: string
+          example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+        name:
+          type: string
+          example: Montgomery Jorgensen
+        username:
+          type: string
+          example: scotty
+        email:
+          type: string
+          example: scotty@enterprise.st
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        active:
+          type: boolean
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
     AccountRes:
       type: object
       properties:
@@ -742,12 +742,12 @@ components:
           - inactive
         active:
           type: boolean
-    MissingElementsError:
+    IncorrectElementsError:
       type: object
       properties:
         error:
           type: string
-          example: missing elements
+          example: incorrect elements
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

@@ -357,6 +357,134 @@ paths:
               $ref: '#/components/schemas/RenewMeterPointConsentReq'
 components:
   schemas:
+    MpxnElem:
+      type: object
+      properties:
+        mpxn:
+          type: string
+          example: '123456789012'
+    AddUserRes:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
+        applications:
+          type: array
+          items:
+            type: object
+            properties:
+              active:
+                type: boolean
+              accountId:
+                type: string
+                example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
+              applicationId:
+                type: string
+                example: 0537b17c-ab62-491c-8085-9ac2b6206346
+        status:
+          type: string
+          example: unverified
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    MeterPointVerificationRenewalElem:
+      type: object
+      properties:
+        mpxn:
+          type: string
+          example: '123456789012'
+        valid:
+          type: boolean
+          example: true
+        meterPointVerificationRenewalId:
+          type: string
+          example: bfdf0b3d-42a6-46f0-8142-39c4d5413b58
+        isValidUntil:
+          type: string
+          example: '2026-03-05T23:59:59'
+    UserMeterPointConsentAndVerification:
+      type: object
+      properties:
+        meterPointVerification:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointConsentAndVerification'
+    MeterPointConsentAndVerificationRenewalRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+        meterPointRenewals:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointConsentAndVerificationRenewal'
+    RenewMeterPointConsentReq:
+      type: object
+      properties:
+        isValidUntil:
+          type: string
+          format: date-time
+          example: '2024-12-13T12:02:09.865Z'
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    MeterPointConsentManagementBulkReq:
+      type: object
+      properties:
+        meterPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/MpxnElem'
+    MeterPointConsentManagementBulkRevocationRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        meterPointRevocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MpxnElem'
+    MeterPointConsentAndVerification:
+      type: object
+      properties:
+        isVerified:
+          type: boolean
+          example: true
+        isValidUntil:
+          type: string
+          format: date-time
+          example: '2024-12-13T12:02:09.865Z'
+        mpxnKey:
+          type: string
+          enum:
+          - mpan
+          - mprn
+          example: mpan
+        mpxn:
+          type: string
+          example: 123456789012
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
     MeterPointConsentAndVerificationRenewal:
       type: object
       properties:
@@ -391,48 +519,6 @@ components:
         meterPointVerificationRenewalId:
           type: string
           example: aa2464fa-bca2-e22a-83b1-14e9819c54d2
-    MeterPointConsentAndVerification:
-      type: object
-      properties:
-        isVerified:
-          type: boolean
-          example: true
-        isValidUntil:
-          type: string
-          format: date-time
-          example: '2024-12-13T12:02:09.865Z'
-        mpxnKey:
-          type: string
-          enum:
-          - mpan
-          - mprn
-          example: mpan
-        mpxn:
-          type: string
-          example: 123456789012
-    MeterPointConsentManagementBulkReq:
-      type: object
-      properties:
-        meterPoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/MpxnElem'
-    RenewMeterPointConsentReq:
-      type: object
-      properties:
-        isValidUntil:
-          type: string
-          format: date-time
-          example: '2024-12-13T12:02:09.865Z'
-    MeterPointConsentManagementBulkRevocationRes:
-      type: object
-      properties:
-        valid:
-          type: boolean
-        meterPointRevocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/MpxnElem'
     MeterPointConsentManagementBulkRenewalRes:
       type: object
       properties:
@@ -442,92 +528,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MeterPointVerificationRenewalElem'
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-    UserMeterPointConsentAndVerification:
-      type: object
-      properties:
-        meterPointVerification:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeterPointConsentAndVerification'
-    MeterPointConsentAndVerificationRenewalRes:
-      type: object
-      properties:
-        valid:
-          type: boolean
-          example: true
-        meterPointRenewals:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeterPointConsentAndVerificationRenewal'
-    MpxnElem:
-      type: object
-      properties:
-        mpxn:
-          type: string
-          example: '123456789012'
-    MeterPointVerificationRenewalElem:
-      type: object
-      properties:
-        mpxn:
-          type: string
-          example: '123456789012'
-        valid:
-          type: boolean
-          example: true
-        meterPointVerificationRenewalId:
-          type: string
-          example: bfdf0b3d-42a6-46f0-8142-39c4d5413b58
-        isValidUntil:
-          type: string
-          example: '2026-03-05T23:59:59'
-    AddUserRes:
-      type: object
-      properties:
-        userId:
-          type: string
-          example: 69f464fa-bca2-4f2a-83b1-0c69819c5cd0
-        applications:
-          type: array
-          items:
-            type: object
-            properties:
-              active:
-                type: boolean
-              accountId:
-                type: string
-                example: ffe4f42e-7c1a-4ea3-9ec8-087d4a1071e6
-              applicationId:
-                type: string
-                example: 0537b17c-ab62-491c-8085-9ac2b6206346
-        status:
-          type: string
-          example: unverified
-        active:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

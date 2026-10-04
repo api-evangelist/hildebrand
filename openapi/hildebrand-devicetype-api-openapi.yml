@@ -112,25 +112,33 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    AddDeviceTypeSucess:
+    ServerError:
       type: object
       properties:
-        status:
+        error:
           type: string
-          example: OK
-        deviceTypeId:
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    MissingElementsError:
+      type: object
+      properties:
+        error:
           type: string
-          example: a0872822-c10c-4a90-bf8a-17310ffe10af
-    ProtocolResourceType:
+          example: missing elements
+    ProtocolResourceTypeResource:
       type: object
       properties:
         protocolId:
           type: string
         resourceTypeId:
           type: string
+        resourceId:
+          type: string
       required:
       - protocolId
       - resourceTypeId
+      - resourceId
     DeviceType:
       type: object
       properties:
@@ -150,19 +158,6 @@ components:
           required:
           - protocol
           - sensors
-    ProtocolResourceTypeResource:
-      type: object
-      properties:
-        protocolId:
-          type: string
-        resourceTypeId:
-          type: string
-        resourceId:
-          type: string
-      required:
-      - protocolId
-      - resourceTypeId
-      - resourceId
     DeviceTypeReq:
       type: object
       properties:
@@ -180,20 +175,25 @@ components:
           required:
           - protocol
           - sensors
-    ServerError:
+    AddDeviceTypeSucess:
       type: object
       properties:
-        error:
+        status:
           type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
-    MissingElementsError:
+          example: OK
+        deviceTypeId:
+          type: string
+          example: a0872822-c10c-4a90-bf8a-17310ffe10af
+    ProtocolResourceType:
       type: object
       properties:
-        error:
+        protocolId:
           type: string
-          example: missing elements
+        resourceTypeId:
+          type: string
+      required:
+      - protocolId
+      - resourceTypeId
   securitySchemes:
     orgAppKeys:
       type: http

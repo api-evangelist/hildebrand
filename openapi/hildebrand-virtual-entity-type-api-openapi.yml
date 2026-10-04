@@ -240,39 +240,39 @@ components:
           example: EHSOLAPI
         active:
           type: boolean
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
     reqError:
       type: object
       properties:
         error:
           type: string
           example: missing elements
-    newVeTypeRes:
+    newVeTypeReq:
       type: object
       properties:
-        status:
+        name:
           type: string
-          example: OK
-        veTypeId:
+          example: Smart Home
+        description:
           type: string
-          example: b82d4f8b-a097-4b96-acbb-81d891489441
-    VeTypeResources:
-      type: object
-      properties:
-        veTypeId:
-          type: string
-          example: cc90b599-2705-4b13-98d4-3306f81169cf
-        ownerId:
-          type: string
-          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
-        applicationId:
-          type: string
-          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
+          example: Smart home, with electricity and gas utilities
         resources:
           type: array
           items:
-            $ref: '#/components/schemas/ResourceTypeAvailableResources'
-        selectionNeeded:
-          type: boolean
+            type: object
+            properties:
+              resourceTypeId:
+                type: string
+                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+              required:
+                type: boolean
     VeType:
       type: object
       properties:
@@ -300,15 +300,15 @@ components:
                 example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
               required:
                 type: boolean
-    updateVeTypeReq:
+    newVeTypeRes:
       type: object
       properties:
-        name:
+        status:
           type: string
-          example: Smart Home
-        description:
+          example: OK
+        veTypeId:
           type: string
-          example: Smart home, with electricity and gas utilities
+          example: b82d4f8b-a097-4b96-acbb-81d891489441
     ResourceTypeAvailableResources:
       type: object
       properties:
@@ -321,7 +321,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Resource'
-    newVeTypeReq:
+    ListOfVeType:
+      type: array
+      items:
+        $ref: '#/components/schemas/VeType'
+    VeTypeResources:
+      type: object
+      properties:
+        veTypeId:
+          type: string
+          example: cc90b599-2705-4b13-98d4-3306f81169cf
+        ownerId:
+          type: string
+          example: f78a3812-d4fc-4b00-99c5-20fd581721a6
+        applicationId:
+          type: string
+          example: a0cf21a2-51f6-4df2-9214-0bc762bcee09
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceTypeAvailableResources'
+        selectionNeeded:
+          type: boolean
+    updateVeTypeReq:
       type: object
       properties:
         name:
@@ -330,28 +352,6 @@ components:
         description:
           type: string
           example: Smart home, with electricity and gas utilities
-        resources:
-          type: array
-          items:
-            type: object
-            properties:
-              resourceTypeId:
-                type: string
-                example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-              required:
-                type: boolean
-    ListOfVeType:
-      type: array
-      items:
-        $ref: '#/components/schemas/VeType'
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
   securitySchemes:
     orgAppKeys:
       type: http

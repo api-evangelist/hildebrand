@@ -282,12 +282,21 @@ components:
         error:
           type: string
           example: missing elements
-    IsValidRes:
+    UserNameLoginReq:
       type: object
       properties:
-        valid:
-          type: boolean
-          example: true
+        username:
+          type: string
+          example: scotty
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - password
     TokenDocument:
       type: object
       properties:
@@ -311,27 +320,18 @@ components:
         grant_type:
           type: string
           example: refresh_token
-    UserNameLoginReq:
-      type: object
-      properties:
-        username:
-          type: string
-          example: scotty
-        password:
-          type: string
-          example: '@$tr0ngP@$'
-        directoryId:
-          type: string
-          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
-      required:
-      - username
-      - password
     AccessDeniedError:
       type: object
       properties:
         error:
           type: string
           example: Access denied
+    IsValidRes:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

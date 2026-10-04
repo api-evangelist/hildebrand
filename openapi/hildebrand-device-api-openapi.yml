@@ -268,44 +268,14 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    IncorrectElementsError:
+    ServerError:
       type: object
       properties:
         error:
           type: string
-          example: incorrect elements
-    missingUserIdError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -userId
-    ProtocolResourceTypeResource:
-      type: object
-      properties:
-        protocolId:
-          type: string
-        resourceTypeId:
-          type: string
-        resourceId:
-          type: string
-      required:
-      - protocolId
-      - resourceTypeId
-      - resourceId
-    DeviceReq:
-      type: object
-      properties:
-        deviceTypeId:
-          type: string
-        hardwareId:
-          type: string
-        hardwareIds:
-          type: object
-      required:
-      - deviceTypeId
-      - hardwareId
-      - hardwareIds
+          example: An error has occurred
+      xml:
+        name: AddResourceError
     AddDeviceSuccess:
       type: object
       properties:
@@ -320,6 +290,19 @@ components:
     ParentHardwareIds:
       type: string
       example: KO17321203
+    ProtocolResourceTypeResource:
+      type: object
+      properties:
+        protocolId:
+          type: string
+        resourceTypeId:
+          type: string
+        resourceId:
+          type: string
+      required:
+      - protocolId
+      - resourceTypeId
+      - resourceId
     Device:
       type: object
       properties:
@@ -358,14 +341,31 @@ components:
       required:
       - ownerId
       - hardwareId
-    ServerError:
+    DeviceReq:
+      type: object
+      properties:
+        deviceTypeId:
+          type: string
+        hardwareId:
+          type: string
+        hardwareIds:
+          type: object
+      required:
+      - deviceTypeId
+      - hardwareId
+      - hardwareIds
+    IncorrectElementsError:
       type: object
       properties:
         error:
           type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
+          example: incorrect elements
+    missingUserIdError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -userId
   securitySchemes:
     orgAppKeys:
       type: http

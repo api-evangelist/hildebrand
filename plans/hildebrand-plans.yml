@@ -63,3 +63,29 @@ free_tier:
     call the production API with the published individual applicationId
     b0f1b774-a586-4f72-9edd-27ead8aa7a8d and a JWT from POST /api/v0-1/auth.
   source: https://docs.glowmarkt.com/GlowmarktAPIDataRetrievalDocumentationIndividualUserForBright.pdf
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  - subscription
+  units: []
+  plans:
+  - name: Core
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Dedicated
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []

@@ -160,12 +160,6 @@ components:
               agg: daily
               metric: consumption
               timeframe: lastMonth
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
     MissingElementsError:
       type: object
       properties:
@@ -178,6 +172,12 @@ components:
         error:
           type: string
           example: Access denied
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
   securitySchemes:
     oAccessAuthToken:
       type: apiKey

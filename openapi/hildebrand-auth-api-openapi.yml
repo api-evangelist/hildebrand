@@ -270,33 +270,24 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
     MissingElementsError:
       type: object
       properties:
         error:
           type: string
           example: missing elements
-    UserNameLoginReq:
+    InternalServerError:
       type: object
       properties:
-        username:
+        error:
           type: string
-          example: scotty
-        password:
+          example: An error has occurred
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
           type: string
-          example: '@$tr0ngP@$'
-        directoryId:
-          type: string
-          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
-      required:
-      - username
-      - password
+          example: Access denied
     TokenDocument:
       type: object
       properties:
@@ -320,12 +311,21 @@ components:
         grant_type:
           type: string
           example: refresh_token
-    AccessDeniedError:
+    UserNameLoginReq:
       type: object
       properties:
-        error:
+        username:
           type: string
-          example: Access denied
+          example: scotty
+        password:
+          type: string
+          example: '@$tr0ngP@$'
+        directoryId:
+          type: string
+          example: 2e214dec-bf44-4f58-83d0-2fa89d023e90
+      required:
+      - username
+      - password
     IsValidRes:
       type: object
       properties:

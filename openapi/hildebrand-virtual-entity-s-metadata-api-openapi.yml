@@ -146,23 +146,12 @@ components:
           example: An error has occurred
       xml:
         name: AddResourceError
-    VEResDeletedAttributes:
+    AccessDeniedError:
       type: object
       properties:
-        status:
+        error:
           type: string
-          example: OK
-        veId:
-          type: string
-          example: dc9069a7-7695-43fd-8f27-16b1c94213da
-        rooms:
-          type: array
-          items:
-            type: string
-            example: living room
-      required:
-      - veId
-      - status
+          example: Access denied
     reqError:
       type: object
       properties:
@@ -210,12 +199,23 @@ components:
             measurement:
               type: string
               example: 100
-    AccessDeniedError:
+    VEResDeletedAttributes:
       type: object
       properties:
-        error:
+        status:
           type: string
-          example: Access denied
+          example: OK
+        veId:
+          type: string
+          example: dc9069a7-7695-43fd-8f27-16b1c94213da
+        rooms:
+          type: array
+          items:
+            type: string
+            example: living room
+      required:
+      - veId
+      - status
     VEReqDeleteAttributes:
       type: object
       description: Insert the attributes you would like to delete under the field removeAttributes

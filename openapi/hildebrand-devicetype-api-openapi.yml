@@ -126,6 +126,42 @@ components:
         error:
           type: string
           example: missing elements
+    AddDeviceTypeSucess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        deviceTypeId:
+          type: string
+          example: a0872822-c10c-4a90-bf8a-17310ffe10af
+    DeviceTypeReq:
+      type: object
+      properties:
+        description:
+          type: string
+        protocol:
+          type: object
+          properties:
+            sensors:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProtocolResourceType'
+            protocol:
+              type: string
+          required:
+          - protocol
+          - sensors
+    ProtocolResourceType:
+      type: object
+      properties:
+        protocolId:
+          type: string
+        resourceTypeId:
+          type: string
+      required:
+      - protocolId
+      - resourceTypeId
     ProtocolResourceTypeResource:
       type: object
       properties:
@@ -158,42 +194,6 @@ components:
           required:
           - protocol
           - sensors
-    DeviceTypeReq:
-      type: object
-      properties:
-        description:
-          type: string
-        protocol:
-          type: object
-          properties:
-            sensors:
-              type: array
-              items:
-                $ref: '#/components/schemas/ProtocolResourceType'
-            protocol:
-              type: string
-          required:
-          - protocol
-          - sensors
-    AddDeviceTypeSucess:
-      type: object
-      properties:
-        status:
-          type: string
-          example: OK
-        deviceTypeId:
-          type: string
-          example: a0872822-c10c-4a90-bf8a-17310ffe10af
-    ProtocolResourceType:
-      type: object
-      properties:
-        protocolId:
-          type: string
-        resourceTypeId:
-          type: string
-      required:
-      - protocolId
-      - resourceTypeId
   securitySchemes:
     orgAppKeys:
       type: http

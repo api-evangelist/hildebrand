@@ -131,29 +131,6 @@ components:
           example: An error has occurred
       xml:
         name: AddResourceError
-    MeterPointInventoryResponse:
-      type: object
-      properties:
-        valid:
-          type: boolean
-        inventory:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeterPointInventory'
-    ResourceListingWithClassifier:
-      type: object
-      properties:
-        resourceId:
-          type: string
-          example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
-        resourceTypeId:
-          type: string
-          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
-        classifier:
-          type: string
-          example: electricity.consumption
-      xml:
-        name: ResourceListingWithClassifier
     MeterPointResourceResponse:
       type: object
       properties:
@@ -167,6 +144,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceListingWithClassifier'
+    MeterPointInventoryResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        inventory:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterPointInventory'
     MeterPointInventory:
       type: object
       properties:
@@ -197,6 +183,20 @@ components:
         SmetsVersion:
           type: string
           example: 2
+    ResourceListingWithClassifier:
+      type: object
+      properties:
+        resourceId:
+          type: string
+          example: 8f2a0722-3b59-47a6-a115-d43fcc0c5d1c
+        resourceTypeId:
+          type: string
+          example: f8e6fb07-6307-4e0e-8a17-4b94bc7249c2
+        classifier:
+          type: string
+          example: electricity.consumption
+      xml:
+        name: ResourceListingWithClassifier
   securitySchemes:
     orgAppKeys:
       type: http

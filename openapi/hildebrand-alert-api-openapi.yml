@@ -140,13 +140,35 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    Alert:
-      allOf:
-      - $ref: '#/components/schemas/AlertReq'
-      - properties:
-          ns_alert_id:
-            type: string
-            example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
+    MissingElementsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Access denied
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+    AlertRes:
+      type: object
+      properties:
+        ns_alert_id:
+          type: string
+          example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
+        status:
+          type: string
+          example: OK
+      xml:
+        name: AlertRes
     AlertReq:
       type: object
       properties:
@@ -199,35 +221,13 @@ components:
           type: object
       xml:
         name: AlertReq
-    MissingElementsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements
-    AccessDeniedError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Access denied
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-    AlertRes:
-      type: object
-      properties:
-        ns_alert_id:
-          type: string
-          example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
-        status:
-          type: string
-          example: OK
-      xml:
-        name: AlertRes
+    Alert:
+      allOf:
+      - $ref: '#/components/schemas/AlertReq'
+      - properties:
+          ns_alert_id:
+            type: string
+            example: 2cd8ddcc-3eb1-489d-b204-450e0887d0d8
   securitySchemes:
     orgAppKeys:
       type: http

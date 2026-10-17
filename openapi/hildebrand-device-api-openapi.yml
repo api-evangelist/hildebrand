@@ -268,14 +268,6 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
-    ServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: An error has occurred
-      xml:
-        name: AddResourceError
     AddDeviceSuccess:
       type: object
       properties:
@@ -287,9 +279,27 @@ components:
         deviceId:
           type: string
           example: d3vb0129-8c95-43f3-bde2-744007221oli
-    ParentHardwareIds:
-      type: string
-      example: KO17321203
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error has occurred
+      xml:
+        name: AddResourceError
+    DeviceReq:
+      type: object
+      properties:
+        deviceTypeId:
+          type: string
+        hardwareId:
+          type: string
+        hardwareIds:
+          type: object
+      required:
+      - deviceTypeId
+      - hardwareId
+      - hardwareIds
     ProtocolResourceTypeResource:
       type: object
       properties:
@@ -303,6 +313,15 @@ components:
       - protocolId
       - resourceTypeId
       - resourceId
+    ParentHardwareIds:
+      type: string
+      example: KO17321203
+    missingUserIdError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: missing elements -userId
     Device:
       type: object
       properties:
@@ -341,31 +360,12 @@ components:
       required:
       - ownerId
       - hardwareId
-    DeviceReq:
-      type: object
-      properties:
-        deviceTypeId:
-          type: string
-        hardwareId:
-          type: string
-        hardwareIds:
-          type: object
-      required:
-      - deviceTypeId
-      - hardwareId
-      - hardwareIds
     IncorrectElementsError:
       type: object
       properties:
         error:
           type: string
           example: incorrect elements
-    missingUserIdError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: missing elements -userId
   securitySchemes:
     orgAppKeys:
       type: http
